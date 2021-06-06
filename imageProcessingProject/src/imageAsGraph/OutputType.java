@@ -1,2 +1,8 @@
-package imageAsGraph;public enum OutputType {
+package imageAsGraph;
+
+/**
+ * Represents a type of image file supported as a possible output format for a GraphOfPixels.
+ */
+public enum OutputType {
+  ppm
 }
