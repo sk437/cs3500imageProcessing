@@ -88,11 +88,24 @@ public class ImageToGraphConverter {
     for (int row = 0; row < toConvert.size() - 1; row += 1) {
       toReturn.insertRow(row);
     }
+    /*
     for (int row = 0; row < toReturn.getHeight(); row += 1) {
       for (int col = 0; col < toReturn.getWidth(); col += 1) {
         toReturn.getPixelAt(col, row).updateColors(toConvert.get(row).get(col));
       }
+    }*/
+    int col = 0;
+    int row = 0;
+    for (Node n : toReturn) {
+      n.updateColors(toConvert.get(row).get(col));
+      col += 1;
+      if (col == toReturn.getWidth()) {
+        row += 1;
+        col = 0;
+      }
     }
     return toReturn;
   }
+
+
 }

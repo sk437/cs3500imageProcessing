@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Iterator;
 
 /**
  * Represents an image as a Graph of Pixels
@@ -61,13 +62,10 @@ public class SimpleGraphOfPixels extends AbstractGraphOfPixels {
             printer.append(this.width + " ");
             printer.append(this.height + "\n");
             printer.append(PixelAsColors.maxColor + "\n");
-            for (int row = 0; row < this.height; row += 1) {
-                for (int col = 0; col < this.width; col += 1) {
-                    Node currentNode = this.getPixelAt(col, row);
-                    printer.append(currentNode.getRed() + "\n");
-                    printer.append(currentNode.getGreen() + "\n");
-                    printer.append(currentNode.getBlue() + "\n");
-                }
+            for (Node currentNode : this) {
+                printer.append(currentNode.getRed() + "\n");
+                printer.append(currentNode.getGreen() + "\n");
+                printer.append(currentNode.getBlue() + "\n");
             }
         } catch (IOException e) {
             throw new IllegalArgumentException("Invalid file");
@@ -188,5 +186,10 @@ public class SimpleGraphOfPixels extends AbstractGraphOfPixels {
     @Override
     public int getWidth() {
         return width;
+    }
+
+    @Override
+    public Iterator<Node> iterator() {
+        return new GraphIterator(this.topLeft);
     }
 }

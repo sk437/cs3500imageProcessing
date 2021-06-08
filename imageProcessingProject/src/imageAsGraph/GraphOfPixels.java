@@ -7,7 +7,7 @@ import pixel.PixelAsColors;
  * Represents an image as a graph of pixels, which can be manipulated in various ways and written
  * as an output to a given type of file. Should be instantiated using the ImageToGraphConverter builder class.
  */
-public interface GraphOfPixels {
+public interface GraphOfPixels extends Iterable<Node> {
   //TODO FIGURE OUT HOW TO WRITE INVARIANT THAT GRAPH IS X BY Y AND ALL PIXELS ARE CONNECTED PROPERLY
 
   /**
