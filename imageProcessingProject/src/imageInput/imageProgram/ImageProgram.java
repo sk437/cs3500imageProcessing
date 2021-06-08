@@ -8,7 +8,7 @@ import pixel.PixelAsColors;
  * created.
  */
 public interface ImageProgram {
-
+  //TODO ADD INVARIANT CLAMING THAT DOUBLE ARRAYLIST WILL BE RECTANGULAR
   /**
    * Returns an arraylist of arraylists which represents the pixels of this image, stored
    * as a representation of their colors as 3 RGB components.

@@ -41,8 +41,7 @@ public interface Node {
      * Updates the RGB values of this node by changing them by the RGB values of the given PixelAsColors object.
      *
      * @param colorDeltas A PixelAsColors object, which the RGB values of this node will be changed by
-     * @throws IllegalArgumentException If given a null input or if any of the provided changes would result in
-     *                                  an invalid pixel color
+     * @throws IllegalArgumentException If given a null input
      */
     void editColors(PixelAsColors colorDeltas) throws IllegalArgumentException;
 
@@ -73,36 +72,4 @@ public interface Node {
      * @return A reference to the node just below this one
      */
     Node getBelow();
-
-    /**
-     * Updates this node to consider the given node as the one to it's left.
-     *
-     * @param other a reference to the node which will be considered to the left of this one
-     * @throws IllegalArgumentException If given a null input
-     */
-    void updateLeft(Node other) throws IllegalArgumentException;
-
-    /**
-     * Updates this node to consider the given node as the one to it's right.
-     *
-     * @param other a reference to the node which will be considered to the right of this one
-     * @throws IllegalArgumentException If given a null input
-     */
-    void updateRight(Node other) throws IllegalArgumentException;
-
-    /**
-     * Updates this node to consider the given node as the one above it.
-     *
-     * @param other a reference to the node which will be considered above this one
-     * @throws IllegalArgumentException If given a null input
-     */
-    void updateAbove(Node other) throws IllegalArgumentException;
-
-    /**
-     * Updates this node to consider the given node as the one below it.
-     *
-     * @param other a reference to the node which will be considered below this one
-     * @throws IllegalArgumentException If given a null input
-     */
-    void updateBelow(Node other) throws IllegalArgumentException;
 }

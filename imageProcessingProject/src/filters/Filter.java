@@ -1,7 +1,10 @@
 package filters;
 
+import imageAsGraph.Mutator;
+
 /**
  * Represents a filter which can be applied to a graph of pixels to alter an image.
  */
-public interface Filter {
+public interface Filter extends Mutator {
+    //TODO ADD METHOD APPLYING TO SPECIFIC PIXEL
 }

@@ -14,11 +14,14 @@ public class SimplePixel implements PixelAsColors {
      * @param c The color component to be tested
      * @return Whether or not it is a valid component
      */
-    private boolean invalidColor(int c) {
-        if (c < minColor || c > maxColor) {
-            return true;
+    private int clamp(int c) {
+        if (c < minColor) {
+            return minColor;
         }
-        return false;
+        else if (c > maxColor) {
+            return maxColor;
+        }
+        return c;
     }
 
     /**
@@ -29,18 +32,19 @@ public class SimplePixel implements PixelAsColors {
      * @param blue  The blue component
      */
     public SimplePixel(int red, int green, int blue) {
-        if (this.invalidColor(red)) {
-            throw new IllegalArgumentException("Invalid red value");
-        }
-        if (this.invalidColor(green)) {
-            throw new IllegalArgumentException("Invalid green value");
-        }
-        if (this.invalidColor(blue)) {
-            throw new IllegalArgumentException("Invalid blue color");
-        }
-        this.r = red;
-        this.g = green;
-        this.b = blue;
+        this.r = this.clamp(red);
+        this.g = this.clamp(green);
+        this.b = this.clamp(blue);
+    }
+
+    /**
+     * Constructs a copy of the given pixel.
+     * @param pixel The pixel whose RGB values are to be copied.
+     */
+    public SimplePixel(PixelAsColors pixel) {
+        this.r = pixel.getRed();
+        this.g = pixel.getGreen();
+        this.b = pixel.getBlue();
     }
 
     @Override
@@ -59,62 +63,44 @@ public class SimplePixel implements PixelAsColors {
     }
 
     @Override
-    public void editBlue(int delta) throws IllegalArgumentException {
-        if (this.invalidColor(this.b + delta)) {
-            throw new IllegalArgumentException("This change to this pixel's blue value would cause it to become invalid");
-        }
-        this.b += delta;
+    public void editBlue(int delta) {
+        this.b = this.clamp(b + delta);
     }
 
     @Override
-    public void editGreen(int delta) throws IllegalArgumentException {
-        if (this.invalidColor(this.g + delta)) {
-            throw new IllegalArgumentException("This change to this pixel's green value would cause it to become invalid");
-        }
-        this.g += delta;
+    public void editGreen(int delta) {
+        this.g = this.clamp(g + delta);
     }
 
     @Override
-    public void editRed(int delta) throws IllegalArgumentException {
-        if (this.invalidColor(this.r + delta)) {
-            throw new IllegalArgumentException("This change to this pixel's red value would cause it to become invalid");
-        }
-        this.r += delta;
+    public void editRed(int delta) {
+        this.r = this.clamp(r + delta);
     }
 
     @Override
-    public void setBlue(int color) throws IllegalArgumentException {
-        if (this.invalidColor(color)) {
-            throw new IllegalArgumentException("Changing this pixel's blue valid to this would cause it to become invalid");
-        }
-        this.b = color;
+    public void setBlue(int color) {
+        this.b = this.clamp(color);
     }
 
     @Override
     public void setGreen(int color) throws IllegalArgumentException {
-        if (this.invalidColor(color)) {
-            throw new IllegalArgumentException("Changing this pixel's green valid to this would cause it to become invalid");
-        }
-        this.g = color;
+        this.g = this.clamp(color);
     }
 
     @Override
     public void setRed(int color) throws IllegalArgumentException {
-        if (this.invalidColor(color)) {
-            throw new IllegalArgumentException("Changing this pixel's red valid to this would cause it to become invalid");
-        }
-        this.r = color;
+        this.r = this.clamp(color);
     }
 
     @Override
-    public void setRGB(int r, int g, int b) throws IllegalArgumentException {
+    public void setRGB(int r, int g, int b) {
         this.setRed(r);
         this.setGreen(g);
         this.setBlue(b);
     }
 
     @Override
-    public void editRGB(int deltaR, int deltaG, int deltaB) throws IllegalArgumentException {
+    public void editRGB(int deltaR, int deltaG, int deltaB) {
         this.editRed(deltaR);
         this.editGreen(deltaG);
         this.editBlue(deltaB);

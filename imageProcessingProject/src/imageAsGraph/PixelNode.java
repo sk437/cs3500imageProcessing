@@ -5,9 +5,9 @@ import pixel.PixelAsColors;
 /**
  * Represents a node in a graph that contains a pixel.
  */
-public class PixelNode implements Node{
+public class PixelNode extends AbstractNode {
 
-    private final Node[] neighbors;
+    private final AbstractNode[] neighbors;
     private final PixelAsColors pixel;
 
     /**
@@ -16,7 +16,7 @@ public class PixelNode implements Node{
      */
     public PixelNode(PixelAsColors p) {
         this.pixel = p;
-        this.neighbors = new Node[4];
+        this.neighbors = new AbstractNode[4];
         this.neighbors[0] = new EmptyNode();
         this.neighbors[1] = new EmptyNode();
         this.neighbors[2] = new EmptyNode();
@@ -75,7 +75,7 @@ public class PixelNode implements Node{
     }
 
     @Override
-    public void updateLeft(Node other) throws IllegalArgumentException {
+    void updateLeft(AbstractNode other) throws IllegalArgumentException {
         if (other == null) {
             throw new IllegalArgumentException("Null input");
         }
@@ -83,7 +83,7 @@ public class PixelNode implements Node{
     }
 
     @Override
-    public void updateRight(Node other) {
+    void updateRight(AbstractNode other) {
         if (other == null) {
             throw new IllegalArgumentException("Null input");
         }
@@ -91,7 +91,7 @@ public class PixelNode implements Node{
     }
 
     @Override
-    public void updateAbove(Node other) {
+    void updateAbove(AbstractNode other) {
         if (other == null) {
             throw new IllegalArgumentException("Null input");
         }
@@ -99,10 +99,30 @@ public class PixelNode implements Node{
     }
 
     @Override
-    public void updateBelow(Node other) {
+    void updateBelow(AbstractNode other) {
         if (other == null) {
             throw new IllegalArgumentException("Null input");
         }
         this.neighbors[3] = other;
+    }
+
+    @Override
+    AbstractNode getLeftAsUpdatable() {
+        return this.neighbors[0];
+    }
+
+    @Override
+    AbstractNode getRightAsUpdatable() {
+        return this.neighbors[1];
+    }
+
+    @Override
+    AbstractNode getAboveAsUpdatable() {
+        return this.neighbors[2];
+    }
+
+    @Override
+    AbstractNode getBelowAsUpdatable() {
+        return this.neighbors[3];
     }
 }

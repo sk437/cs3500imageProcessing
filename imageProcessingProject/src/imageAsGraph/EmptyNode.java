@@ -6,7 +6,7 @@ import pixel.PixelAsColors;
  * Represents an empty node which does not contain a pixel value, used to represent the edges of a graph. This is used
  * to represent a sort of null node, where a real node does not have a neighbor, without actually using null.
  */
-public class EmptyNode implements Node {
+public class EmptyNode extends AbstractNode {
 
     @Override
     public int getBlue() {
@@ -62,30 +62,68 @@ public class EmptyNode implements Node {
     // NOTE: These methods do not do anything because this represents an empty node, which does not contain a reference
     // to a pixel and does not store neighbors, to avoid infinite repetition and null references.
     @Override
-    public void updateLeft(Node other) throws IllegalArgumentException {
+    void updateLeft(AbstractNode other) throws IllegalArgumentException {
         if (other == null) {
             throw new IllegalArgumentException("Null input");
         }
     }
 
     @Override
-    public void updateRight(Node other) throws IllegalArgumentException {
+    void updateRight(AbstractNode other) throws IllegalArgumentException {
         if (other == null) {
             throw new IllegalArgumentException("Null input");
         }
     }
 
     @Override
-    public void updateAbove(Node other) throws IllegalArgumentException {
+    void updateAbove(AbstractNode other) throws IllegalArgumentException {
         if (other == null) {
             throw new IllegalArgumentException("Null input");
         }
     }
 
     @Override
-    public void updateBelow(Node other) throws IllegalArgumentException {
+    void updateBelow(AbstractNode other) throws IllegalArgumentException {
         if (other == null) {
             throw new IllegalArgumentException("Null input");
         }
+    }
+
+    @Override
+    AbstractNode getLeftAsUpdatable() {
+        return this;
+    }
+
+    @Override
+    AbstractNode getRightAsUpdatable() {
+        return this;
+    }
+
+    @Override
+    AbstractNode getAboveAsUpdatable() {
+        return this;
+    }
+
+    @Override
+    AbstractNode getBelowAsUpdatable() {
+        return this;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof EmptyNode)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return -1; // All Empty Nodes are equal, so they should all have the same hashCode
     }
 }
