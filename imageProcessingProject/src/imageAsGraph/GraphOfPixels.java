@@ -1,7 +1,6 @@
 package imageAsGraph;
 
-import filters.Filter;
-import pixel.PixelAsColors;
+import mutators.Mutator;
 
 /**
  * Represents an image as a graph of pixels, which can be manipulated in various ways and written

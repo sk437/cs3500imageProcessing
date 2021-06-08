@@ -72,4 +72,12 @@ public interface Node {
      * @return A reference to the node just below this one
      */
     Node getBelow();
+
+    /**
+     * Gets the node at the position described relative to this one.
+     * @param deltaX represents the difference in x coordinates
+     * @param deltaY represents the difference in x coordinates
+     * @return the Node at given relative position.
+     */
+    Node getNearby(int deltaX, int deltaY);
 }

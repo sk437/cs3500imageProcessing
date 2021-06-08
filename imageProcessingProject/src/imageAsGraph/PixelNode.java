@@ -75,6 +75,29 @@ public class PixelNode extends AbstractNode {
     }
 
     @Override
+    public Node getNearby(int deltaX, int deltaY) {
+        if (deltaX == 0 && deltaY == 0) {
+            return this;
+        }
+        else if (deltaX != 0) {
+            if (deltaX < 0) {
+                return this.getLeft().getNearby(deltaX + 1, deltaY);
+            }
+            else {
+                return this.getRight().getNearby(deltaX - 1, deltaY);
+            }
+        }
+        else {
+            if (deltaY < 0) {
+                return this.getBelow().getNearby(deltaX, deltaY + 1);
+            }
+            else {
+                return this.getAbove().getNearby(deltaX, deltaY - 1);
+            }
+        }
+    }
+
+    @Override
     void updateLeft(AbstractNode other) throws IllegalArgumentException {
         if (other == null) {
             throw new IllegalArgumentException("Null input");

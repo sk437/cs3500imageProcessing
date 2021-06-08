@@ -1,5 +1,6 @@
 package imageAsGraph;
 
+import mutators.Mutator;
 import pixel.PixelAsColors;
 import pixel.SimplePixel;
 

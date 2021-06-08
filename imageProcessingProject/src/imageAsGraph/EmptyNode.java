@@ -59,6 +59,11 @@ public class EmptyNode extends AbstractNode {
         return this;
     }
 
+    @Override
+    public Node getNearby(int deltaX, int deltaY) {
+        return this;
+    }
+
     // NOTE: These methods do not do anything because this represents an empty node, which does not contain a reference
     // to a pixel and does not store neighbors, to avoid infinite repetition and null references.
     @Override
