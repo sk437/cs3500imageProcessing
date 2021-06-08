@@ -8,7 +8,7 @@ import pixel.SimplePixel;
 public class TestSimpleGraphOfPixels {
 
     public static void main(String[] args) {
-        ImageProgram checkers = new CheckerBoard(1,4,new SimplePixel(0, 0, 0),
+        ImageProgram checkers = new CheckerBoard(50,36,new SimplePixel(0, 0, 0),
                 new SimplePixel(255, 255, 255));
         GraphOfPixels graph0 = ImageToGraphConverter.convertProgram(checkers);
         graph0.writeToFile(OutputType.ppm, "outputImages/checkers");
