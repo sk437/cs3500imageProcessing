@@ -1,4 +1,6 @@
 import static org.junit.Assert.assertEquals;
+
+import imageAsGraph.EmptyNode;
 import imageAsGraph.GraphOfPixels;
 import imageAsGraph.ImageToGraphConverter;
 import org.junit.Test;
@@ -115,6 +117,63 @@ public class TestGraphMethods {
   @Test
   public void testInsertRow() {
     this.setUp();
+    assertEquals(3, this.graphExample.getHeight());
+    assertEquals(3, this.graphExample.getWidth());
+    this.graphExample.insertRow(1);
+    assertEquals(4, this.graphExample.getHeight());
+    assertEquals(3, this.graphExample.getWidth());
+    assertEquals(255, this.graphExample.getPixelAt(0,2).getRed());
+    assertEquals(255, this.graphExample.getPixelAt(1,2).getRed());
+    assertEquals(255, this.graphExample.getPixelAt(2,2).getRed());
+    assertEquals(4, this.graphExample.getPixelAt(0,2).getAbove().getRed());
+    assertEquals(5, this.graphExample.getPixelAt(1,2).getAbove().getRed());
+    assertEquals(6, this.graphExample.getPixelAt(2,2).getAbove().getRed());
+    assertEquals(7, this.graphExample.getPixelAt(0,2).getBelow().getRed());
+    assertEquals(8, this.graphExample.getPixelAt(1,2).getBelow().getRed());
+    assertEquals(9, this.graphExample.getPixelAt(2,2).getBelow().getRed());
+    this.setUp();
+    this.graphExample.insertColumn(1);
+    assertEquals(3, this.graphExample.getHeight());
+    assertEquals(4, this.graphExample.getWidth());
+    assertEquals(255, this.graphExample.getPixelAt(2,0).getRed());
+    assertEquals(255, this.graphExample.getPixelAt(2,1).getRed());
+    assertEquals(255, this.graphExample.getPixelAt(2,2).getRed());
+    assertEquals(2, this.graphExample.getPixelAt(2,0).getLeft().getRed());
+    assertEquals(5, this.graphExample.getPixelAt(2,1).getLeft().getRed());
+    assertEquals(8, this.graphExample.getPixelAt(2,2).getLeft().getRed());
+    assertEquals(3, this.graphExample.getPixelAt(2,0).getRight().getRed());
+    assertEquals(6, this.graphExample.getPixelAt(2,1).getRight().getRed());
+    assertEquals(9, this.graphExample.getPixelAt(2,2).getRight().getRed());
+    this.graphExample.insertColumn(3);
+    assertEquals(3, this.graphExample.getHeight());
+    assertEquals(5, this.graphExample.getWidth());
+    assertEquals(255, this.graphExample.getPixelAt(4,0).getRed());
+    assertEquals(255, this.graphExample.getPixelAt(4,1).getRed());
+    assertEquals(255, this.graphExample.getPixelAt(4,2).getRed());
+    assertEquals(3, this.graphExample.getPixelAt(4,0).getLeft().getRed());
+    assertEquals(6, this.graphExample.getPixelAt(4,1).getLeft().getRed());
+    assertEquals(9, this.graphExample.getPixelAt(4,2).getLeft().getRed());
+    assertEquals(new EmptyNode(), this.graphExample.getPixelAt(4,0).getRight());
+    assertEquals(new EmptyNode(), this.graphExample.getPixelAt(4,1).getRight());
+    assertEquals(new EmptyNode(), this.graphExample.getPixelAt(4,2).getRight());
+    this.graphExample.insertRow(2);
+    assertEquals(4, this.graphExample.getHeight());
+    assertEquals(5, this.graphExample.getWidth());
+    assertEquals(255, this.graphExample.getPixelAt(0,3).getRed());
+    assertEquals(255, this.graphExample.getPixelAt(1,3).getRed());
+    assertEquals(255, this.graphExample.getPixelAt(2,3).getRed());
+    assertEquals(255, this.graphExample.getPixelAt(3,3).getRed());
+    assertEquals(255, this.graphExample.getPixelAt(4,3).getRed());
+    assertEquals(7, this.graphExample.getPixelAt(0,3).getAbove().getRed());
+    assertEquals(8, this.graphExample.getPixelAt(1,3).getAbove().getRed());
+    assertEquals(255, this.graphExample.getPixelAt(2,3).getAbove().getRed());
+    assertEquals(9, this.graphExample.getPixelAt(3,3).getAbove().getRed());
+    assertEquals(255, this.graphExample.getPixelAt(4,3).getAbove().getRed());
+    assertEquals(new EmptyNode(), this.graphExample.getPixelAt(0,3).getBelow());
+    assertEquals(new EmptyNode(), this.graphExample.getPixelAt(1,3).getBelow());
+    assertEquals(new EmptyNode(), this.graphExample.getPixelAt(2,3).getBelow());
+    assertEquals(new EmptyNode(), this.graphExample.getPixelAt(3,3).getBelow());
+    assertEquals(new EmptyNode(), this.graphExample.getPixelAt(4,3).getBelow());
   }
 
 }
