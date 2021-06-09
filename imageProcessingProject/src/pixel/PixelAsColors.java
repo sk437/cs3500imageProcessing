@@ -26,42 +26,45 @@ public interface PixelAsColors {
 
   /**
    * Updates the blue value of this pixel to the given integer, which should be between
-   * 0 and 255.
+   * 0 and 255, and will clamp the number if it is not.
    * @param color The new blue value
    */
   void setBlue(int color);
 
   /**
    * Updates the red value of this pixel to the given integer, which should be between
-   * 0 and 255.
+   * 0 and 255, and will clamp the number if it is not.
    * @param color The new red value
    */
   void setRed(int color);
 
   /**
    * Updates the green value of this pixel to the given integer, which should be between
-   * 0 and 255.
+   * 0 and 255, and will clamp the number if it is not.
    * @param color The new green value
    */
   void setGreen(int color);
 
   /**
    * Edits the blue value of this pixel by adding the given color value to this pixel's blue
-   * value.
+   * value. If the change would result in a color outside the boundaries of this pixel, clamps it
+   * down.
    * @param delta
    */
   void editBlue(int delta);
 
   /**
    * Edits the red value of this pixel by adding the given color value to this pixel's red
-   * value.
+   * value. If the change would result in a color outside the boundaries of this pixel, clamps it
+   * down.
    * @param delta
    */
   void editRed(int delta);
 
   /**
    * Edits the green value of this pixel by adding the given color value to this pixel's green
-   * value.
+   * value. If the change would result in a color outside the boundaries of this pixel, clamps it
+   * down.
    * @param delta
    */
   void editGreen(int delta);

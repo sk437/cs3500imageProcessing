@@ -40,10 +40,11 @@ public interface Node {
     /**
      * Updates the RGB values of this node by changing them by the RGB values of the given PixelAsColors object.
      *
-     * @param colorDeltas A PixelAsColors object, which the RGB values of this node will be changed by
-     * @throws IllegalArgumentException If given a null input
+     * @param deltaRed The value to change this Node's red values by
+     * @param deltaGreen The value to change this Node's green values by
+     * @param deltaBlue The value to change this Node's blue values by
      */
-    void editColors(PixelAsColors colorDeltas) throws IllegalArgumentException;
+    void editColors(int deltaRed, int deltaGreen, int deltaBlue);
 
     /**
      * Returns the reference of the node just to the left of this node.
@@ -76,7 +77,7 @@ public interface Node {
     /**
      * Gets the node at the position described relative to this one.
      * @param deltaX represents the difference in x coordinates
-     * @param deltaY represents the difference in x coordinates
+     * @param deltaY represents the difference in y coordinates
      * @return the Node at given relative position.
      */
     Node getNearby(int deltaX, int deltaY);

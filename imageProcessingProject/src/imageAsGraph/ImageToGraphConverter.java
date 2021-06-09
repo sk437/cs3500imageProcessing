@@ -26,6 +26,15 @@ public class ImageToGraphConverter {
   }
 
   /**
+   * Creates an empty(ish) graph, with only one white node at the top left.
+   */
+  public static GraphOfPixels createEmptyGraph() {
+    AbstractGraphOfPixels toReturn = new SimpleGraphOfPixels();
+    toReturn.addFirstNode(new PixelNode(new SimplePixel(255,255,255)));
+    return toReturn;
+  }
+
+  /**
    * Converts the ppm file as specified by the given string to a graph of pixel nodes.
    * @param fileName The name of the ppm file to be converted
    * @return The converted graph of pixel nodes

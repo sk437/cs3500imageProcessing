@@ -1,5 +1,7 @@
 package pixel;
 
+import java.util.Objects;
+
 /**
  * A simple representation of pixel colors, which stores a red, blue, and green value.
  */
@@ -40,8 +42,12 @@ public class SimplePixel implements PixelAsColors {
     /**
      * Constructs a copy of the given pixel.
      * @param pixel The pixel whose RGB values are to be copied.
+     * @throws IllegalArgumentException If the given pixel is null
      */
-    public SimplePixel(PixelAsColors pixel) {
+    public SimplePixel(PixelAsColors pixel) throws IllegalArgumentException {
+        if (pixel == null) {
+            throw new IllegalArgumentException("Null pixel");
+        }
         this.r = pixel.getRed();
         this.g = pixel.getGreen();
         this.b = pixel.getBlue();
@@ -104,5 +110,22 @@ public class SimplePixel implements PixelAsColors {
         this.editRed(deltaR);
         this.editGreen(deltaG);
         this.editBlue(deltaB);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof SimplePixel)) {
+            return false;
+        }
+        SimplePixel that = (SimplePixel) o;
+        return r == that.r && g == that.g && b == that.b;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(r, g, b);
     }
 }

@@ -1,6 +1,7 @@
 package imageAsGraph;
 
 import pixel.PixelAsColors;
+import pixel.SimplePixel;
 
 /**
  * Represents a node in a graph that contains a pixel.
@@ -11,11 +12,15 @@ public class PixelNode extends AbstractNode {
     private final PixelAsColors pixel;
 
     /**
-     * Constructs a new PixelNode, and initializes all of it's neighbors to be empty and it's pixel to hold a refernece
-     * to the given pixel.
+     * Constructs a new PixelNode, and initializes all of it's neighbors to be empty and it's pixel
+     * to contain the same colors as the given one.
+     * @throws IllegalArgumentException if the given PixelAsColors is null
      */
-    public PixelNode(PixelAsColors p) {
-        this.pixel = p;
+    public PixelNode(PixelAsColors p) throws IllegalArgumentException {
+        if (p == null) {
+            throw new IllegalArgumentException("Null pixel");
+        }
+        this.pixel = new SimplePixel(p);
         this.neighbors = new AbstractNode[4];
         this.neighbors[0] = new EmptyNode();
         this.neighbors[1] = new EmptyNode();
@@ -47,11 +52,8 @@ public class PixelNode extends AbstractNode {
     }
 
     @Override
-    public void editColors(PixelAsColors colorDeltas) throws IllegalArgumentException {
-        if (colorDeltas == null) {
-            throw new IllegalArgumentException("Null input");
-        }
-        this.pixel.editRGB(colorDeltas.getRed(), colorDeltas.getGreen(), colorDeltas.getBlue());
+    public void editColors(int deltaRed, int deltaGreen, int deltaBlue) {
+        this.pixel.editRGB(deltaRed, deltaGreen, deltaBlue);
     }
 
     @Override

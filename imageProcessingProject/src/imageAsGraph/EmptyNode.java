@@ -33,10 +33,7 @@ public class EmptyNode extends AbstractNode {
     }
 
     @Override
-    public void editColors(PixelAsColors colorDeltas) throws IllegalArgumentException {
-        if (colorDeltas == null) {
-            throw new IllegalArgumentException("Null input");
-        }
+    public void editColors(int deltaRed, int deltaGreen, int deltaBlue) {
     }
 
     @Override
