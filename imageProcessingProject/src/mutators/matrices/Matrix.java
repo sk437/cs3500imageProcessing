@@ -22,7 +22,8 @@ public interface Matrix {
 	 * @param x represents the x coordinate of the position
 	 * @param y represents the x coordinate of the position
 	 * @return the double at given coordinates
-	 * @throws IllegalArgumentException if the position is out of this Matrix's bounds.
+	 * @throws IllegalArgumentException if the position is out of this Matrix's bounds, or if either
+	 * 																	coordinate is negative.
 	 */
 	 double getValue(int x, int y) throws IllegalArgumentException;
 

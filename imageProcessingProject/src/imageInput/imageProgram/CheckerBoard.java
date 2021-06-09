@@ -30,12 +30,17 @@ public class CheckerBoard implements ImageProgram {
      * @param numTiles The total number of tiles, must be a perfect square
      * @param c0 The color of even tiles
      * @param c1 The color of odd tiles
-     * @throws IllegalArgumentException If the numTiles given is not a perfect square, or if either color is null.
+     * @throws IllegalArgumentException If the numTiles given is not a perfect square,
+     *                                  or if either color is null, or if tileSize or numTiles
+     *                                  not greater than 0
      */
     public CheckerBoard(int tileSize, int numTiles, PixelAsColors c0, PixelAsColors c1) {
         this.assertPerfectSquare(numTiles);
         if (c0 == null || c1 == null) {
             throw new IllegalArgumentException("One of the given colors is null");
+        }
+        if (tileSize <= 0 || numTiles <= 0) {
+            throw new IllegalArgumentException("Negative or 0 parameters");
         }
         this.img = new ArrayList<ArrayList<PixelAsColors>>();
         boolean invert = false;

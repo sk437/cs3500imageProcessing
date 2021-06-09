@@ -16,8 +16,8 @@ public class MatrixImpl implements Matrix{
 			throw new IllegalArgumentException("Values given are null.");
 		}
 
-		if (width < 0 || height < 0) {
-			throw new IllegalArgumentException("One or both dimensions are negative.");
+		if (width <= 0 || height <= 0) {
+			throw new IllegalArgumentException("One or both dimensions are negative or zero.");
 		}
 
 		if (values.size() != width * height) {
