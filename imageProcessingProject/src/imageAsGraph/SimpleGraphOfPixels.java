@@ -157,16 +157,6 @@ public class SimpleGraphOfPixels extends AbstractGraphOfPixels {
     }
 
     @Override
-    public void removeRow(int index) throws IllegalArgumentException {
-        //TODO IMPLEMENT AT END, NOT NECESSARY FOR THIS HW
-    }
-
-    @Override
-    public void removeColumn(int index) throws IllegalArgumentException {
-        //TODO IMPLEMENT AT END, NOT NECESSARY FOR THIS HW
-    }
-
-    @Override
     void addFirstNode(AbstractNode n) throws IllegalArgumentException {
         if (n.equals(new EmptyNode())) {
             throw new IllegalArgumentException("Starting node cannot be empty");

@@ -30,7 +30,8 @@ public interface GraphOfPixels extends Iterable<Node> {
    * @param x The x coordinate of the pixel to get
    * @param y The y coordinate of the pixel to get
    * @return The pixel retrieved
-   * @throws IllegalArgumentException If the position described does not have a non-empty pixel
+   * @throws IllegalArgumentException If the position described does not have a non-empty pixel, or
+   * if either coordinate is negative
    */
   Node getPixelAt(int x, int y) throws IllegalArgumentException;
 
@@ -47,20 +48,6 @@ public interface GraphOfPixels extends Iterable<Node> {
    * @throws IllegalArgumentException if the given index is not valid
    */
   void insertColumn(int after) throws IllegalArgumentException;
-
-  /**
-   * Removes the row at the given index.
-   * @param index The index of the row to be removed
-   * @throws IllegalArgumentException If the given index is not valid
-   */
-  void removeRow(int index) throws IllegalArgumentException;
-
-  /**
-   * Removes the column at the given index.
-   * @param index The index of the column to be removed
-   * @throws IllegalArgumentException If the given index is not valid
-   */
-  void removeColumn(int index) throws IllegalArgumentException;
 
   /**
    * Returns the current height of this image.

@@ -1,6 +1,7 @@
 import static org.junit.Assert.assertEquals;
 import imageInput.imageProgram.CheckerBoard;
 import imageInput.imageProgram.ImageProgram;
+import java.security.PrivilegedActionException;
 import java.util.ArrayList;
 import org.junit.Test;
 import pixel.PixelAsColors;
@@ -76,6 +77,7 @@ public class TestCheckerboard {
     assertEquals(black, cArray.get(1).get(6));
     assertEquals(black, cArray.get(1).get(7));
   }
+
 
 
 }
