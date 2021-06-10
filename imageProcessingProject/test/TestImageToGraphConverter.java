@@ -19,9 +19,9 @@ public class TestImageToGraphConverter {
    * Initializes example graphs or programs for testing.
    */
   public void setUp() {
-    PixelAsColors red = new SimplePixel(255,0,0);
-    PixelAsColors black = new SimplePixel(0,0,0);
-    checkerboard = new CheckerBoard(1,9,red,black);
+    PixelAsColors red = new SimplePixel(255, 0, 0);
+    PixelAsColors black = new SimplePixel(0, 0, 0);
+    checkerboard = new CheckerBoard(1, 9, red, black);
 
 
   }

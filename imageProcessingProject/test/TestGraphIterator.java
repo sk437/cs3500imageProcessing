@@ -12,14 +12,14 @@ import org.junit.Test;
 import pixel.SimplePixel;
 
 /**
- * A class to test the iterator for GraphsOfPixels
+ * A class to test the iterator for GraphsOfPixels.
  */
 public class TestGraphIterator {
 
   private GraphOfPixels newGraph;
 
   /**
-   * Initializes test cases for Graph Iterator
+   * Initializes test cases for Graph Iterator.
    */
 
   @Test
@@ -29,7 +29,6 @@ public class TestGraphIterator {
     Node n0 = newGraph.getPixelAt(0, 0);
     Node n1 = newGraph.getPixelAt(0, 1);
     Iterator<Node> graphIter = newGraph.iterator();
-
 
     assertTrue(graphIter.hasNext());
     assertEquals(n0, graphIter.next());

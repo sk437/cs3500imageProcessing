@@ -11,6 +11,7 @@ import pixel.SimplePixel;
  * For testing Graph methods that involve writing files.
  */
 public class TestWritingGraph {
+
   private GraphOfPixels graphExample;
 
   /**
@@ -22,24 +23,24 @@ public class TestWritingGraph {
     this.graphExample.insertColumn(1);
     this.graphExample.insertRow(0);
     this.graphExample.insertRow(1);
-    this.graphExample.getPixelAt(0,0).updateColors(
-        new SimplePixel(1,1,1));
-    this.graphExample.getPixelAt(1,0).updateColors(
-        new SimplePixel(2,2,2));
-    this.graphExample.getPixelAt(2,0).updateColors(
-        new SimplePixel(3,3,3));
-    this.graphExample.getPixelAt(0,1).updateColors(
-        new SimplePixel(4,4,4));
-    this.graphExample.getPixelAt(1,1).updateColors(
-        new SimplePixel(5,5,5));
-    this.graphExample.getPixelAt(2,1).updateColors(
-        new SimplePixel(6,6,6));
-    this.graphExample.getPixelAt(0,2).updateColors(
-        new SimplePixel(7,7,7));
-    this.graphExample.getPixelAt(1,2).updateColors(
-        new SimplePixel(8,8,8));
-    this.graphExample.getPixelAt(2,2).updateColors(
-        new SimplePixel(9,9,9));
+    this.graphExample.getPixelAt(0, 0).updateColors(
+        new SimplePixel(1, 1, 1));
+    this.graphExample.getPixelAt(1, 0).updateColors(
+        new SimplePixel(2, 2, 2));
+    this.graphExample.getPixelAt(2, 0).updateColors(
+        new SimplePixel(3, 3, 3));
+    this.graphExample.getPixelAt(0, 1).updateColors(
+        new SimplePixel(4, 4, 4));
+    this.graphExample.getPixelAt(1, 1).updateColors(
+        new SimplePixel(5, 5, 5));
+    this.graphExample.getPixelAt(2, 1).updateColors(
+        new SimplePixel(6, 6, 6));
+    this.graphExample.getPixelAt(0, 2).updateColors(
+        new SimplePixel(7, 7, 7));
+    this.graphExample.getPixelAt(1, 2).updateColors(
+        new SimplePixel(8, 8, 8));
+    this.graphExample.getPixelAt(2, 2).updateColors(
+        new SimplePixel(9, 9, 9));
   }
 
   @Test

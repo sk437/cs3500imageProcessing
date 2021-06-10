@@ -11,9 +11,10 @@ import pixel.PixelAsColors;
 import pixel.SimplePixel;
 
 /**
- * For testing Filter methods and effects of mutations,
+ * For testing Filter methods and effects of mutations.
  */
 public class TestFilters {
+
   private GraphOfPixels graphExample1;
   private GraphOfPixels graphExample2;
   private Mutator blur;
@@ -28,25 +29,24 @@ public class TestFilters {
     this.graphExample1.insertColumn(1);
     this.graphExample1.insertRow(0);
     this.graphExample1.insertRow(1);
-    this.graphExample1.getPixelAt(0,0).updateColors(
-        new SimplePixel(16,16,16));
-    this.graphExample1.getPixelAt(1,0).updateColors(
-        new SimplePixel(16,16,16));
-    this.graphExample1.getPixelAt(2,0).updateColors(
-        new SimplePixel(16,16,16));
-    this.graphExample1.getPixelAt(0,1).updateColors(
-        new SimplePixel(16,16,16));
-    this.graphExample1.getPixelAt(1,1).updateColors(
-        new SimplePixel(16,16,16));
-    this.graphExample1.getPixelAt(2,1).updateColors(
-        new SimplePixel(16,16,16));
-    this.graphExample1.getPixelAt(0,2).updateColors(
-        new SimplePixel(16,16,16));
-    this.graphExample1.getPixelAt(1,2).updateColors(
-        new SimplePixel(16,16,16));
-    this.graphExample1.getPixelAt(2,2).updateColors(
-        new SimplePixel(16,16,16));
-
+    this.graphExample1.getPixelAt(0, 0).updateColors(
+        new SimplePixel(16, 16, 16));
+    this.graphExample1.getPixelAt(1, 0).updateColors(
+        new SimplePixel(16, 16, 16));
+    this.graphExample1.getPixelAt(2, 0).updateColors(
+        new SimplePixel(16, 16, 16));
+    this.graphExample1.getPixelAt(0, 1).updateColors(
+        new SimplePixel(16, 16, 16));
+    this.graphExample1.getPixelAt(1, 1).updateColors(
+        new SimplePixel(16, 16, 16));
+    this.graphExample1.getPixelAt(2, 1).updateColors(
+        new SimplePixel(16, 16, 16));
+    this.graphExample1.getPixelAt(0, 2).updateColors(
+        new SimplePixel(16, 16, 16));
+    this.graphExample1.getPixelAt(1, 2).updateColors(
+        new SimplePixel(16, 16, 16));
+    this.graphExample1.getPixelAt(2, 2).updateColors(
+        new SimplePixel(16, 16, 16));
 
     this.graphExample2 = ImageToGraphConverter.createEmptyGraph();
     this.graphExample2.insertColumn(0);
@@ -57,56 +57,56 @@ public class TestFilters {
     this.graphExample2.insertRow(1);
     this.graphExample2.insertRow(2);
     this.graphExample2.insertRow(3);
-    this.graphExample2.getPixelAt(0,0).updateColors(
-        new SimplePixel(16,16,16));
-    this.graphExample2.getPixelAt(1,0).updateColors(
-        new SimplePixel(16,16,16));
-    this.graphExample2.getPixelAt(2,0).updateColors(
-        new SimplePixel(16,16,16));
-    this.graphExample2.getPixelAt(3,0).updateColors(
-        new SimplePixel(16,16,16));
-    this.graphExample2.getPixelAt(4,0).updateColors(
-        new SimplePixel(16,16,16));
-    this.graphExample2.getPixelAt(0,1).updateColors(
-        new SimplePixel(16,16,16));
-    this.graphExample2.getPixelAt(1,1).updateColors(
-        new SimplePixel(16,16,16));
-    this.graphExample2.getPixelAt(2,1).updateColors(
-        new SimplePixel(16,16,16));
-    this.graphExample2.getPixelAt(3,1).updateColors(
-        new SimplePixel(16,16,16));
-    this.graphExample2.getPixelAt(4,1).updateColors(
-        new SimplePixel(16,16,16));
-    this.graphExample2.getPixelAt(0,2).updateColors(
-        new SimplePixel(16,16,16));
-    this.graphExample2.getPixelAt(1,2).updateColors(
-        new SimplePixel(16,16,16));
-    this.graphExample2.getPixelAt(2,2).updateColors(
-        new SimplePixel(16,16,16));
-    this.graphExample2.getPixelAt(3,2).updateColors(
-        new SimplePixel(16,16,16));
-    this.graphExample2.getPixelAt(4,2).updateColors(
-        new SimplePixel(16,16,16));
-    this.graphExample2.getPixelAt(0,3).updateColors(
-        new SimplePixel(16,16,16));
-    this.graphExample2.getPixelAt(1,3).updateColors(
-        new SimplePixel(16,16,16));
-    this.graphExample2.getPixelAt(2,3).updateColors(
-        new SimplePixel(16,16,16));
-    this.graphExample2.getPixelAt(3,3).updateColors(
-        new SimplePixel(16,16,16));
-    this.graphExample2.getPixelAt(4,3).updateColors(
-        new SimplePixel(16,16,16));
-    this.graphExample2.getPixelAt(0,4).updateColors(
-        new SimplePixel(16,16,16));
-    this.graphExample2.getPixelAt(1,4).updateColors(
-        new SimplePixel(16,16,16));
-    this.graphExample2.getPixelAt(2,4).updateColors(
-        new SimplePixel(16,16,16));
-    this.graphExample2.getPixelAt(3,4).updateColors(
-        new SimplePixel(16,16,16));
-    this.graphExample2.getPixelAt(4,4).updateColors(
-        new SimplePixel(16,16,16));
+    this.graphExample2.getPixelAt(0, 0).updateColors(
+        new SimplePixel(16, 16, 16));
+    this.graphExample2.getPixelAt(1, 0).updateColors(
+        new SimplePixel(16, 16, 16));
+    this.graphExample2.getPixelAt(2, 0).updateColors(
+        new SimplePixel(16, 16, 16));
+    this.graphExample2.getPixelAt(3, 0).updateColors(
+        new SimplePixel(16, 16, 16));
+    this.graphExample2.getPixelAt(4, 0).updateColors(
+        new SimplePixel(16, 16, 16));
+    this.graphExample2.getPixelAt(0, 1).updateColors(
+        new SimplePixel(16, 16, 16));
+    this.graphExample2.getPixelAt(1, 1).updateColors(
+        new SimplePixel(16, 16, 16));
+    this.graphExample2.getPixelAt(2, 1).updateColors(
+        new SimplePixel(16, 16, 16));
+    this.graphExample2.getPixelAt(3, 1).updateColors(
+        new SimplePixel(16, 16, 16));
+    this.graphExample2.getPixelAt(4, 1).updateColors(
+        new SimplePixel(16, 16, 16));
+    this.graphExample2.getPixelAt(0, 2).updateColors(
+        new SimplePixel(16, 16, 16));
+    this.graphExample2.getPixelAt(1, 2).updateColors(
+        new SimplePixel(16, 16, 16));
+    this.graphExample2.getPixelAt(2, 2).updateColors(
+        new SimplePixel(16, 16, 16));
+    this.graphExample2.getPixelAt(3, 2).updateColors(
+        new SimplePixel(16, 16, 16));
+    this.graphExample2.getPixelAt(4, 2).updateColors(
+        new SimplePixel(16, 16, 16));
+    this.graphExample2.getPixelAt(0, 3).updateColors(
+        new SimplePixel(16, 16, 16));
+    this.graphExample2.getPixelAt(1, 3).updateColors(
+        new SimplePixel(16, 16, 16));
+    this.graphExample2.getPixelAt(2, 3).updateColors(
+        new SimplePixel(16, 16, 16));
+    this.graphExample2.getPixelAt(3, 3).updateColors(
+        new SimplePixel(16, 16, 16));
+    this.graphExample2.getPixelAt(4, 3).updateColors(
+        new SimplePixel(16, 16, 16));
+    this.graphExample2.getPixelAt(0, 4).updateColors(
+        new SimplePixel(16, 16, 16));
+    this.graphExample2.getPixelAt(1, 4).updateColors(
+        new SimplePixel(16, 16, 16));
+    this.graphExample2.getPixelAt(2, 4).updateColors(
+        new SimplePixel(16, 16, 16));
+    this.graphExample2.getPixelAt(3, 4).updateColors(
+        new SimplePixel(16, 16, 16));
+    this.graphExample2.getPixelAt(4, 4).updateColors(
+        new SimplePixel(16, 16, 16));
 
     blur = new BlurFilter();
     sharpen = new SharpenFilter();

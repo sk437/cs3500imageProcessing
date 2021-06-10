@@ -10,9 +10,10 @@ import pixel.PixelAsColors;
 import pixel.SimplePixel;
 
 /**
- * Represents a filter applied to blur a pixel.
+ * Represents a filter applied to sharpen a pixel.
  */
 public class SharpenFilter extends AbstractFilter {
+
   private final static Matrix kernel =
       new MatrixImpl(new ArrayList<Double>(Arrays.asList(
           -0.125, -0.125, -0.125, -0.125, -0.125,
@@ -34,7 +35,7 @@ public class SharpenFilter extends AbstractFilter {
     double newBlue = 0.0;
 
     for (int i = -2; i <= 2; i += 1) {
-      for(int j = 2; j >= -2; j -= 1) {
+      for (int j = 2; j >= -2; j -= 1) {
         double kernelValue = kernel.getValue(i + 2, Math.abs(j - 2));
         newRed += kernelValue * n.getNearby(i, j).getRed();
         newGreen += kernelValue * n.getNearby(i, j).getGreen();

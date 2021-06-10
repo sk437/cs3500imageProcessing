@@ -3,53 +3,51 @@ import static org.junit.Assert.assertEquals;
 import imageAsGraph.GraphOfPixels;
 import imageAsGraph.ImageToGraphConverter;
 import mutators.Mutator;
-import mutators.colortransformations.GreyscaleTransform;
-import mutators.colortransformations.SepiaTransform;
-import mutators.filters.BlurFilter;
-import mutators.filters.SharpenFilter;
+import mutators.colorTransformations.GreyscaleTransform;
+import mutators.colorTransformations.SepiaTransform;
 import org.junit.Test;
 import pixel.SimplePixel;
 
 /**
- * For testing Color Transformation methods and effects of mutations,
+ * For testing Color Transformation methods and effects of mutations.
  */
 public class TestColorTransformations {
-    private GraphOfPixels graphExample1;
-    private Mutator greyscale;
-    private Mutator sepia;
 
-    /**
-     * For initializing test variables. Initialized with 16 as RGB for convenient testing.
-     */
-    private void setUp() {
-      this.graphExample1 = ImageToGraphConverter.createEmptyGraph();
-      this.graphExample1.insertColumn(0);
-      this.graphExample1.insertColumn(1);
-      this.graphExample1.insertRow(0);
-      this.graphExample1.insertRow(1);
-      this.graphExample1.getPixelAt(0,0).updateColors(
-          new SimplePixel(55,111,222));
-      this.graphExample1.getPixelAt(1,0).updateColors(
-          new SimplePixel(55,111,222));
-      this.graphExample1.getPixelAt(2,0).updateColors(
-          new SimplePixel(55,111,222));
-      this.graphExample1.getPixelAt(0,1).updateColors(
-          new SimplePixel(55,111,222));
-      this.graphExample1.getPixelAt(1,1).updateColors(
-          new SimplePixel(55,111,222));
-      this.graphExample1.getPixelAt(2,1).updateColors(
-          new SimplePixel(55,111,222));
-      this.graphExample1.getPixelAt(0,2).updateColors(
-          new SimplePixel(55,111,222));
-      this.graphExample1.getPixelAt(1,2).updateColors(
-          new SimplePixel(55,111,222));
-      this.graphExample1.getPixelAt(2,2).updateColors(
-          new SimplePixel(55,111,222));
+  private GraphOfPixels graphExample1;
+  private Mutator greyscale;
+  private Mutator sepia;
 
+  /**
+   * For initializing test variables. Initialized with 16 as RGB for convenient testing.
+   */
+  private void setUp() {
+    this.graphExample1 = ImageToGraphConverter.createEmptyGraph();
+    this.graphExample1.insertColumn(0);
+    this.graphExample1.insertColumn(1);
+    this.graphExample1.insertRow(0);
+    this.graphExample1.insertRow(1);
+    this.graphExample1.getPixelAt(0, 0).updateColors(
+        new SimplePixel(55, 111, 222));
+    this.graphExample1.getPixelAt(1, 0).updateColors(
+        new SimplePixel(55, 111, 222));
+    this.graphExample1.getPixelAt(2, 0).updateColors(
+        new SimplePixel(55, 111, 222));
+    this.graphExample1.getPixelAt(0, 1).updateColors(
+        new SimplePixel(55, 111, 222));
+    this.graphExample1.getPixelAt(1, 1).updateColors(
+        new SimplePixel(55, 111, 222));
+    this.graphExample1.getPixelAt(2, 1).updateColors(
+        new SimplePixel(55, 111, 222));
+    this.graphExample1.getPixelAt(0, 2).updateColors(
+        new SimplePixel(55, 111, 222));
+    this.graphExample1.getPixelAt(1, 2).updateColors(
+        new SimplePixel(55, 111, 222));
+    this.graphExample1.getPixelAt(2, 2).updateColors(
+        new SimplePixel(55, 111, 222));
 
-      greyscale = new GreyscaleTransform();
-      sepia = new SepiaTransform();
-    }
+    greyscale = new GreyscaleTransform();
+    sepia = new SepiaTransform();
+  }
 
   @Test
   public void testGreyscaleMutate() {

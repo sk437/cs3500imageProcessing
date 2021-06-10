@@ -13,6 +13,7 @@ import pixel.SimplePixel;
  * Represents a filter applied to blur a pixel.
  */
 public class BlurFilter extends AbstractFilter {
+
   private final static Matrix kernel =
       new MatrixImpl(new ArrayList<Double>(Arrays.asList(
           0.0625, 0.125, 0.0625,
@@ -32,7 +33,7 @@ public class BlurFilter extends AbstractFilter {
     double newBlue = 0.0;
 
     for (int i = -1; i <= 1; i += 1) {
-      for(int j = 1; j >= -1; j -= 1) {
+      for (int j = 1; j >= -1; j -= 1) {
         double kernelValue = kernel.getValue(i + 1, Math.abs(j - 1));
         newRed += kernelValue * n.getNearby(i, j).getRed();
         newGreen += kernelValue * n.getNearby(i, j).getGreen();

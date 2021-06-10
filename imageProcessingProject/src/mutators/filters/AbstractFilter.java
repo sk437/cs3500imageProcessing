@@ -10,10 +10,11 @@ import pixel.SimplePixel;
 /**
  * Represents an abstraction of a image filter.
  */
-public abstract class AbstractFilter implements Filter{
+public abstract class AbstractFilter implements Filter {
 
   /**
    * Applies this filter to the given pixel.
+   *
    * @param n represents a node in the graph for an image in a pixel
    * @return PixelAsColors representing new color of pixel
    * @throws IllegalArgumentException if node given is null
