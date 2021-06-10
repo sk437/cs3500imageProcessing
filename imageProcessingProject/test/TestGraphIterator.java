@@ -2,14 +2,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import imageAsGraph.GraphOfPixels;
-import imageAsGraph.ImageToGraphConverter;
-import imageAsGraph.Node;
-import imageAsGraph.SimpleGraphOfPixels;
+import imageasgraph.GraphOfPixels;
+import imageasgraph.ImageToGraphConverter;
+import imageasgraph.Node;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import org.junit.Test;
-import pixel.SimplePixel;
 
 /**
  * A class to test the iterator for GraphsOfPixels.

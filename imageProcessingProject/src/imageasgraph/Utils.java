@@ -1,4 +1,4 @@
-package imageAsGraph;
+package imageasgraph;
 
 /**
  * Holds useful utility commands.

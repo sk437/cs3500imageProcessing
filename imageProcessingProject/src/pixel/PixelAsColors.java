@@ -1,7 +1,7 @@
 package pixel;
 
 /**
- * Represents a pixel that stores it's color values, which can be accessed and updated
+ * Represents a pixel that stores it's color values, which can be accessed and updated.
  */
 public interface PixelAsColors {
 
@@ -54,7 +54,7 @@ public interface PixelAsColors {
    * Edits the blue value of this pixel by adding the given color value to this pixel's blue value.
    * If the change would result in a color outside the boundaries of this pixel, clamps it down.
    *
-   * @param delta
+   * @param delta The change in the blue channel of the pixel
    */
   void editBlue(int delta);
 
@@ -62,7 +62,7 @@ public interface PixelAsColors {
    * Edits the red value of this pixel by adding the given color value to this pixel's red value. If
    * the change would result in a color outside the boundaries of this pixel, clamps it down.
    *
-   * @param delta
+   * @param delta The change in the red channel of the pixel
    */
   void editRed(int delta);
 
@@ -71,7 +71,7 @@ public interface PixelAsColors {
    * value. If the change would result in a color outside the boundaries of this pixel, clamps it
    * down.
    *
-   * @param delta
+   * @param delta The change in the green channel of the pixel
    */
   void editGreen(int delta);
 

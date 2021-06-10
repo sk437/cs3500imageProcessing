@@ -1,7 +1,7 @@
 package mutators.filters;
 
-import imageAsGraph.Node;
-import imageAsGraph.Utils;
+import imageasgraph.Node;
+import imageasgraph.Utils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import mutators.matrices.Matrix;
@@ -14,7 +14,7 @@ import pixel.SimplePixel;
  */
 public class SharpenFilter extends AbstractFilter {
 
-  private final static Matrix kernel =
+  private static final Matrix kernel =
       new MatrixImpl(new ArrayList<Double>(Arrays.asList(
           -0.125, -0.125, -0.125, -0.125, -0.125,
           -0.125, 0.25, 0.25, 0.25, -0.125,

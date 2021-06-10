@@ -1,8 +1,7 @@
-package imageInput.imageProgram;
-
-import pixel.PixelAsColors;
+package imageinput.imageprogram;
 
 import java.util.ArrayList;
+import pixel.PixelAsColors;
 
 /**
  * Programmatically creates a checkerboard image.
@@ -47,14 +46,14 @@ public class CheckerBoard implements ImageProgram {
     int countUntilNextOuter = 0;
     double root = Math.sqrt(numTiles);
     for (int row = 0; row < tileSize * root; row += 1) {
-        /*
-        Creates the next row in the double array to return, and a reference to it to the solution.
-         */
+      /*
+      Creates the next row in the double array to return, and a reference to it to the solution.
+      */
       ArrayList<PixelAsColors> current = new ArrayList<PixelAsColors>();
       this.img.add(current);
       /*
       If a tile has been finished vertically, flip to building the next tile vertically.
-       */
+      */
       if (countUntilNextOuter == tileSize) {
         invert = !invert;
         countUntilNextOuter = 0;
@@ -64,11 +63,11 @@ public class CheckerBoard implements ImageProgram {
       /*
       Fills out the next row, starting with color0 or color1 depending on the previously defined
       vertical tile.
-       */
+      */
       for (int col = 0; col < tileSize * root; col += 1) {
-          /*
-          If a tile has been finished horizontally, flip to building the next tile horizontally.
-           */
+        /*
+        If a tile has been finished horizontally, flip to building the next tile horizontally.
+        */
         if (countUntilNextInner == tileSize) {
           onColor0 = !onColor0;
           countUntilNextInner = 0;

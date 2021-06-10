@@ -1,4 +1,4 @@
-package imageAsGraph;
+package imageasgraph;
 
 /**
  * Represents a Node, used alongside Node interface to require package-specific methods - in this

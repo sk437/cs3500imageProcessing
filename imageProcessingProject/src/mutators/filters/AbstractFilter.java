@@ -1,11 +1,9 @@
 package mutators.filters;
 
-import imageAsGraph.GraphOfPixels;
-import imageAsGraph.Node;
-import imageAsGraph.Utils;
+import imageasgraph.GraphOfPixels;
+import imageasgraph.Node;
 import java.util.ArrayList;
 import pixel.PixelAsColors;
-import pixel.SimplePixel;
 
 /**
  * Represents an abstraction of a image filter.

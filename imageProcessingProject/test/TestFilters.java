@@ -1,13 +1,11 @@
 import static org.junit.Assert.assertEquals;
 
-import imageAsGraph.GraphOfPixels;
-import imageAsGraph.ImageToGraphConverter;
-import imageAsGraph.Node;
+import imageasgraph.GraphOfPixels;
+import imageasgraph.ImageToGraphConverter;
 import mutators.Mutator;
 import mutators.filters.BlurFilter;
 import mutators.filters.SharpenFilter;
 import org.junit.Test;
-import pixel.PixelAsColors;
 import pixel.SimplePixel;
 
 /**

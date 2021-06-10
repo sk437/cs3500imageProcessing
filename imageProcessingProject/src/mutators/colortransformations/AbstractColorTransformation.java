@@ -1,8 +1,8 @@
-package mutators.colorTransformations;
+package mutators.colortransformations;
 
-import imageAsGraph.GraphOfPixels;
-import imageAsGraph.Node;
-import imageAsGraph.Utils;
+import imageasgraph.GraphOfPixels;
+import imageasgraph.Node;
+import imageasgraph.Utils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import mutators.matrices.Matrix;

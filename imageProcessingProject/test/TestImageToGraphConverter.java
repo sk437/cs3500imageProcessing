@@ -1,9 +1,9 @@
 import static org.junit.Assert.assertEquals;
 
-import imageAsGraph.GraphOfPixels;
-import imageAsGraph.ImageToGraphConverter;
-import imageInput.imageProgram.CheckerBoard;
-import imageInput.imageProgram.ImageProgram;
+import imageasgraph.GraphOfPixels;
+import imageasgraph.ImageToGraphConverter;
+import imageinput.imageprogram.CheckerBoard;
+import imageinput.imageprogram.ImageProgram;
 import org.junit.Test;
 import pixel.PixelAsColors;
 import pixel.SimplePixel;
@@ -18,7 +18,7 @@ public class TestImageToGraphConverter {
   /**
    * Initializes example graphs or programs for testing.
    */
-  public void setUp() {
+  private void setUp() {
     PixelAsColors red = new SimplePixel(255, 0, 0);
     PixelAsColors black = new SimplePixel(0, 0, 0);
     checkerboard = new CheckerBoard(1, 9, red, black);

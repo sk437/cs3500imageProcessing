@@ -1,10 +1,10 @@
 import static org.junit.Assert.assertEquals;
 
-import imageAsGraph.EmptyNode;
-import imageAsGraph.GraphOfPixels;
-import imageAsGraph.ImageToGraphConverter;
-import imageAsGraph.Node;
-import imageAsGraph.PixelNode;
+import imageasgraph.EmptyNode;
+import imageasgraph.GraphOfPixels;
+import imageasgraph.ImageToGraphConverter;
+import imageasgraph.Node;
+import imageasgraph.PixelNode;
 import org.junit.Test;
 import pixel.PixelAsColors;
 import pixel.SimplePixel;
@@ -15,11 +15,9 @@ import pixel.SimplePixel;
 public class TestNode {
 
   private Node empty0;
-  private Node empty1;
   private Node pn0;
   private Node pn1;
   private Node pn2;
-  private Node pn3;
   private GraphOfPixels graphForTestingNeighbors;
 
   /**
@@ -27,11 +25,9 @@ public class TestNode {
    */
   private void setUp() {
     this.empty0 = new EmptyNode();
-    this.empty1 = new EmptyNode();
     this.pn0 = new PixelNode(new SimplePixel(3, 4, 5));
     this.pn1 = new PixelNode(new SimplePixel(4, 5, 6));
     this.pn2 = new PixelNode(new SimplePixel(5, 6, 7));
-    this.pn3 = new PixelNode(new SimplePixel(6, 7, 8));
     this.graphForTestingNeighbors = ImageToGraphConverter.createEmptyGraph();
     this.graphForTestingNeighbors.insertColumn(0);
     this.graphForTestingNeighbors.insertColumn(1);

@@ -1,4 +1,4 @@
-package mutators.colorTransformations;
+package mutators.colortransformations;
 
 import mutators.Mutator;
 

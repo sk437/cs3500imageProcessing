@@ -1,13 +1,10 @@
-import imageAsGraph.GraphOfPixels;
-import imageAsGraph.ImageToGraphConverter;
-import imageAsGraph.OutputType;
-import imageInput.imageProgram.CheckerBoard;
-import imageInput.imageProgram.ImageProgram;
-import mutators.colorTransformations.GreyscaleTransform;
-import mutators.colorTransformations.SepiaTransform;
+import imageasgraph.GraphOfPixels;
+import imageasgraph.ImageToGraphConverter;
+import imageasgraph.OutputType;
+import mutators.colortransformations.GreyscaleTransform;
+import mutators.colortransformations.SepiaTransform;
 import mutators.filters.BlurFilter;
 import mutators.filters.SharpenFilter;
-import pixel.SimplePixel;
 
 /**
  * For running methods directly through a main method.

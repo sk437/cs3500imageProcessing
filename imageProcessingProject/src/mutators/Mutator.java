@@ -1,6 +1,6 @@
 package mutators;
 
-import imageAsGraph.GraphOfPixels;
+import imageasgraph.GraphOfPixels;
 
 /**
  * Represents an operation to be done on a GraphOfPixels, which changes it in some way.

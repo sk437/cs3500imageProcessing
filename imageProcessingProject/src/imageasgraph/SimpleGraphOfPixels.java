@@ -1,14 +1,13 @@
-package imageAsGraph;
-
-import mutators.Mutator;
-import pixel.PixelAsColors;
-import pixel.SimplePixel;
+package imageasgraph;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Iterator;
+import mutators.Mutator;
+import pixel.PixelAsColors;
+import pixel.SimplePixel;
 
 /**
  * Represents an image as a Graph of Pixels.
@@ -40,12 +39,10 @@ public class SimpleGraphOfPixels extends AbstractGraphOfPixels {
     if (fileType == null || fileName == null) {
       throw new IllegalArgumentException("One or both of the arguments is null");
     }
-    switch (fileType) {
-      case ppm:
-        this.writePPM(fileName);
-        break;
-      default:
-        throw new IllegalArgumentException("Unsupported fileType");
+    if (fileType == OutputType.ppm) {
+      this.writePPM(fileName);
+    } else {
+      throw new IllegalArgumentException("Unsupported fileType");
     }
   }
 
@@ -135,7 +132,7 @@ public class SimpleGraphOfPixels extends AbstractGraphOfPixels {
   @Override
   public void insertColumn(int after) throws IllegalArgumentException {
     this.assertGraphNotEmpty();
-    ;
+
     if (after >= this.width || after < 0) {
       throw new IllegalArgumentException("Index not in bounds");
     }

@@ -1,4 +1,4 @@
-package imageAsGraph;
+package imageasgraph;
 
 import pixel.PixelAsColors;
 
@@ -36,6 +36,8 @@ public class EmptyNode extends AbstractNode {
 
   @Override
   public void editColors(int deltaRed, int deltaGreen, int deltaBlue) {
+    //This method implements a method from the Node interface. Empty Nodes can not have colors
+    // edited, but Nodes must still retain this functionality, so this method is retained.
   }
 
   @Override
@@ -120,11 +122,7 @@ public class EmptyNode extends AbstractNode {
       return true;
     }
 
-    if (!(obj instanceof EmptyNode)) {
-      return false;
-    }
-
-    return true;
+    return obj instanceof EmptyNode;
   }
 
   @Override

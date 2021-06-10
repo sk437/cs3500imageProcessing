@@ -1,4 +1,4 @@
-package imageInput.imageProgram;
+package imageinput.imageprogram;
 
 import java.util.ArrayList;
 import pixel.PixelAsColors;

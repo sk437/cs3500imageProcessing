@@ -1,4 +1,4 @@
-package imageAsGraph;
+package imageasgraph;
 
 /**
  * Represents a Graph of Pixels, used alongside interface to require package-specific methods - in

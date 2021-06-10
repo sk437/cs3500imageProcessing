@@ -1,6 +1,6 @@
-package imageAsGraph;
+package imageasgraph;
 
-import imageInput.imageProgram.ImageProgram;
+import imageinput.imageprogram.ImageProgram;
 import pixel.PixelAsColors;
 import pixel.SimplePixel;
 

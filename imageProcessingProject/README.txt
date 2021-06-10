@@ -1,6 +1,6 @@
 OVERVIEW OF CLASSES/INTERFACES:
 
-Package imageAsGraph:
+Package imageasgraph:
 
 Interface GraphOfPixels: Defines the required methods for a representation of an image as a graph of
 pixels - represented this way because it can be iterated over in the same time as a double array,

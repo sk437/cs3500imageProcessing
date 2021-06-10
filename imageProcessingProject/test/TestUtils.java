@@ -1,6 +1,6 @@
 import static org.junit.Assert.assertEquals;
 
-import imageAsGraph.Utils;
+import imageasgraph.Utils;
 import org.junit.Test;
 
 /**
