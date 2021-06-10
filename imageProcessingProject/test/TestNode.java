@@ -95,7 +95,7 @@ public class TestNode {
     // FOR PIXELNODE
     assertEquals(3, this.pn0.getRed());
     assertEquals(5, this.pn1.getGreen());
-    assertEquals(7, this.pn0.getBlue());
+    assertEquals(7, this.pn2.getBlue());
   }
 
   @Test

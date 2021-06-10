@@ -2,6 +2,7 @@ package mutators.colortransformations;
 
 import imageAsGraph.GraphOfPixels;
 import imageAsGraph.Node;
+import imageAsGraph.Utils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import mutators.matrices.Matrix;
@@ -33,14 +34,21 @@ public abstract class AbstractColorTransformation implements ColorTransformation
     ArrayList<Double> nodeRGB = new ArrayList<Double>(
         Arrays.asList(n.getRed() + 0.0, n.getGreen() + 0.0, n.getBlue() + 0.0));
     Matrix ogRGB = new MatrixImpl(nodeRGB, 1, 3);
+
     Matrix newRGB = this.generateNewColorMatrix(ogRGB);
 
     n.updateColors(new SimplePixel(
-        (int)newRGB.getValue(0,0), (int)newRGB.getValue(0,1), (int)newRGB.getValue(0,2)));
+        Utils.roundDouble(newRGB.getValue(0,0)),
+        Utils.roundDouble(newRGB.getValue(0,1)),
+        Utils.roundDouble(newRGB.getValue(0,2))));
   }
 
   @Override
   public void apply(GraphOfPixels graph) throws IllegalArgumentException {
+    if (graph == null) {
+      throw new IllegalArgumentException("Null graph given.");
+    }
+
     for (Node n : graph) {
       this.applyToPixel(n);
     }

@@ -1,10 +1,12 @@
 package mutators.filters;
 
 import imageAsGraph.Node;
+import imageAsGraph.Utils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import mutators.matrices.Matrix;
 import mutators.matrices.MatrixImpl;
+import pixel.PixelAsColors;
 import pixel.SimplePixel;
 
 /**
@@ -20,7 +22,7 @@ public class BlurFilter extends AbstractFilter {
 
 
   @Override
-  protected void applyToPixel(Node n) throws IllegalArgumentException {
+  protected PixelAsColors applyToPixel(Node n) throws IllegalArgumentException {
     if (n == null) {
       throw new IllegalArgumentException("Given node is null.");
     }
@@ -38,6 +40,7 @@ public class BlurFilter extends AbstractFilter {
       }
     }
 
-    n.updateColors(new SimplePixel((int)newRed, (int)newGreen, (int)newBlue));
+    return new SimplePixel(Utils.roundDouble(newRed), Utils.roundDouble(newGreen),
+        Utils.roundDouble(newBlue));
   }
 }

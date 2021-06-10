@@ -4,8 +4,8 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * Iterates over all of the non-empty pixels in a graph object, meant to save time from just using a double for loop
- * and getting each pixel.
+ * Iterates over all of the non-empty pixels in a graph object, meant to save time from just
+ * using a double for loop and getting each pixel.
  */
 class GraphIterator implements Iterator<Node> {
     private Node left;
@@ -16,6 +16,9 @@ class GraphIterator implements Iterator<Node> {
      * @param topLeft The node to start iterating from
      */
     public GraphIterator(Node topLeft) {
+        if (topLeft == null) {
+            throw new IllegalArgumentException("Null node given.");
+        }
         this.left = topLeft;
         this.top = topLeft;
     }

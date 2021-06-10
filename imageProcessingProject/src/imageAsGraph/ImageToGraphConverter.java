@@ -20,8 +20,12 @@ public class ImageToGraphConverter {
    * Converts the given image program to a graph of pixel nodes.
    * @param prog The image program to be converted
    * @return The converted graph of pixel nodes
+   * @throws IllegalArgumentException If given program is null
    */
-  public static GraphOfPixels convertProgram(ImageProgram prog) {
+  public static GraphOfPixels convertProgram(ImageProgram prog) throws IllegalArgumentException{
+    if (prog == null) {
+      throw new IllegalArgumentException("Null program given.");
+    }
     return ImageToGraphConverter.convertFromDoubleArray(prog.getImage());
   }
 
