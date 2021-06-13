@@ -51,7 +51,7 @@ public class SimpleGraphOfPixels extends AbstractGraphOfPixels {
    *
    * @param fileName The name of the file which will become the output
    */
-  private void writePPM(String fileName) {
+  protected void writePPM(String fileName) {
     File output = new File(fileName + ".ppm");
     FileWriter writer;
     PrintWriter printer = null;

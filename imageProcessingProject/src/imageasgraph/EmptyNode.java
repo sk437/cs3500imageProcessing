@@ -97,6 +97,17 @@ public class EmptyNode extends AbstractNode {
   }
 
   @Override
+  public void makeTransparent() {
+    // Does nothing, an empty node is always transparent
+  }
+
+  @Override
+  public void colorInTransparent(PixelAsColors newColors)
+      throws IllegalArgumentException, IllegalStateException {
+    // Does nothing, an empty node is always transparent
+  }
+
+  @Override
   AbstractNode getLeftAsUpdatable() {
     return this;
   }

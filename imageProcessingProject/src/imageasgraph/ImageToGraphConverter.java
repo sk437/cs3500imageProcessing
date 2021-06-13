@@ -1,6 +1,7 @@
 package imageasgraph;
 
 import imageinput.imageprogram.ImageProgram;
+import java.util.Iterator;
 import pixel.PixelAsColors;
 import pixel.SimplePixel;
 
@@ -35,6 +36,40 @@ public class ImageToGraphConverter {
   public static GraphOfPixels createEmptyGraph() {
     AbstractGraphOfPixels toReturn = new SimpleGraphOfPixels();
     toReturn.addFirstNode(new PixelNode(new SimplePixel(255, 255, 255)));
+    return toReturn;
+  }
+
+  /**
+   * Creates a copy of the given GraphOfPixels
+   * @param original The graph of pixels to copy
+   * @return The copy of the given graph
+   * @throws IllegalArgumentException If the given graph is null
+   */
+  public static GraphOfPixels createCopyOfGraph(FixedSizeGraph original) throws IllegalArgumentException {
+    if (original == null) {
+      throw new IllegalArgumentException("Null graph");
+    }
+    AbstractGraphOfPixels toReturn = new SimpleGraphOfPixels();
+    toReturn.addFirstNode(new PixelNode(new SimplePixel(0,0,0)));
+    for (int col = 0; col < original.getWidth() - 1; col += 1) {
+      toReturn.insertColumn(col);
+    }
+    for (int row = 0; row < original.getHeight() - 1; row += 1) {
+      toReturn.insertRow(row);
+    }
+    Iterator<Node> copyNodes = toReturn.iterator();
+    Iterator<Node> originalNodes = original.iterator();
+    while (copyNodes.hasNext()) {
+      Node copyNext = copyNodes.next();
+      Node originalNext = originalNodes.next(); // Can do this because both iterators should be same length
+      if (originalNext.isTransparent()) {
+        copyNext.makeTransparent();
+      }
+      else {
+        copyNext.updateColors(new SimplePixel(originalNext.getRed(), originalNext.getGreen(),
+            originalNext.getBlue()));
+      }
+    }
     return toReturn;
   }
 
@@ -90,6 +125,24 @@ public class ImageToGraphConverter {
       toReturn.add(current);
     }
     return convertFromDoubleArray(toReturn);
+  }
+
+  public static GraphOfPixels createTransparentGraph(int width, int height) {
+    AbstractGraphOfPixels toReturn = new SimpleGraphOfPixels();
+    toReturn.addFirstNode(new PixelNode(new SimplePixel(0,0,0)));
+    /*
+    Creates a graph of the same size as the input, with all white nodes.
+     */
+    for (int col = 0; col < width - 1; col += 1) {
+      toReturn.insertColumn(col);
+    }
+    for (int row = 0; row < height - 1; row += 1) {
+      toReturn.insertRow(row);
+    }
+    for (Node n : toReturn) {
+      n.makeTransparent();
+    }
+    return toReturn;
   }
 
   /**
@@ -150,6 +203,5 @@ public class ImageToGraphConverter {
     }
     return toReturn;
   }
-
 
 }

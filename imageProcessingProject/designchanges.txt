@@ -1,0 +1,3 @@
+Added FixedSizeGraph interface, and made GraphOfPixels extend it
+Added made it so nodes can be transparent
+added many new ways of creating graphs

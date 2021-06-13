@@ -84,4 +84,24 @@ public interface Node {
    * @return the Node at given relative position.
    */
   Node getNearby(int deltaX, int deltaY);
+
+  /**
+   * Determines whether or not this node is transparent.
+   *
+   * @return Whether or not this node is transparent
+   */
+  boolean isTransparent();
+
+  /**
+   * Makes this pixel considered transparent, and erases the color it currently holds.
+   */
+  void makeTransparent();
+
+  /**
+   * If this pixel is currently transparent, colors it in to be non-transparent and ov the given color.
+   * @param newColors The new colors of this pixel
+   * @throws IllegalArgumentException If newcolors is null
+   * @throws IllegalStateException If this pixel is already non-transparent
+   */
+  void colorInTransparent(PixelAsColors newColors) throws IllegalArgumentException, IllegalStateException;
 }

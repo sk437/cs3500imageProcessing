@@ -10,6 +10,7 @@ public class PixelNode extends AbstractNode {
 
   private final AbstractNode[] neighbors;
   private final PixelAsColors pixel;
+  private boolean isTransparent;
 
   /**
    * Constructs a new PixelNode, and initializes all of it's neighbors to be empty and it's pixel to
@@ -27,6 +28,7 @@ public class PixelNode extends AbstractNode {
     this.neighbors[1] = new EmptyNode();
     this.neighbors[2] = new EmptyNode();
     this.neighbors[3] = new EmptyNode();
+    this.isTransparent = false;
   }
 
   @Override
@@ -49,11 +51,17 @@ public class PixelNode extends AbstractNode {
     if (newColors == null) {
       throw new IllegalArgumentException("Null input");
     }
+    if (this.isTransparent) {
+      return;
+    }
     this.pixel.setRGB(newColors.getRed(), newColors.getGreen(), newColors.getBlue());
   }
 
   @Override
   public void editColors(int deltaRed, int deltaGreen, int deltaBlue) {
+    if (this.isTransparent) {
+      return;
+    }
     this.pixel.editRGB(deltaRed, deltaGreen, deltaBlue);
   }
 
@@ -75,25 +83,6 @@ public class PixelNode extends AbstractNode {
   @Override
   public Node getBelow() {
     return this.neighbors[3];
-  }
-
-  @Override
-  public Node getNearby(int deltaX, int deltaY) {
-    if (deltaX == 0 && deltaY == 0) {
-      return this;
-    } else if (deltaX != 0) {
-      if (deltaX < 0) {
-        return this.getLeft().getNearby(deltaX + 1, deltaY);
-      } else {
-        return this.getRight().getNearby(deltaX - 1, deltaY);
-      }
-    } else {
-      if (deltaY < 0) {
-        return this.getBelow().getNearby(deltaX, deltaY + 1);
-      } else {
-        return this.getAbove().getNearby(deltaX, deltaY - 1);
-      }
-    }
   }
 
   @Override
@@ -146,5 +135,29 @@ public class PixelNode extends AbstractNode {
   @Override
   AbstractNode getBelowAsUpdatable() {
     return this.neighbors[3];
+  }
+
+  @Override
+  public boolean isTransparent() {
+    return this.isTransparent;
+  }
+
+  @Override
+  public void makeTransparent() {
+    this.updateColors(new SimplePixel(0,0,0));
+    this.isTransparent = true;
+  }
+
+  @Override
+  public void colorInTransparent(PixelAsColors newColors)
+      throws IllegalArgumentException, IllegalStateException {
+    if (!this.isTransparent()) {
+      throw new IllegalStateException("This node is already visible");
+    }
+    if (newColors == null) {
+      throw new IllegalArgumentException("Null color");
+    }
+    this.isTransparent = false;
+    this.updateColors(newColors);
   }
 }
