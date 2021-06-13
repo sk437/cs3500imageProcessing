@@ -1,6 +1,7 @@
 package layeredimage;
 
 import imageasgraph.FixedSizeGraph;
+import imageasgraph.GraphOfPixels;
 import imageasgraph.ImageToGraphConverter;
 import imageasgraph.OutputType;
 import java.util.ArrayList;
@@ -162,7 +163,15 @@ public class LayeredImageV0 implements LayeredImage {
 
   @Override
   public void loadImageAsLayer(String layerName, String fileName) throws IllegalArgumentException {
-
+    this.assertLayerNameDoesntExist(layerName);
+    if (fileName == null) {
+      throw new IllegalArgumentException("Null file name");
+    }
+    for (LayerData info : this.layers.values()) {
+      info.setPos(info.getPos() + 1);
+    }
+    GraphOfPixels newImage = ImageToGraphConverter.convertComplexImage(fileName);
+    this.layers.put(layerName, new LayerData(newImage, 0));
   }
 
   @Override

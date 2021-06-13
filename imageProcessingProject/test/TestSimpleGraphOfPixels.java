@@ -47,7 +47,7 @@ public class TestSimpleGraphOfPixels {
     graph1.writeToFile(OutputType.ppm, "res/pellegrinoSharpen");
 
      */
-    GraphOfPixels graph2 = ImageToGraphConverter.convertComplexImage("outputImages/vulture.png");
-    graph2.writeToFile(OutputType.ppm, "outputImages/vulturePPM");
+    GraphOfPixels graph2 = ImageToGraphConverter.convertComplexImage("res/orange.ppm");
+    graph2.writeToFile(OutputType.ppm, "outputImages/orange");
   }
 }
