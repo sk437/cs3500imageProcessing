@@ -65,6 +65,16 @@ public class EmptyNode extends AbstractNode {
     return this;
   }
 
+  @Override
+  public int getOpacity() {
+    return 0;
+  }
+
+  @Override
+  public void setOpacity(int newOpacity) throws IllegalArgumentException {
+    //This will never have effect due to this being an empty node.
+  }
+
   // NOTE: These methods do not do anything because this represents an empty node, which does not
   // contain a reference to a pixel and does not store neighbors, to avoid infinite repetition and
   // null references.
@@ -96,6 +106,7 @@ public class EmptyNode extends AbstractNode {
     }
   }
 
+  /*
   @Override
   public void makeTransparent() {
     // Does nothing, an empty node is always transparent
@@ -106,6 +117,8 @@ public class EmptyNode extends AbstractNode {
       throws IllegalArgumentException, IllegalStateException {
     // Does nothing, an empty node is always transparent
   }
+
+   */
 
   @Override
   AbstractNode getLeftAsUpdatable() {

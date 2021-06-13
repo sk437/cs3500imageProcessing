@@ -17,6 +17,7 @@ public class TestSimpleGraphOfPixels {
    * @param args CommandLine args(not used)
    */
   public static void main(String[] args) {
+    /*
     GraphOfPixels graph0 = ImageToGraphConverter.convertPPM("res/orange.ppm");
     GraphOfPixels graph1 = ImageToGraphConverter.convertPPM("res/pellegrino.ppm");
     graph0.applyMutator(new GreyscaleTransform());
@@ -44,5 +45,12 @@ public class TestSimpleGraphOfPixels {
     graph1.applyMutator(new SharpenFilter());
     graph0.writeToFile(OutputType.ppm, "res/orangeSharpen");
     graph1.writeToFile(OutputType.ppm, "res/pellegrinoSharpen");
+
+     */
+    System.out.println("WAH");
+
+    GraphOfPixels graph2 = ImageToGraphConverter.convertComplexImage("outputImages/birb.jpg");
+    System.out.println(graph2.getWidth() + " " + graph2.getHeight());
+    graph2.writeToFile(OutputType.ppm, "outputImages/birbPPM");
   }
 }

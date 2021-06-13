@@ -1,7 +1,11 @@
 package imageasgraph;
 
 import imageinput.imageprogram.ImageProgram;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Iterator;
+import javax.imageio.ImageIO;
 import pixel.PixelAsColors;
 import pixel.SimplePixel;
 
@@ -62,16 +66,69 @@ public class ImageToGraphConverter {
     while (copyNodes.hasNext()) {
       Node copyNext = copyNodes.next();
       Node originalNext = originalNodes.next(); // Can do this because both iterators should be same length
-      if (originalNext.isTransparent()) {
-        copyNext.makeTransparent();
-      }
-      else {
-        copyNext.updateColors(new SimplePixel(originalNext.getRed(), originalNext.getGreen(),
-            originalNext.getBlue()));
-      }
+      copyNext.updateColors(new SimplePixel(originalNext.getRed(), originalNext.getGreen(),
+          originalNext.getBlue()));
+      copyNext.setOpacity(originalNext.getOpacity());
     }
     return toReturn;
   }
+
+  public static GraphOfPixels convertComplexImage(String fileName) {
+    System.out.println("YO");
+    if (fileName == null) {
+      throw new IllegalArgumentException("Null fileName");
+    }
+
+    File newFile = new File(fileName);
+
+    BufferedImage newImage;
+    try {
+       newImage = ImageIO.read(newFile);
+    }
+    catch (IOException e) {
+      throw new IllegalArgumentException("Could not read file.");
+    }
+
+    GraphOfPixels toReturn = ImageToGraphConverter.createEmptyGraph();
+
+    for (int col = 0; col < newImage.getWidth() - 1; col += 1) {
+      toReturn.insertColumn(col);
+    }
+    for (int row = 0; row < newImage.getHeight() - 1; row += 1) {
+      toReturn.insertRow(row);
+    }
+
+    System.out.println("toReturn Gen: " + toReturn.getWidth() + " " + toReturn.getHeight());
+
+    ArrayList<int[]> newPixelData = new ArrayList<int[]>();
+    for (int y = 0; y < newImage.getHeight(); y += 1) {
+      for (int x = 0; x < newImage.getWidth(); x += 1) {
+        int argb = newImage.getRGB(x, y);
+        int alpha = (argb >> 24) & 0xFF;
+        int red =   (argb >> 16) & 0xFF;
+        int green = (argb >> 8) & 0xFF;
+        int blue =  argb & 0xFF;
+        int[] pixelValues = {
+            alpha, red, green, blue
+        };
+        newPixelData.add(pixelValues);
+      }
+    }
+
+    System.out.println("newPixelData Gen: " + newPixelData.size());
+    System.out.println("newPixelData: " + newPixelData);
+
+    int data = 0;
+    for (Node n : toReturn) {
+      int[] currentPixelData = newPixelData.get(data);
+      n.setOpacity(currentPixelData[0]);
+      n.updateColors(new SimplePixel(currentPixelData[1], currentPixelData[2], currentPixelData[3]));
+    }
+
+    return toReturn;
+  }
+
+
 
   /**
    * Converts the ppm file as specified by the given string to a graph of pixel nodes.
@@ -140,7 +197,7 @@ public class ImageToGraphConverter {
       toReturn.insertRow(row);
     }
     for (Node n : toReturn) {
-      n.makeTransparent();
+      n.setOpacity(0);
     }
     return toReturn;
   }

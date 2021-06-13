@@ -10,11 +10,13 @@ public class PixelNode extends AbstractNode {
 
   private final AbstractNode[] neighbors;
   private final PixelAsColors pixel;
-  private boolean isTransparent;
+  //private boolean isTransparent;
+  private int opacity;
 
   /**
    * Constructs a new PixelNode, and initializes all of it's neighbors to be empty and it's pixel to
    * contain the same colors as the given one.
+   * TODO: FIX DOCUMENTATION OF BOTH CONSTRUCTORS
    *
    * @throws IllegalArgumentException if the given PixelAsColors is null
    */
@@ -28,21 +30,54 @@ public class PixelNode extends AbstractNode {
     this.neighbors[1] = new EmptyNode();
     this.neighbors[2] = new EmptyNode();
     this.neighbors[3] = new EmptyNode();
-    this.isTransparent = false;
+    //this.isTransparent = false;
+    this.opacity = PixelAsColors.maxColor;
+  }
+
+  /**
+   * Constructs a new PixelNode, and initializes all of it's neighbors to be empty and it's pixel to
+   * contain the same colors as the given one.
+   *
+   * @throws IllegalArgumentException if the given PixelAsColors is null
+   */
+  public PixelNode(PixelAsColors p, int opacity) throws IllegalArgumentException {
+    if (p == null) {
+      throw new IllegalArgumentException("Null pixel");
+    }
+    if (opacity < PixelAsColors.minColor || opacity > PixelAsColors.maxColor) {
+      throw new IllegalArgumentException("Invalid opacity given.");
+    }
+    this.pixel = new SimplePixel(p);
+    this.neighbors = new AbstractNode[4];
+    this.neighbors[0] = new EmptyNode();
+    this.neighbors[1] = new EmptyNode();
+    this.neighbors[2] = new EmptyNode();
+    this.neighbors[3] = new EmptyNode();
+    //this.isTransparent = false;
+    this.opacity = opacity;
   }
 
   @Override
   public int getBlue() {
+    if (this.isTransparent()) {
+      return 0;
+    }
     return this.pixel.getBlue();
   }
 
   @Override
   public int getGreen() {
+    if (this.isTransparent()) {
+      return 0;
+    }
     return this.pixel.getGreen();
   }
 
   @Override
   public int getRed() {
+    if (this.isTransparent()) {
+      return 0;
+    }
     return this.pixel.getRed();
   }
 
@@ -51,17 +86,23 @@ public class PixelNode extends AbstractNode {
     if (newColors == null) {
       throw new IllegalArgumentException("Null input");
     }
+    /*
     if (this.isTransparent) {
       return;
     }
+
+     */
     this.pixel.setRGB(newColors.getRed(), newColors.getGreen(), newColors.getBlue());
   }
 
   @Override
   public void editColors(int deltaRed, int deltaGreen, int deltaBlue) {
+    /*
     if (this.isTransparent) {
       return;
     }
+
+     */
     this.pixel.editRGB(deltaRed, deltaGreen, deltaBlue);
   }
 
@@ -137,11 +178,28 @@ public class PixelNode extends AbstractNode {
     return this.neighbors[3];
   }
 
+
   @Override
   public boolean isTransparent() {
-    return this.isTransparent;
+    //return this.isTransparent;
+    return this.opacity == 0;
   }
 
+  @Override
+  public int getOpacity() {
+    return this.opacity;
+  }
+
+  @Override
+  public void setOpacity(int newOpacity) throws IllegalArgumentException {
+    if (newOpacity < PixelAsColors.minColor || newOpacity > PixelAsColors.maxColor) {
+      throw new IllegalArgumentException("Invalid opacity given.");
+    }
+
+    this.opacity = newOpacity;
+  }
+
+  /*
   @Override
   public void makeTransparent() {
     this.updateColors(new SimplePixel(0,0,0));
@@ -160,4 +218,7 @@ public class PixelNode extends AbstractNode {
     this.isTransparent = false;
     this.updateColors(newColors);
   }
+   */
+
+
 }

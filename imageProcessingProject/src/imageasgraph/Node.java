@@ -95,7 +95,7 @@ public interface Node {
   /**
    * Makes this pixel considered transparent, and erases the color it currently holds.
    */
-  void makeTransparent();
+  //void makeTransparent();
 
   /**
    * If this pixel is currently transparent, colors it in to be non-transparent and ov the given color.
@@ -103,5 +103,20 @@ public interface Node {
    * @throws IllegalArgumentException If newcolors is null
    * @throws IllegalStateException If this pixel is already non-transparent
    */
-  void colorInTransparent(PixelAsColors newColors) throws IllegalArgumentException, IllegalStateException;
+  //void colorInTransparent(PixelAsColors newColors) throws IllegalArgumentException, IllegalStateException;
+
+  /**
+   * Gets the opacity of the pixel in this Node.
+   * @return The opacity of this Node
+   */
+  int getOpacity();
+
+  /**
+   * Sets the opacity of the color saved in the pixel to the given value.
+   * @param newOpacity The new transparency of the pixel, must be in same boundaries as pixel's colors
+   * @throws IllegalArgumentException If the newOpacity is out of its proper range
+   */
+  void setOpacity(int newOpacity) throws IllegalArgumentException;
+
+
 }
