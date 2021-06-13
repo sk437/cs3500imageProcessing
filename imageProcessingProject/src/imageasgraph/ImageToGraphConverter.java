@@ -74,7 +74,6 @@ public class ImageToGraphConverter {
   }
 
   public static GraphOfPixels convertComplexImage(String fileName) {
-    System.out.println("YO");
     if (fileName == null) {
       throw new IllegalArgumentException("Null fileName");
     }
@@ -98,8 +97,6 @@ public class ImageToGraphConverter {
       toReturn.insertRow(row);
     }
 
-    System.out.println("toReturn Gen: " + toReturn.getWidth() + " " + toReturn.getHeight());
-
     ArrayList<int[]> newPixelData = new ArrayList<int[]>();
     for (int y = 0; y < newImage.getHeight(); y += 1) {
       for (int x = 0; x < newImage.getWidth(); x += 1) {
@@ -115,14 +112,12 @@ public class ImageToGraphConverter {
       }
     }
 
-    System.out.println("newPixelData Gen: " + newPixelData.size());
-    System.out.println("newPixelData: " + newPixelData);
-
     int data = 0;
     for (Node n : toReturn) {
       int[] currentPixelData = newPixelData.get(data);
       n.setOpacity(currentPixelData[0]);
       n.updateColors(new SimplePixel(currentPixelData[1], currentPixelData[2], currentPixelData[3]));
+      data += 1;
     }
 
     return toReturn;
