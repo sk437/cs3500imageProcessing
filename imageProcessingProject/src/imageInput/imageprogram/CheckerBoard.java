@@ -1,4 +1,4 @@
-package imageinput.imageprogram;
+package imageInput.imageprogram;
 
 import java.util.ArrayList;
 import pixel.PixelAsColors;
@@ -6,7 +6,8 @@ import pixel.PixelAsColors;
 /**
  * Programmatically creates a checkerboard image.
  */
-public class CheckerBoard implements ImageProgram {
+public class CheckerBoard implements imageinput.imageprogram.ImageProgram {
+
 
   private ArrayList<ArrayList<PixelAsColors>> img;
 

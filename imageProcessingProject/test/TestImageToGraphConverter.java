@@ -2,7 +2,7 @@ import static org.junit.Assert.assertEquals;
 
 import imageasgraph.GraphOfPixels;
 import imageasgraph.ImageToGraphConverter;
-import imageinput.imageprogram.CheckerBoard;
+import imageInput.imageprogram.CheckerBoard;
 import imageinput.imageprogram.ImageProgram;
 import org.junit.Test;
 import pixel.PixelAsColors;
@@ -21,7 +21,7 @@ public class TestImageToGraphConverter {
   private void setUp() {
     PixelAsColors red = new SimplePixel(255, 0, 0);
     PixelAsColors black = new SimplePixel(0, 0, 0);
-    checkerboard = new CheckerBoard(1, 9, red, black);
+    this.checkerboard = new CheckerBoard(1, 9, red, black);
 
 
   }

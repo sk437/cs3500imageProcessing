@@ -66,9 +66,12 @@ public class ImageToGraphConverter {
     while (copyNodes.hasNext()) {
       Node copyNext = copyNodes.next();
       Node originalNext = originalNodes.next(); // Can do this because both iterators should be same length
+      int storedOpacity = originalNext.getOpacity();
+      originalNext.setOpacity(255); // Done so transparent pixels are not copied as black
       copyNext.updateColors(new SimplePixel(originalNext.getRed(), originalNext.getGreen(),
           originalNext.getBlue()));
-      copyNext.setOpacity(originalNext.getOpacity());
+      copyNext.setOpacity(storedOpacity);
+      originalNext.setOpacity(storedOpacity);
     }
     return toReturn;
   }
@@ -77,7 +80,10 @@ public class ImageToGraphConverter {
     if (fileName == null) {
       throw new IllegalArgumentException("Null fileName");
     }
-
+    String extension = fileName.substring(fileName.length() - 4);
+    if (!extension.equals(".png") && !extension.equals(".jpg")) {
+      throw new IllegalArgumentException("Invalid fileType for this constructor");
+    }
     File newFile = new File(fileName);
 
     BufferedImage newImage;

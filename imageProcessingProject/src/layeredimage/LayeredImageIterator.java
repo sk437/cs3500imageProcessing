@@ -1,6 +1,7 @@
 package layeredimage;
 
 import imageasgraph.FixedSizeGraph;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -18,10 +19,11 @@ public class LayeredImageIterator implements Iterator<FixedSizeGraph> {
    * @param layers The layers to be iterated over
    */
   public LayeredImageIterator(HashMap<String, LayerData> layers) {
-    this.layers = new LinkedList<FixedSizeGraph>();
+    FixedSizeGraph[] layerArray = new FixedSizeGraph[layers.size()];
     for (LayerData info : layers.values()) {
-      this.layers.add(info.getPos(), info.getImage());
+      layerArray[info.getPos()] = info.getImage();
     }
+    this.layers = new LinkedList<FixedSizeGraph>(Arrays.asList(layerArray));
   }
 
   @Override
