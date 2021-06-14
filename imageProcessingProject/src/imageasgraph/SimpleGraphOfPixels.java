@@ -1,10 +1,12 @@
 package imageasgraph;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Iterator;
+import javax.imageio.ImageIO;
 import mutators.Mutator;
 import pixel.PixelAsColors;
 import pixel.SimplePixel;
@@ -39,10 +41,18 @@ public class SimpleGraphOfPixels extends AbstractGraphOfPixels {
     if (fileType == null || fileName == null) {
       throw new IllegalArgumentException("One or both of the arguments is null");
     }
-    if (fileType == OutputType.ppm) {
-      this.writePPM(fileName);
-    } else {
-      throw new IllegalArgumentException("Unsupported fileType");
+    switch(fileType) {
+      case ppm:
+        this.writePPM(fileName);
+        break;
+      case png:
+        this.writePNG(fileName);
+        break;
+      case jpeg:
+        this.writeJPG(fileName);
+        break;
+      default:
+        throw new IllegalArgumentException("Unsupported fileType");
     }
   }
 
@@ -183,5 +193,68 @@ public class SimpleGraphOfPixels extends AbstractGraphOfPixels {
   @Override
   public Iterator<Node> iterator() {
     return new GraphIterator(this.topLeft);
+  }
+
+  /**
+   * Writes this Graph as a PNG image file with the given string as it's name.
+   * @param fileName The name of the image file to be created
+   * @throws IllegalArgumentException If the name given is null
+   */
+  protected void writePNG(String fileName) throws IllegalArgumentException {
+    if (fileName == null) {
+      throw new IllegalArgumentException("Null fileName");
+    }
+    BufferedImage toReturn = this.createBufferedImageForOutPut();
+
+    File outPut = new File(fileName + ".png");
+
+    try {
+      ImageIO.write(toReturn, "png", outPut);
+    } catch (IOException e) {
+      throw new IllegalArgumentException("Could not write to file");
+    }
+  }
+
+  /**
+   * Writes this Graph as a JPG image file with the given string as it's name.
+   * @param fileName The name of the image file to be created
+   * @throws IllegalArgumentException If the name given is null
+   */
+  protected void writeJPG(String fileName) throws IllegalArgumentException {
+    if (fileName == null) {
+      throw new IllegalArgumentException("Null fileName");
+    }
+    BufferedImage toReturn = this.createBufferedImageForOutPut();
+    File outPut = new File(fileName + ".jpg");
+
+
+    try {
+      ImageIO.write(toReturn, "jpg", outPut);
+      System.out.println("I was here");
+    } catch (IOException e) {
+      throw new IllegalArgumentException("Could not write to file");
+    }
+  }
+
+  /**
+   * Creates a buffered image which represents the image that this graph does, with all the
+   * ARGB values copied over.
+   * @return The buffered image representaiton
+   */
+  protected BufferedImage createBufferedImageForOutPut() {
+    BufferedImage toReturn = new BufferedImage(this.getWidth(), this.getHeight(),
+        BufferedImage.TYPE_INT_ARGB);
+    int col = 0;
+    int row = 0;
+    for (Node n : this) {
+      int rgb = (n.getOpacity()<<24 | n.getRed()<<16 | n.getGreen()<<8 | n.getBlue()); // LOOK UP WHAT THIS MEANS BEFORE SUBMISSION
+      toReturn.setRGB(col, row, rgb);
+      col += 1;
+      if (col == this.getWidth()) {
+        col = 0;
+        row += 1;
+      }
+    }
+    return toReturn;
   }
 }

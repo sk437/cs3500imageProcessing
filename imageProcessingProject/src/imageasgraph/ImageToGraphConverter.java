@@ -80,8 +80,9 @@ public class ImageToGraphConverter {
     if (fileName == null) {
       throw new IllegalArgumentException("Null fileName");
     }
-    String extension = fileName.substring(fileName.length() - 4);
-    if (!extension.equals(".png") && !extension.equals(".jpg")) {
+    String[] splitFile = fileName.split("\\.");
+    String extension = splitFile[splitFile.length - 1];
+    if (!extension.equals("png") && !extension.equals("jpg") && !extension.equals("jpeg")) {
       throw new IllegalArgumentException("Invalid fileType for this constructor");
     }
     File newFile = new File(fileName);

@@ -1,6 +1,7 @@
 package layeredimage.blend;
 
 import imageasgraph.FixedSizeGraph;
+import imageasgraph.OutputType;
 import layeredimage.LayeredImage;
 
 /**
@@ -13,5 +14,5 @@ public interface Blend {
    * @param original The image to be converted
    * @return The converted image
    */
-  FixedSizeGraph blend(LayeredImage original);
+  FixedSizeGraph blend(LayeredImage original, OutputType outputType, String fileName);
 }

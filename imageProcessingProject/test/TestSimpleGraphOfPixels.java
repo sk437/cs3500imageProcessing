@@ -73,7 +73,7 @@ public class TestSimpleGraphOfPixels {
     for (FixedSizeGraph g : layered0) {
       System.out.println(g.getPixelAt(0,0).getRed());
     }
-    GraphOfPixels graph2 = ImageToGraphConverter.convertComplexImage("outputImages/vulture.png");
-    graph2.writeToFile(OutputType.ppm, "outputImages/vulturePPM");
+    GraphOfPixels graph2 = ImageToGraphConverter.convertComplexImage("outputImages/birb.jpg");
+    graph2.writeToFile(OutputType.jpeg, "outputImages/birbBetter");
   }
 }
