@@ -20,6 +20,7 @@ public class LanguageSyntaxImpl implements LanguageSyntax {
     temp.put("update-color", Command.updateColor);
     temp.put("apply-mutator", Command.applyMutator);
     temp.put("save", Command.save);
+    temp.put("save-layered", Command.saveLayered);
     temp.put("load", Command.load);
     temp.put("set-current-layer", Command.setCurrentLayer);
     temp.put("add-layer", Command.addLayer);
@@ -33,9 +34,18 @@ public class LanguageSyntaxImpl implements LanguageSyntax {
   }
 
   @Override
-  public ParsedCommand parseCommand(String inputLine) {
-    ArrayList<String> inputs = new ArrayList<String>(Arrays.asList(inputLine.split("\\S+")));
+  public ParsedCommand parseCommand(String inputLine) throws IllegalArgumentException{
+    if (inputLine == null) {
+      throw new IllegalArgumentException("Null input");
+    }
+    if (inputLine.length() < 1) {
+      throw new IllegalArgumentException("Invalid input length");
+    }
+    ArrayList<String> inputs = new ArrayList<String>(Arrays.asList(inputLine.split(" ")));
     String cmd = inputs.remove(0);
+    if (!commands.containsKey(cmd)) {
+      throw new IllegalArgumentException("Unsupported command given");
+    }
     ParsedCommand toReturn = commands.get(cmd).returnExecutable(inputs, this.currentImage, this.currentLayer);
     return toReturn;
   }

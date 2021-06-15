@@ -35,6 +35,9 @@ public class CopyLayerCommand implements ParsedCommand {
   @Override
   public void execute(HashMap<String, GraphOfPixels> graphs,
       HashMap<String, LayeredImage> layeredImages) throws IllegalArgumentException {
+    if (graphs == null || layeredImages == null) {
+      throw new IllegalArgumentException("Null inputs");
+    }
     if (!layeredImages.containsKey(imageToAddTo)) {
       throw new IllegalArgumentException("The image this command is supposed to alter does not"
           + " exist");

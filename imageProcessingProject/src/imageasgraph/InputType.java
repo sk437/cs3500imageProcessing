@@ -1,9 +1,12 @@
 package imageasgraph;
 
-public enum InputType {//TODO REFACTOR SO EACH TYPE AS A STRING, AND THERE IS A METHOD
+public enum InputType {
   ppm, jpeg, png;
 
   public static InputType convertString(String toConvert) throws IllegalArgumentException {
+    if (toConvert == null) {
+      throw new IllegalArgumentException("Null input");
+    }
     switch (toConvert) {
       case "ppm":
         return InputType.ppm;

@@ -26,6 +26,9 @@ public class LoadCommand implements ParsedCommand {
   @Override
   public void execute(HashMap<String, GraphOfPixels> graphs,
       HashMap<String, LayeredImage> layeredImages) throws IllegalArgumentException {
+    if (graphs == null || layeredImages == null) {
+      throw new IllegalArgumentException("Null inputs");
+    }
     //Execution does nothing, as this command only alters the state of the language
   }
 

@@ -32,6 +32,9 @@ public class ImportNewLayeredImageCommand implements ParsedCommand {
   @Override
   public void execute(HashMap<String, GraphOfPixels> graphs,
       HashMap<String, LayeredImage> layeredImages) throws IllegalArgumentException {
+    if (graphs == null || layeredImages == null) {
+      throw new IllegalArgumentException("Null inputs");
+    }
     if (graphs.containsKey(imageName) || layeredImages.containsKey(imageName)) {
       throw new IllegalArgumentException("There is already an image with that name");
     }

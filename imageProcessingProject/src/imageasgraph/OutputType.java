@@ -3,10 +3,13 @@ package imageasgraph;
 /**
  * Represents a type of image file supported as a possible output format for a GraphOfPixels.
  */
-public enum OutputType {//TODO REFACTOR SO EACH TYPE AS A STRING, AND THERE IS A METHOD
+public enum OutputType {
   ppm, jpeg, png;
 
   public static OutputType convertString(String toConvert) throws IllegalArgumentException {
+    if (toConvert == null) {
+      throw new IllegalArgumentException("Null input");
+    }
     switch (toConvert) {
       case "ppm":
         return ppm;

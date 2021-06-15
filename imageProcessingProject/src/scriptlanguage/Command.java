@@ -23,6 +23,7 @@ import scriptlanguage.parsedcommands.loadlayer.LoadLayerCommand;
 import scriptlanguage.parsedcommands.movelayer.MoveLayerCommand;
 import scriptlanguage.parsedcommands.removelayer.RemoveLayerByNameCommand;
 import scriptlanguage.parsedcommands.save.SaveCommand;
+import scriptlanguage.parsedcommands.savelayeredimage.SaveLayeredCommand;
 import scriptlanguage.parsedcommands.updatecolor.UpdateColorCommand;
 import scriptlanguage.parsedcommands.updatevisibility.UpdateVisibilityCommand;
 
@@ -188,16 +189,35 @@ public enum Command {
         String currentLayer) {
       Command.assertNonNullInputs(inputs);
       switch(inputs.size()) {
+        case 2:
+          if (currentImage == null) {
+            throw new IllegalArgumentException("This command cannot be called with the given amount"
+                + " of inputs, because there is no default image");
+          }
+          return new SaveCommand(currentImage, currentLayer, inputs.get(0), inputs.get(1));
+        case 3:
+          return new SaveCommand(inputs.get(0), currentLayer, inputs.get(1), inputs.get(2));
+        case 4:
+          return new SaveCommand(inputs.get(0), inputs.get(1), inputs.get(2), inputs.get(3));
+        default:
+          throw new IllegalArgumentException("Invalid number of inputs");
+      }
+    }
+  },
+  saveLayered {
+    @Override
+    public ParsedCommand returnExecutable(List<String> inputs, String currentImage,
+        String currentLayer) throws IllegalArgumentException {
+      Command.assertNonNullInputs(inputs);
+      switch(inputs.size()) {
         case 1:
           if (currentImage == null) {
             throw new IllegalArgumentException("This command cannot be called with the given amount"
                 + " of inputs, because there is no default image");
           }
-          return new SaveCommand(currentImage, currentLayer, inputs.get(0));
+          return new SaveLayeredCommand(currentImage, inputs.get(0));
         case 2:
-          return new SaveCommand(inputs.get(0), currentLayer, inputs.get(1));
-        case 3:
-          return new SaveCommand(inputs.get(0), inputs.get(1), inputs.get(2));
+          return new SaveLayeredCommand(inputs.get(0), inputs.get(1));
         default:
           throw new IllegalArgumentException("Invalid number of inputs");
       }
@@ -309,9 +329,9 @@ public enum Command {
             throw new IllegalArgumentException("This command cannot be called with the given amount"
                 + " of inputs, because there is no default image");
           }
-          return new RemoveLayerByNameCommand(currentImage, inputs.get(1));
+          return new RemoveLayerByNameCommand(currentImage, inputs.get(0));
         case 2:
-          return new RemoveLayerByNameCommand(inputs.get(0), inputs.get(2));
+          return new RemoveLayerByNameCommand(inputs.get(0), inputs.get(1));
         default:
           throw new IllegalArgumentException("Invalid number of inputs");
       }
@@ -325,7 +345,7 @@ public enum Command {
       switch(inputs.size()) {
         case 3:
           switch(inputs.get(0)) {
-            case "Basic":
+            case "basic":
               if (currentImage == null) {
                 throw new IllegalArgumentException("This command cannot be called with the given amount"
                     + " of inputs, because there is no default image");
@@ -336,7 +356,7 @@ public enum Command {
           }
         case 4:
           switch(inputs.get(1)) {
-            case "Basic":
+            case "basic":
               return new BasicBlendCommand(inputs.get(0), inputs.get(2), inputs.get(3));
             default:
               throw new IllegalArgumentException("Unsupported blend type");
@@ -438,7 +458,7 @@ public enum Command {
       throw new IllegalArgumentException("Null input");
     }
     List<Integer> intInputs = new ArrayList<Integer>();
-    for (int i = start; i <= end; i += 1) {
+    for (int i = start; i < end; i += 1) {
       try {
         intInputs.add(Integer.parseInt(inputs.get(i)));
       } catch (NumberFormatException e) {

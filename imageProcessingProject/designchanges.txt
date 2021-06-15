@@ -24,7 +24,8 @@ create-image @ImageName @ImageType [@Arg0 @Arg1 ... @ArgN]
 create-layered-image @ImageName (@FileName)/[(@Width) (@Height)]
 update-color (@ImageName) (@LayerName) @PixelX @PixelY @Alpha @Red @Green @Blue
 apply-mutator @MutatorType (@ImageName) (@LayerName) [@Arg0 @Arg1 ... @ArgN]
-save (@ImageName) (@LayerName) @FileName
+save (@ImageName) (@LayerName) @OutputType @FileName
+save-layered (@ImageName) @FileName
 load @ImageName
 
 set-current-layer @LayerName
@@ -32,6 +33,6 @@ add-layer (@ImageName) @LayerName
 copy-layer (@ImageName) @LayerName @LayerToCopy
 add-image-as-layer (@ImageName) @LayerName @FileName
 move-layer (@ImageName) @LayerName @NewPosition
-remove-layer (@ImageName) @LayerName/@LayerPosition
+remove-layer (@ImageName) @LayerName
 save-as-image (@ImageName) @BlendType @OutputType @FileName
 update-visibility (@ImageName) (@LayerName) @Visibility

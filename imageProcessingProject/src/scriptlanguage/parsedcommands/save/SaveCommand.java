@@ -25,25 +25,27 @@ public class SaveCommand implements ParsedCommand {
    *                    to be saved.
    * @param layerToSave The name of the layer to be saved, might be null if this command saves a
    *                    graph and not a layer of a layered image.
+   * @param outputType The type of image being outputted
    * @param fileName The name of the file the image will be saved as
    * @throws IllegalArgumentException if given a null imageToSave or fileName
    */
-  public SaveCommand(String imageToSave, String layerToSave, String fileName)  throws IllegalArgumentException {
+  public SaveCommand(String imageToSave, String layerToSave, String outputType, String fileName)  throws IllegalArgumentException {
     if (imageToSave == null || fileName == null) {
       throw new IllegalArgumentException("Null imageToSave or fileName");
     }
     this.imageToSave = imageToSave;
     this.layerToSave = layerToSave;
     this.fileName = fileName;
-    String[] splitFile = fileName.split("\\.");
-    String extension = splitFile[splitFile.length - 1];
-    this.outputType = OutputType.convertString(extension);
+    this.outputType = OutputType.convertString(outputType);
 
   }
 
   @Override
   public void execute(HashMap<String, GraphOfPixels> graphs,
       HashMap<String, LayeredImage> layeredImages) throws IllegalArgumentException {
+    if (graphs == null || layeredImages == null) {
+      throw new IllegalArgumentException("Null inputs");
+    }
     if (graphs.containsKey(imageToSave)) {
       graphs.get(imageToSave).writeToFile(this.outputType, this.fileName);
     }

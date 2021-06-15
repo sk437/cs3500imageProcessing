@@ -1,8 +1,11 @@
+import controller.ImageProcessingController;
+import controller.ProcessingController;
 import imageasgraph.FixedSizeGraph;
 import imageasgraph.GraphOfPixels;
 import imageasgraph.ImageToGraphConverter;
 import imageasgraph.Node;
 import imageasgraph.OutputType;
+import java.io.InputStreamReader;
 import layeredimage.LayeredImage;
 import layeredimage.LayeredImageV0;
 import layeredimage.blend.BasicBlend;
@@ -53,6 +56,7 @@ public class TestSimpleGraphOfPixels {
     graph1.writeToFile(OutputType.ppm, "res/pellegrinoSharpen");
 
      */
+    /*
     LayeredImage layered0 = new LayeredImageV0(4,4);
     layered0.addLayer("THIS");
     layered0.addLayer("IS");
@@ -88,5 +92,10 @@ public class TestSimpleGraphOfPixels {
 
     LayeredImage layered2 = new LayeredImageV0("outputImages/misc");
     layered2.saveAsLayeredImage("outputImages/misc2");
+
+     */
+    ImageProcessingController controller = new ProcessingController("outputImages/TestScript.txt", System.out);
+    controller.run();
+
   }
 }

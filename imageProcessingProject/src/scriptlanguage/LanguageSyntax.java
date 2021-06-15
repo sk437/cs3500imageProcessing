@@ -14,6 +14,7 @@ public interface LanguageSyntax {
    * layered images and apply the desired sequence to those collections.
    * @param inputLine The line of input to be processed
    * @return The executable command
+   * @throws IllegalArgumentException If the given inputLine is null
    */
   ParsedCommand parseCommand(String inputLine) throws IllegalArgumentException;
 

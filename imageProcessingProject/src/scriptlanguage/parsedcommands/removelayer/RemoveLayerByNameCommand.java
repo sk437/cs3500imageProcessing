@@ -31,6 +31,9 @@ public class RemoveLayerByNameCommand implements ParsedCommand {
   @Override
   public void execute(HashMap<String, GraphOfPixels> graphs,
       HashMap<String, LayeredImage> layeredImages) throws IllegalArgumentException {
+    if (graphs == null || layeredImages == null) {
+      throw new IllegalArgumentException("Null inputs");
+    }
     if (!layeredImages.containsKey(imageToUpdate)) {
       throw new IllegalArgumentException("the image this command is supposed to modify does not exist");
     }
