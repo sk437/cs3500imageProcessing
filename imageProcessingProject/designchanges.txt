@@ -3,3 +3,32 @@ Added made it so nodes can be transparent
 added many new ways of creating graphs
 added support for opacity, changing how Node's handle opacity
 https://stackoverflow.com/questions/6001211/format-of-type-int-rgb-and-type-int-argb
+
+Supported Batch Scripts:
+create normal image
+create layered image
+blur
+sharpen
+sepia
+greyscale
+load layer
+add layer
+
+
+
+
+Example Syntax:
+create-image @ImageName @ImageType [@Arg0 @Arg1 ... @ArgN]
+create-layered-image @ImageName (@FileName)/[(@Width) (@Height)]
+update-color (@ImageName) (@LayerName) @PixelX @PixelY (@Alpha) @Red @Green @Blue
+apply-mutator (@ImageName) (@LayerName) @MutatorType [@Arg0 @Arg1 ... @ArgN]
+save (@ImageName) (@LayerName) @FileName
+load @ImageName
+
+set-current-layer (@ImageName) @LayerName
+add-layer (@ImageName) @LayerName (@LayerToCopy)
+add-image-as-layer (@ImageName) @LayerName @FileName
+move-layer (@ImageName) @LayerName @NewPosition
+remove-layer (@ImageName) @LayerPosition
+save-as-image (@ImageName) @BlendType @OutputType @FileName
+update-visibility (@ImageName) (@LayerName) @Visibility

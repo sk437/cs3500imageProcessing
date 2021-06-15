@@ -3,12 +3,23 @@ package layeredimage;
 import imageasgraph.FixedSizeGraph;
 import imageasgraph.GraphOfPixels;
 import imageasgraph.ImageToGraphConverter;
+import imageasgraph.Node;
 import imageasgraph.OutputType;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Scanner;
 import layeredimage.blend.Blend;
+import pixel.PixelAsColors;
 
 /**
  * An implementation of a Layered Image ADD DETAILS LATER
@@ -40,10 +51,30 @@ public class LayeredImageV0 implements LayeredImage {
    * @throws IllegalArgumentException If fileName is null, or if it references an invalid file
    */
   public LayeredImageV0(String fileName) throws IllegalArgumentException {
-    //TODO READ FILE
-    this.layers = null; //TODO FOR COMPILATION REMOVE WHEN IMPLEMENTING
-    this.width = -1;
-    this.height = -1;
+    this.layers = new HashMap<String, LayerData>();
+    if (fileName == null) {
+      throw new IllegalArgumentException("Null fileName");
+    }
+    Scanner sc;
+
+    try {
+      sc = new Scanner(new FileInputStream(fileName + "/layerdata.txt"));
+    } catch (FileNotFoundException e) {
+      throw new IllegalArgumentException("File not found");
+    }
+
+    this.width = sc.nextInt();
+    this.height = sc.nextInt();
+
+    while (sc.hasNext()) {
+      String key = sc.next();
+      int position = sc.nextInt();
+      boolean visible = sc.nextBoolean();
+
+      LayerData toAdd = new LayerData(ImageToGraphConverter.convertComplexImage(fileName + "/" + key + ".png"), position, visible);
+      this.layers.put(key, toAdd);
+    }
+
   }
 
   /**
@@ -136,6 +167,20 @@ public class LayeredImageV0 implements LayeredImage {
   }
 
   @Override
+  public boolean getVisibility(int layerIndex) throws IllegalArgumentException {
+    if (layerIndex >= this.layers.size() || layerIndex < 0) {
+      throw new IllegalArgumentException("Index is out of range");
+    }
+
+    for (LayerData info : this.layers.values()) {
+      if (info.getPos() == layerIndex) {
+        return info.getVisibility();
+      }
+    }
+    throw new IllegalArgumentException("Invalid index");
+  }
+
+  @Override
   public int getNumLayers() {
     return this.layers.size();
   }
@@ -181,14 +226,70 @@ public class LayeredImageV0 implements LayeredImage {
   }
 
   @Override
+  public FixedSizeGraph getLayer(int layerIndex) throws IllegalArgumentException {
+    if (layerIndex >= this.layers.size() || layerIndex < 0) {
+      throw new IllegalArgumentException("Index is out of range");
+    }
+
+    for (LayerData info : this.layers.values()) {
+      if (info.getPos() == layerIndex) {
+        return info.getImage();
+      }
+    }
+    throw new IllegalArgumentException("Invalid index");
+  }
+
+  @Override
   public void saveAsImage(Blend blendType, OutputType outputType, String fileName)
       throws IllegalArgumentException {
-
+    FixedSizeGraph toReturn = blendType.blend(this);
+    toReturn.writeToFile(outputType, fileName);
   }
 
   @Override
   public void saveAsLayeredImage(String fileName) throws IllegalArgumentException {
+    if (fileName == null) {
+      throw new IllegalArgumentException("Null input.");
+    }
+    try {
+      Files.createDirectories(Paths.get(fileName));
+    }
+    catch (IOException e) {
+      throw new IllegalArgumentException("Could not create directory.");
+    }
 
+    for (String key : this.layers.keySet()) {
+      this.layers.get(key).getImage().writeToFile(OutputType.png, fileName + "/" + key);
+    }
+
+    File output = new File(fileName + "/layerdata.txt");
+    FileWriter writer;
+    PrintWriter printer = null;
+    try {
+      writer = new FileWriter(output);
+      printer = new PrintWriter(writer);
+      printer.append(this.width + " " + this.height + "\n");
+      for (String key : this.layers.keySet()) {
+        LayerData info = this.layers.get(key);
+        printer.append(key + " " + info.getPos() + " " + info.getVisibility() + "\n");
+      }
+    } catch (IOException e) {
+      throw new IllegalArgumentException("Invalid file");
+    } finally {
+      if (printer != null) {
+        printer.close();
+      }
+    }
+  }
+
+  @Override
+  public int getWidth() {
+    return this.width;
+  }
+
+  @Override
+  public int getHeight() {
+    return this.height;
   }
 
   @Override

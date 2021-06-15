@@ -5,6 +5,7 @@ import imageasgraph.Node;
 import imageasgraph.OutputType;
 import layeredimage.LayeredImage;
 import layeredimage.LayeredImageV0;
+import layeredimage.blend.BasicBlend;
 import mutators.colortransformations.GreyscaleTransform;
 import mutators.colortransformations.SepiaTransform;
 import mutators.filters.BlurFilter;
@@ -73,7 +74,19 @@ public class TestSimpleGraphOfPixels {
     for (FixedSizeGraph g : layered0) {
       System.out.println(g.getPixelAt(0,0).getRed());
     }
-    GraphOfPixels graph2 = ImageToGraphConverter.convertComplexImage("outputImages/birb.jpg");
-    graph2.writeToFile(OutputType.jpeg, "outputImages/birbBetter");
+
+    //GraphOfPixels graph2 = ImageToGraphConverter.convertComplexImage("outputImages/birbBetter.jpg");
+    //graph2.writeToFile(OutputType.jpeg, "outputImages/birbBetterJPG");
+
+    LayeredImage layered1 = new LayeredImageV0(1024, 768);
+    layered1.loadImageAsLayer("birb", "outputImages/birb.jpg");
+    layered1.loadImageAsLayer("rainbow", "outputImages/rainbow.png");
+    layered1.loadImageAsLayer("galaxy", "outputImages/galaxy.png");
+    layered1.setVisibility("galaxy", false);
+    layered1.saveAsImage(new BasicBlend(), OutputType.png, "outputImages/misc");
+    layered1.saveAsLayeredImage("outputImages/misc");
+
+    LayeredImage layered2 = new LayeredImageV0("outputImages/misc");
+    layered2.saveAsLayeredImage("outputImages/misc2");
   }
 }

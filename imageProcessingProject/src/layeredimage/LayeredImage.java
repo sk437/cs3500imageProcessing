@@ -56,6 +56,14 @@ public interface LayeredImage extends Iterable<FixedSizeGraph> {
   boolean getVisibility(String layerName) throws IllegalArgumentException;
 
   /**
+   * Returns whether or not the referenced layer is visible.
+   * @param layerIndex The index of the layer
+   * @return Whether or not it is visible
+   * @throws IllegalArgumentException If layerIndex is out of bounds
+   */
+  boolean getVisibility(int layerIndex) throws IllegalArgumentException;
+
+  /**
    * Returns the number of layers in this layeredImage.
    * @return The number of layers in this image
    */
@@ -97,6 +105,15 @@ public interface LayeredImage extends Iterable<FixedSizeGraph> {
    */
   FixedSizeGraph getLayer(String layerName) throws IllegalArgumentException;
 
+  /**
+   * Returns the image represented by the given layerIndex.
+   *
+   * @param layerIndex The name of the layer to be accessed.
+   * @return The layer that is represented by the given name.
+   * @throws IllegalArgumentException If layerIndex is out of bounds
+   */
+  FixedSizeGraph getLayer(int layerIndex) throws IllegalArgumentException;
+
 
   /**
    * Saves a copy of this Layered image as an image of the given outputType, blended as specified
@@ -116,4 +133,15 @@ public interface LayeredImage extends Iterable<FixedSizeGraph> {
    */
   void saveAsLayeredImage(String fileName) throws IllegalArgumentException;
 
+  /**
+   * Gets the common width of all layers.
+   * @return An integer representing the width in pixels of all layers.
+   */
+  int getWidth();
+
+  /**
+   * Gets the common height of all layers.
+   * @return An integer representing the height in pixels of all layers.
+   */
+  int getHeight();
 }

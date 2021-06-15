@@ -27,6 +27,23 @@ class LayerData {
     this.visibility = true;
   }
 
+
+  /**
+   * Constructs a new LayerData about the given image, at the given position, with the given visibility.
+   * @param image The image this LayerData represents
+   * @param pos The position of that image in a Layered Image
+   * @param visibility The visibility of the image
+   * @throws IllegalArgumentException If the given image is null
+   */
+  LayerData(FixedSizeGraph image, int pos, boolean visibility) throws IllegalArgumentException {
+    if (image == null) {
+      throw new IllegalArgumentException("Null image");
+    }
+    this.image = image;
+    this.pos = pos;
+    this.visibility = visibility;
+  }
+
   /**
    * Returns a reference to the image of this layer
    * @return The image of this layer
