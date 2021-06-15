@@ -15,8 +15,17 @@ public interface ParsedCommand {
    * access existing images depending on what the parsed command does.
    * @param graphs The graphs that currently exist
    * @param layeredImages The layered images that currently exist
+   * @throws IllegalArgumentException If given null inputs, or if the command cannot be executed
+   *                                  properly
    */
-  void execute(HashMap<String, GraphOfPixels> graphs, HashMap<String, LayeredImage> layeredImages);
+  void execute(HashMap<String, GraphOfPixels> graphs, HashMap<String, LayeredImage> layeredImages)
+      throws IllegalArgumentException;
 
-  void alterLanguageState(LanguageSyntax toAlter);
+  /**
+   * Alters the state of the given LanguageSyntax in the manner specified by this command.
+   * @param toAlter The LanguageSyntax object to be updated
+   * @throws IllegalArgumentException If given a null input, or if the command fails to alter the
+   *                                  language properly
+   */
+  void alterLanguageState(LanguageSyntax toAlter) throws IllegalArgumentException;
 }

@@ -3,6 +3,8 @@ Added made it so nodes can be transparent
 added many new ways of creating graphs
 added support for opacity, changing how Node's handle opacity
 https://stackoverflow.com/questions/6001211/format-of-type-int-rgb-and-type-int-argb
+refactored ImageToGraphConverter to have a method which takes an InputType and a fileName
+and outputs a graph
 
 Supported Batch Scripts:
 create normal image

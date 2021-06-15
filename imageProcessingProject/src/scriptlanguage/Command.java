@@ -8,6 +8,7 @@ import scriptlanguage.parsedcommands.applymutator.BlurCommand;
 import scriptlanguage.parsedcommands.applymutator.GreyscaleCommand;
 import scriptlanguage.parsedcommands.applymutator.SepiaCommand;
 import scriptlanguage.parsedcommands.applymutator.SharpenCommand;
+import scriptlanguage.parsedcommands.blend.BasicBlendCommand;
 import scriptlanguage.parsedcommands.copylayer.CopyLayerCommand;
 import scriptlanguage.parsedcommands.creategraph.CreateCheckerBoardCommand;
 import scriptlanguage.parsedcommands.creategraph.CreateCopyCommand;
@@ -87,9 +88,9 @@ public enum Command {
       List<Integer> intInputs;
       switch(inputs.size()) {
         case 6:
-          if (currentImage == null || currentLayer == null) { //TODO FIGURE OUT HOW TO DETERMINE BASED ON WHAT TYPE OF IMAGE IS BEING CREATED
-            throw new IllegalArgumentException("Cannot call this command with the specified number"
-                + "of inputs because default parameters have not yet been specified");
+          if (currentImage == null) {
+            throw new IllegalArgumentException("This command cannot be called with the given amount"
+                + " of inputs, because there is no default image");
           }
           intInputs = Command.convertIntegerInputs(0,6,inputs);
           return new UpdateColorCommand(currentImage, currentLayer, intInputs.get(0), intInputs.get(1),
@@ -119,6 +120,10 @@ public enum Command {
         case "blur":
           switch(inputs.size()) {
             case 1:
+              if (currentImage == null) {
+                throw new IllegalArgumentException("This command cannot be called with the given amount"
+                    + " of inputs, because there is no default image");
+              }
               return new BlurCommand(currentImage, currentLayer);
             case 2:
               return new BlurCommand(inputs.get(1), currentLayer);
@@ -130,6 +135,10 @@ public enum Command {
         case "sharpen":
           switch(inputs.size()) {
             case 1:
+              if (currentImage == null) {
+                throw new IllegalArgumentException("This command cannot be called with the given amount"
+                    + " of inputs, because there is no default image");
+              }
               return new SharpenCommand(currentImage, currentLayer);
             case 2:
               return new SharpenCommand(inputs.get(1), currentLayer);
@@ -141,6 +150,10 @@ public enum Command {
         case "sepia":
           switch(inputs.size()) {
             case 1:
+              if (currentImage == null) {
+                throw new IllegalArgumentException("This command cannot be called with the given amount"
+                    + " of inputs, because there is no default image");
+              }
               return new SepiaCommand(currentImage, currentLayer);
             case 2:
               return new SepiaCommand(inputs.get(1), currentLayer);
@@ -152,6 +165,10 @@ public enum Command {
         case "greyscale":
           switch(inputs.size()) {
             case 1:
+              if (currentImage == null) {
+                throw new IllegalArgumentException("This command cannot be called with the given amount"
+                    + " of inputs, because there is no default image");
+              }
               return new GreyscaleCommand(currentImage, currentLayer);
             case 2:
               return new GreyscaleCommand(inputs.get(1), currentLayer);
@@ -172,6 +189,10 @@ public enum Command {
       Command.assertNonNullInputs(inputs);
       switch(inputs.size()) {
         case 1:
+          if (currentImage == null) {
+            throw new IllegalArgumentException("This command cannot be called with the given amount"
+                + " of inputs, because there is no default image");
+          }
           return new SaveCommand(currentImage, currentLayer, inputs.get(0));
         case 2:
           return new SaveCommand(inputs.get(0), currentLayer, inputs.get(1));
@@ -205,6 +226,10 @@ public enum Command {
       Command.assertNonNullInputs(inputs);
       switch(inputs.size()) {
         case 1:
+          if (currentImage == null) {
+            throw new IllegalArgumentException("This command cannot be called with the given amount"
+                + " of inputs, because there is no default image");
+          }
           return new AddLayerCommand(currentImage, inputs.get(0));
         case 2:
           return new AddLayerCommand(inputs.get(0), inputs.get(1));
@@ -220,6 +245,10 @@ public enum Command {
       Command.assertNonNullInputs(inputs);
       switch(inputs.size()) {
         case 2:
+          if (currentImage == null) {
+            throw new IllegalArgumentException("This command cannot be called with the given amount"
+                + " of inputs, because there is no default image");
+          }
           return new CopyLayerCommand(currentImage, inputs.get(0), inputs.get(1));
         case 3:
           return new CopyLayerCommand(inputs.get(0), inputs.get(1), inputs.get(2));
@@ -235,6 +264,10 @@ public enum Command {
       Command.assertNonNullInputs(inputs);
       switch(inputs.size()) {
         case 2:
+          if (currentImage == null) {
+            throw new IllegalArgumentException("This command cannot be called with the given amount"
+                + " of inputs, because there is no default image");
+          }
           return new AddImageLayerCommand(currentImage, inputs.get(0), inputs.get(1));
         case 3:
           return new AddImageLayerCommand(inputs.get(0), inputs.get(1), inputs.get(2));
@@ -251,6 +284,10 @@ public enum Command {
       List<Integer> intInputs;
       switch(inputs.size()) {
         case 2:
+          if (currentImage == null) {
+            throw new IllegalArgumentException("This command cannot be called with the given amount"
+                + " of inputs, because there is no default image");
+          }
           intInputs = Command.convertIntegerInputs(1,2,inputs);
           return new MoveLayerCommand(currentImage, inputs.get(0), intInputs.get(0));
         case 3:
@@ -268,6 +305,10 @@ public enum Command {
       Command.assertNonNullInputs(inputs);
       switch(inputs.size()) {
         case 1:
+          if (currentImage == null) {
+            throw new IllegalArgumentException("This command cannot be called with the given amount"
+                + " of inputs, because there is no default image");
+          }
           return new RemoveLayerByNameCommand(currentImage, inputs.get(1));
         case 2:
           return new RemoveLayerByNameCommand(inputs.get(0), inputs.get(2));
@@ -285,6 +326,10 @@ public enum Command {
         case 3:
           switch(inputs.get(0)) {
             case "Basic":
+              if (currentImage == null) {
+                throw new IllegalArgumentException("This command cannot be called with the given amount"
+                    + " of inputs, because there is no default image");
+              }
               return new BasicBlendCommand(currentImage, inputs.get(1), inputs.get(2));
             default:
               throw new IllegalArgumentException("Unsupported blend type");
@@ -309,9 +354,17 @@ public enum Command {
       boolean newVisibility;
       switch(inputs.size()) {
         case 1:
+          if (currentImage == null || currentLayer == null) {
+            throw new IllegalArgumentException("This command cannot be called with the given amount"
+                + " of inputs, because there is no default image and/or layer");
+          }
           newVisibility = Boolean.parseBoolean(inputs.get(0));
           return new UpdateVisibilityCommand(currentImage, currentLayer, newVisibility);
         case 2:
+          if (currentLayer == null) {
+            throw new IllegalArgumentException("This command cannot be called with the given amount"
+                + " of inputs, because there is no default layer");
+          }
           newVisibility = Boolean.parseBoolean(inputs.get(1));
           return new UpdateVisibilityCommand(inputs.get(0), currentLayer, newVisibility);
         case 3:

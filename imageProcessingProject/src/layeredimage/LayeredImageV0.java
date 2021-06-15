@@ -3,7 +3,6 @@ package layeredimage;
 import imageasgraph.FixedSizeGraph;
 import imageasgraph.GraphOfPixels;
 import imageasgraph.ImageToGraphConverter;
-import imageasgraph.Node;
 import imageasgraph.OutputType;
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,7 +18,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 import layeredimage.blend.Blend;
-import pixel.PixelAsColors;
 
 /**
  * An implementation of a Layered Image ADD DETAILS LATER
@@ -215,7 +213,7 @@ public class LayeredImageV0 implements LayeredImage {
     for (LayerData info : this.layers.values()) {
       info.setPos(info.getPos() + 1);
     }
-    GraphOfPixels newImage = ImageToGraphConverter.convertComplexImage(fileName);
+    GraphOfPixels newImage = ImageToGraphConverter.convertImage(fileName);
     this.layers.put(layerName, new LayerData(newImage, 0));
   }
 

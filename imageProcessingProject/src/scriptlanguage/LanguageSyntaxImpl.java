@@ -34,10 +34,9 @@ public class LanguageSyntaxImpl implements LanguageSyntax {
 
   @Override
   public ParsedCommand parseCommand(String inputLine) {
-    ArrayList<String> inputs = new ArrayList<String>(Arrays.asList(inputLine.split(" ")));
+    ArrayList<String> inputs = new ArrayList<String>(Arrays.asList(inputLine.split("\\S+")));
     String cmd = inputs.remove(0);
     ParsedCommand toReturn = commands.get(cmd).returnExecutable(inputs, this.currentImage, this.currentLayer);
-    toReturn.alterLanguageState(this);
     return toReturn;
   }
 

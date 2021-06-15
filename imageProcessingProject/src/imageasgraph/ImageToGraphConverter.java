@@ -1,5 +1,7 @@
 package imageasgraph;
 
+import static imageasgraph.InputType.ppm;
+
 import imageinput.imageprogram.ImageProgram;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -74,6 +76,29 @@ public class ImageToGraphConverter {
       originalNext.setOpacity(storedOpacity);
     }
     return toReturn;
+  }
+
+  /**
+   * Converts the file of the given name to a GraphOfPixels image.
+   * @param fileName The name of the file to be converted
+   * @return The Graph representation of the given file
+   */
+  public static GraphOfPixels convertImage(String fileName) {
+    if (fileName == null) {
+      throw new IllegalArgumentException("Null input");
+    }
+    String[] splitFile = fileName.split("\\.");
+    String extension = splitFile[splitFile.length - 1];
+    InputType inputType = InputType.convertString(extension);
+    switch (inputType) {
+      case ppm:
+        return ImageToGraphConverter.convertPPM(fileName);
+      case jpeg:
+      case png:
+        return ImageToGraphConverter.convertComplexImage(fileName);
+      default:
+        throw new IllegalArgumentException("Unsupported input type");
+    }
   }
 
   public static GraphOfPixels convertComplexImage(String fileName) {
