@@ -44,7 +44,7 @@ public class SepiaCommand implements ParsedCommand {
       layeredImages.get(imageToUpdate).getLayer(layerToUpdate).applyMutator(new SepiaTransform());
     }
     else {
-      throw new IllegalArgumentException("The iamge this command is supposed to blur does not exit");
+      throw new IllegalArgumentException("The image this command is supposed to blur does not exit");
     }
   }
 

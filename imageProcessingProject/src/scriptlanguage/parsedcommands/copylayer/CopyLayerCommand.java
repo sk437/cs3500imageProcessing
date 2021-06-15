@@ -8,7 +8,7 @@ import scriptlanguage.parsedcommands.ParsedCommand;
 
 /**
  * Represents a command which will create a new layer on an existing layered image, with a given
- * name and layer to copy from that exisitng image.
+ * name and layer to copy from that existing image.
  */
 public class CopyLayerCommand implements ParsedCommand {
   private final String imageToAddTo;
