@@ -32,6 +32,7 @@ public class LanguageSyntaxImpl implements LanguageSyntax {
     commands = temp;
   }
 
+  @Override
   public ParsedCommand parseCommand(String inputLine) {
     ArrayList<String> inputs = new ArrayList<String>(Arrays.asList(inputLine.split(" ")));
     String cmd = inputs.remove(0);

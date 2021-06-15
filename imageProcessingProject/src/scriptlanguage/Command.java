@@ -30,7 +30,7 @@ public enum Command {
     @Override
     public ParsedCommand returnExecutable(List<String> inputs, String currentImage,
         String currentLayer) throws IllegalArgumentException {
-      Command.assertNonNullInputs(inputs, currentImage, currentLayer);
+      Command.assertNonNullInputs(inputs);
       if (inputs.size() < 2) {
         throw new IllegalArgumentException("Not enough inputs");
       }
@@ -64,19 +64,18 @@ public enum Command {
     @Override
     public ParsedCommand returnExecutable(List<String> inputs, String currentImage,
         String currentLayer) throws IllegalArgumentException {
-      Command.assertNonNullInputs(inputs, currentImage, currentLayer);
+      Command.assertNonNullInputs(inputs);
       if (inputs.size() < 2) {
         throw new IllegalArgumentException("Invalid number of inputs");
       }
-      if (inputs.size() == 2) {
-        return new ImportNewLayeredImageCommand(inputs.get(0), inputs.get(1));
-      }
-      else if (inputs.size() == 3) {
-        List<Integer> intInputs = Command.convertIntegerInputs(1,3,inputs);
-        return new CreateNewLayeredImageCommand(inputs.get(0), intInputs.get(0), intInputs.get(1));
-      }
-      else {
-        throw new IllegalArgumentException("Invalid number of inputs");
+      switch(inputs.size()) {
+        case 2:
+          return new ImportNewLayeredImageCommand(inputs.get(0), inputs.get(1));
+        case 3:
+          List<Integer> intInputs = Command.convertIntegerInputs(1,3,inputs);
+          return new CreateNewLayeredImageCommand(inputs.get(0), intInputs.get(0), intInputs.get(1));
+        default:
+          throw new IllegalArgumentException("Invalid number of inputs");
       }
     }
   },
@@ -84,10 +83,14 @@ public enum Command {
     @Override
     public ParsedCommand returnExecutable(List<String> inputs, String currentImage,
         String currentLayer) {
-      Command.assertNonNullInputs(inputs, currentImage, currentLayer);
+      Command.assertNonNullInputs(inputs);
       List<Integer> intInputs;
       switch(inputs.size()) {
         case 6:
+          if (currentImage == null || currentLayer == null) { //TODO FIGURE OUT HOW TO DETERMINE BASED ON WHAT TYPE OF IMAGE IS BEING CREATED
+            throw new IllegalArgumentException("Cannot call this command with the specified number"
+                + "of inputs because default parameters have not yet been specified");
+          }
           intInputs = Command.convertIntegerInputs(0,6,inputs);
           return new UpdateColorCommand(currentImage, currentLayer, intInputs.get(0), intInputs.get(1),
                intInputs.get(2), intInputs.get(3), intInputs.get(4), intInputs.get(5));
@@ -108,7 +111,7 @@ public enum Command {
     @Override
     public ParsedCommand returnExecutable(List<String> inputs, String currentImage,
         String currentLayer) {
-      Command.assertNonNullInputs(inputs, currentImage, currentLayer);
+      Command.assertNonNullInputs(inputs);
       if (inputs.size() < 1) {
         throw new IllegalArgumentException("Invalid number of inputs");
       }
@@ -166,7 +169,7 @@ public enum Command {
     @Override
     public ParsedCommand returnExecutable(List<String> inputs, String currentImage,
         String currentLayer) {
-      Command.assertNonNullInputs(inputs, currentImage, currentLayer);
+      Command.assertNonNullInputs(inputs);
       switch(inputs.size()) {
         case 1:
           return new SaveCommand(currentImage, currentLayer, inputs.get(0));
@@ -183,7 +186,7 @@ public enum Command {
     @Override
     public ParsedCommand returnExecutable(List<String> inputs, String currentImage,
         String currentLayer) {
-      Command.assertNonNullInputs(inputs, currentImage, currentLayer);
+      Command.assertNonNullInputs(inputs);
       return new LoadCommand(inputs.get(0));
     }
   },
@@ -191,7 +194,7 @@ public enum Command {
     @Override
     public ParsedCommand returnExecutable(List<String> inputs, String currentImage,
         String currentLayer) {
-      Command.assertNonNullInputs(inputs, currentImage, currentLayer);
+      Command.assertNonNullInputs(inputs);
       return new LoadLayerCommand(inputs.get(0));
     }
   },
@@ -199,6 +202,7 @@ public enum Command {
     @Override
     public ParsedCommand returnExecutable(List<String> inputs, String currentImage,
         String currentLayer) {
+      Command.assertNonNullInputs(inputs);
       switch(inputs.size()) {
         case 1:
           return new AddLayerCommand(currentImage, inputs.get(0));
@@ -213,6 +217,7 @@ public enum Command {
     @Override
     public ParsedCommand returnExecutable(List<String> inputs, String currentImage,
         String currentLayer) throws IllegalArgumentException {
+      Command.assertNonNullInputs(inputs);
       switch(inputs.size()) {
         case 2:
           return new CopyLayerCommand(currentImage, inputs.get(0), inputs.get(1));
@@ -227,6 +232,7 @@ public enum Command {
     @Override
     public ParsedCommand returnExecutable(List<String> inputs, String currentImage,
         String currentLayer) {
+      Command.assertNonNullInputs(inputs);
       switch(inputs.size()) {
         case 2:
           return new AddImageLayerCommand(currentImage, inputs.get(0), inputs.get(1));
@@ -241,6 +247,7 @@ public enum Command {
     @Override
     public ParsedCommand returnExecutable(List<String> inputs, String currentImage,
         String currentLayer) {
+      Command.assertNonNullInputs(inputs);
       List<Integer> intInputs;
       switch(inputs.size()) {
         case 2:
@@ -258,6 +265,7 @@ public enum Command {
     @Override
     public ParsedCommand returnExecutable(List<String> inputs, String currentImage,
         String currentLayer) {
+      Command.assertNonNullInputs(inputs);
       switch(inputs.size()) {
         case 1:
           return new RemoveLayerByNameCommand(currentImage, inputs.get(1));
@@ -272,6 +280,7 @@ public enum Command {
     @Override
     public ParsedCommand returnExecutable(List<String> inputs, String currentImage,
         String currentLayer) {
+      Command.assertNonNullInputs(inputs);
       switch(inputs.size()) {
         case 3:
           switch(inputs.get(0)) {
@@ -296,7 +305,7 @@ public enum Command {
     @Override
     public ParsedCommand returnExecutable(List<String> inputs, String currentImage,
         String currentLayer) {
-      Command.assertNonNullInputs(inputs, currentImage, currentLayer);
+      Command.assertNonNullInputs(inputs);
       boolean newVisibility;
       switch(inputs.size()) {
         case 1:
@@ -314,9 +323,26 @@ public enum Command {
     }
   };
 
+  /**
+   * Given a list of inputs as well as default inputs, returns an executable command which can
+   * be used to apply a command with the desired parameters to a collection of graphs and layered
+   * images.
+   * @param inputs The input parameters to be parsed
+   * @param currentImage The default image input
+   * @param currentLayer The default layer input
+   * @return The processed executable command
+   * @throws IllegalArgumentException If the given inputs are not valid for this type of command
+   */
   public abstract ParsedCommand returnExecutable(List<String> inputs, String currentImage,
       String currentLayer) throws IllegalArgumentException;
 
+  /**
+   * Given a list of inputs and the expected length of that list, and throws an exception if the
+   * length does not match expectation.
+   * @param numExpected The expected length of the list
+   * @param numActual The actual list of inputs
+   * @throws IllegalArgumentException If the length of the inputs do not match
+   */
   private static void assertValidNumInputs(int numExpected, List<String> numActual) throws IllegalArgumentException {
     if (numActual == null) {
       throw new IllegalArgumentException("Null inputs");
@@ -326,13 +352,38 @@ public enum Command {
     }
   }
 
-  private static void assertNonNullInputs(List<String> inputs, String currentImage, String currentLayer) throws IllegalArgumentException {
-    if (inputs == null) { // TODO FIX FOR MAYBENULL STRINGS
+  /**
+   * Given a list of inputs, throws an exception if either the list itself is null or any of the
+   * elements of the list are null.
+   * @param inputs The list of inputs to be processed
+   * @throws IllegalArgumentException If there are any null elements within the given list
+   */
+  private static void assertNonNullInputs(List<String> inputs) throws IllegalArgumentException {
+    if (inputs == null) {
       throw new IllegalArgumentException("Null input");
+    }
+    for (String s : inputs) {
+      if (s == null) {
+        throw new IllegalArgumentException("Null input");
+      }
     }
   }
 
+  /**
+   * Given a list of inputs, returns a new list of integers by converting all elements in the given
+   * list beginning at the start and going up to (but not including) the end index to integers,
+   * throwing an exception if any of the inputs cannot be parsed.
+   * @param start The start point for conversion
+   * @param end The end point for conversion
+   * @param inputs The inputs to be converted
+   * @return The list of converted integers
+   * @throws IllegalArgumentException If any of the given inputs cannot be properly parsed into integers,
+   *                                  or if given a null list of inputs.
+   */
   private static List<Integer> convertIntegerInputs(int start, int end, List<String> inputs) throws IllegalArgumentException {
+    if (inputs == null) {
+      throw new IllegalArgumentException("Null input");
+    }
     List<Integer> intInputs = new ArrayList<Integer>();
     for (int i = start; i <= end; i += 1) {
       try {
