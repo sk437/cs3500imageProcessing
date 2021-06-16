@@ -1,0 +1,4 @@
+20 20
+invisible layer 0 false
+red layer 2 true
+blue layer 1 true

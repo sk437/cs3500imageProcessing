@@ -96,12 +96,21 @@ public class TestSimpleGraphOfPixels {
      */
     ImageProcessingController controller = new ProcessingController("outputImages/TestScript.txt", System.out);
     //controller.run();
-    GraphOfPixels forTesting = ImageToGraphConverter.createTransparentGraph(3,3);
-    for (Node n : forTesting) {
+    LayeredImage testLayered = new LayeredImageV0(20,20);
+    testLayered.addLayer("red layer");
+    testLayered.addLayer("blue layer");
+    testLayered.addLayer("invisible layer");
+    testLayered.setVisibility("invisible layer", false);
+    FixedSizeGraph redLayer = testLayered.getLayer("red layer");
+    for (Node n : redLayer) {
       n.setOpacity(255);
       n.updateColors(new SimplePixel(255,0,0));
     }
-    forTesting.writeToFile(OutputType.ppm, "outputImages/conversionTest");
-
+    FixedSizeGraph blueLayer = testLayered.getLayer("blue layer");
+    for (Node n : blueLayer) {
+      n.setOpacity(255);
+      n.updateColors(new SimplePixel(0,0,255));
+    }
+    testLayered.saveAsLayeredImage("outputImages/exampleLayeredImage");
   }
 }

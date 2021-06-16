@@ -224,13 +224,12 @@ public class SimpleGraphOfPixels extends AbstractGraphOfPixels {
     if (fileName == null) {
       throw new IllegalArgumentException("Null fileName");
     }
-    BufferedImage toReturn = this.createBufferedImageForOutPut();
-    File outPut = new File(fileName + ".jpg");
+    BufferedImage toReturn = this.createBufferedImageNoAlpha();
+    File outPut = new File(fileName + ".jpeg");
 
 
     try {
-      ImageIO.write(toReturn, "jpg", outPut);
-      System.out.println("I was here");
+      ImageIO.write(toReturn, "jpeg", outPut);
     } catch (IOException e) {
       throw new IllegalArgumentException("Could not write to file");
     }
@@ -239,7 +238,7 @@ public class SimpleGraphOfPixels extends AbstractGraphOfPixels {
   /**
    * Creates a buffered image which represents the image that this graph does, with all the
    * ARGB values copied over.
-   * @return The buffered image representaiton
+   * @return The buffered image representation
    */
   protected BufferedImage createBufferedImageForOutPut() {
     BufferedImage toReturn = new BufferedImage(this.getWidth(), this.getHeight(),
@@ -247,7 +246,7 @@ public class SimpleGraphOfPixels extends AbstractGraphOfPixels {
     int col = 0;
     int row = 0;
     for (Node n : this) {
-      int rgb = (n.getOpacity()<<24 | n.getRed()<<16 | n.getGreen()<<8 | n.getBlue()); // LOOK UP WHAT THIS MEANS BEFORE SUBMISSION
+      int rgb = (n.getOpacity()<<24 | n.getRed()<<16 | n.getGreen()<<8 | n.getBlue());
       toReturn.setRGB(col, row, rgb);
       col += 1;
       if (col == this.getWidth()) {
@@ -257,4 +256,27 @@ public class SimpleGraphOfPixels extends AbstractGraphOfPixels {
     }
     return toReturn;
   }
+  /**
+   *
+   * Creates a buffered image which represents the image that this graph does, with all the
+   * RGB values copied over.
+   * @return The buffered image representation
+   */
+  protected BufferedImage createBufferedImageNoAlpha() {
+    BufferedImage toReturn = new BufferedImage(this.getWidth(), this.getHeight(),
+        BufferedImage.TYPE_INT_RGB);
+    int col = 0;
+    int row = 0;
+    for (Node n : this) {
+      int rgb = (n.getRed()<<16 | n.getGreen()<<8 | n.getBlue());
+      toReturn.setRGB(col, row, rgb);
+      col += 1;
+      if (col == this.getWidth()) {
+        col = 0;
+        row += 1;
+      }
+    }
+    return toReturn;
+  }
+
 }
