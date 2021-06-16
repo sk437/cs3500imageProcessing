@@ -46,7 +46,7 @@ public class ImageToGraphConverter {
   }
 
   /**
-   * Creates a copy of the given GraphOfPixels
+   * Creates a copy of the given GraphOfPixels.
    * @param original The graph of pixels to copy
    * @return The copy of the given graph
    * @throws IllegalArgumentException If the given graph is null
@@ -212,6 +212,9 @@ public class ImageToGraphConverter {
   }
 
   public static GraphOfPixels createTransparentGraph(int width, int height) {
+    if (width <= 0 || height <= 0) {
+      throw new IllegalArgumentException("Invalid dimensions");
+    }
     AbstractGraphOfPixels toReturn = new SimpleGraphOfPixels();
     toReturn.addFirstNode(new PixelNode(new SimplePixel(0,0,0)));
     /*

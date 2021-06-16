@@ -95,7 +95,13 @@ public class TestSimpleGraphOfPixels {
 
      */
     ImageProcessingController controller = new ProcessingController("outputImages/TestScript.txt", System.out);
-    controller.run();
+    //controller.run();
+    GraphOfPixels forTesting = ImageToGraphConverter.createTransparentGraph(3,3);
+    for (Node n : forTesting) {
+      n.setOpacity(255);
+      n.updateColors(new SimplePixel(255,0,0));
+    }
+    forTesting.writeToFile(OutputType.ppm, "outputImages/conversionTest");
 
   }
 }
