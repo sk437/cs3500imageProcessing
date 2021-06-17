@@ -5,6 +5,7 @@ import imageasgraph.GraphOfPixels;
 import imageasgraph.ImageToGraphConverter;
 import imageasgraph.Node;
 import imageasgraph.OutputType;
+import imageasgraph.SimpleGraphOfPixels;
 import java.io.InputStreamReader;
 import layeredimage.LayeredImage;
 import layeredimage.LayeredImageV0;
@@ -96,21 +97,28 @@ public class TestSimpleGraphOfPixels {
      */
     ImageProcessingController controller = new ProcessingController("outputImages/TestScript.txt", System.out);
     //controller.run();
+    /*
     LayeredImage testLayered = new LayeredImageV0(20,20);
-    testLayered.addLayer("red layer");
-    testLayered.addLayer("blue layer");
-    testLayered.addLayer("invisible layer");
-    testLayered.setVisibility("invisible layer", false);
-    FixedSizeGraph redLayer = testLayered.getLayer("red layer");
+    testLayered.addLayer("red-layer");
+    testLayered.addLayer("blue-layer");
+    testLayered.addLayer("invisible-layer");
+    testLayered.setVisibility("invisible-layer", false);
+    FixedSizeGraph redLayer = testLayered.getLayer("red-layer");
     for (Node n : redLayer) {
       n.setOpacity(255);
       n.updateColors(new SimplePixel(255,0,0));
     }
-    FixedSizeGraph blueLayer = testLayered.getLayer("blue layer");
+    FixedSizeGraph blueLayer = testLayered.getLayer("blue-layer");
     for (Node n : blueLayer) {
       n.setOpacity(255);
       n.updateColors(new SimplePixel(0,0,255));
     }
     testLayered.saveAsLayeredImage("outputImages/exampleLayeredImage");
+    */
+    GraphOfPixels example2 = ImageToGraphConverter.convertImage("outputImages/example.ppm");
+    for (Node n: example2) {
+      n.updateColors(new SimplePixel(55,66,77));
+    }
+    example2.writeToFile(OutputType.png, "outputImages/example2");
   }
 }

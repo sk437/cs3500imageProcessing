@@ -106,6 +106,9 @@ public class LayeredImageV0 implements LayeredImage {
   @Override
   public void addLayer(String layerName) throws IllegalArgumentException {
     this.assertLayerNameDoesntExist(layerName);
+    if (layerName.split("\\s+").length != 1) {
+      throw new IllegalArgumentException("A layerName cannot be more than one word");
+    }
     LayerData newData = new LayerData(ImageToGraphConverter.createTransparentGraph(
         this.width, this.height), 0);
     for (LayerData info : this.layers.values()) {
@@ -117,6 +120,9 @@ public class LayeredImageV0 implements LayeredImage {
   @Override
   public void addLayer(String layerName, String toCopy) throws IllegalArgumentException {
     this.assertLayerNameDoesntExist(layerName);
+    if (layerName.split("\\s+").length != 1) {
+      throw new IllegalArgumentException("A layerName cannot be more than one word");
+    }
     this.assertLayerNameExists(toCopy);
     LayerData newData = new LayerData(ImageToGraphConverter.createCopyOfGraph(
         this.layers.get(toCopy).getImage()), 0);
@@ -207,6 +213,9 @@ public class LayeredImageV0 implements LayeredImage {
   @Override
   public void loadImageAsLayer(String layerName, String fileName) throws IllegalArgumentException {
     this.assertLayerNameDoesntExist(layerName);
+    if (layerName.split("\\s+").length != 1) {
+      throw new IllegalArgumentException("A layerName cannot be more than one word");
+    }
     if (fileName == null) {
       throw new IllegalArgumentException("Null file name");
     }
@@ -240,6 +249,12 @@ public class LayeredImageV0 implements LayeredImage {
   @Override
   public void saveAsImage(Blend blendType, OutputType outputType, String fileName)
       throws IllegalArgumentException {
+    if (blendType == null || outputType == null || fileName == null) {
+      throw new IllegalArgumentException("Null input");
+    }
+    if (this.getNumLayers() == 0) {
+      throw new IllegalArgumentException("Not enough layers to save this as an image");
+    }
     FixedSizeGraph toReturn = blendType.blend(this);
     toReturn.writeToFile(outputType, fileName);
   }

@@ -16,7 +16,7 @@ public interface LayeredImage extends Iterable<FixedSizeGraph> {
    *
    * @param layerName The name of the new layer to be added, which does not already exist
    * @throws IllegalArgumentException If the given string is null, or if layerName is a name that
-   *                                  already exists
+   *                                  already exists, or if the layerName is more than one word
    */
   void addLayer(String layerName) throws IllegalArgumentException;
 
@@ -26,7 +26,8 @@ public interface LayeredImage extends Iterable<FixedSizeGraph> {
    * @param layerName The name of the new layer to be added, which does not already exist
    * @param toCopy    The name of the layer, which must already exist, to be copied.
    * @throws IllegalArgumentException If the given string is null, or if layerName is a name that
-   *                                  already exists, or if toCopy is a name that does not exist
+   *                                  already exists, or if toCopy is a name that does not exist,
+   *                                  or if the layerName is more than one word
    */
   void addLayer(String layerName, String toCopy) throws IllegalArgumentException;
 

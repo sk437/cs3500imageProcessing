@@ -14,7 +14,7 @@ public abstract class AbstractBlend implements Blend {
   /**
    * Combines all layers of given layered image and puts them into the output.
    * @param original The original source of all of the layers
-   * @param outPut The output image for the blended layers
+   * @param output The output image for the blended layers
    * @throws IllegalArgumentException If either given parameters are null
    */
   protected abstract void combineLayers(LayeredImage original, GraphOfPixels output) throws IllegalArgumentException;
