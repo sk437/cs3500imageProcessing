@@ -1,0 +1,67 @@
+#Create image to be loaded as layers
+create-image transparent transparentImage 10 15
+load transparentImage
+update-color 5 10 255 255 255 0
+update-color 5 11 255 255 0 255
+update-color 5 9 255 0 255 255
+save png res/transparentImage
+
+#Create layered images
+create-layered-image newLayered 10 15
+create-layered-image fromSaved outputImages/exampleLayeredImage
+
+#Adds layers to the examples
+add-layer newLayered emptyLayer
+add-layer newLayered emptyLayer2
+load newLayered
+add-image-as-layer fromImageLayer res/transparentImage.png
+copy-layer fromSaved newRedLayer red-layer
+
+#Updating colors of some pixels within layers
+update-color newLayered emptyLayer 0 0 255 255 255 255
+load fromSaved
+update-color fromSaved newRedLayer 5 5 255 0 0 255
+set-current-layer blue-layer
+update-color 5 5 0 0 0 0
+update-color newLayered emptyLayer 0 0 255 0 255 0
+
+#Applying a mutator to a layer
+apply-mutator greyscale fromSaved blue-layer
+load newLayered
+set-current-layer emptyLayer
+apply-mutator sepia
+
+#Saving an individual layer
+save fromSaved blue-layer png res/blueLayer
+load newLayered
+set-current-layer emptyLayer
+save png res/empty
+
+#Moves some layers around
+move-layer fromSaved blue-layer 0
+load newLayered
+move-layer emptyLayer 1
+
+#Change visibilities
+update-visibility fromSaved invisible-layer true
+load fromSaved
+update-visibility fromSaved red-layer false
+copy-layer newNewRedLayer newRedLayer
+set-current-layer newNewRedLayer
+update-visibility false
+
+#Removes a few layers
+remove-layer newLayered emptyLayer2
+load fromSaved
+remove-layer red-layer
+
+#Save as a layered image
+save-layered newLayered res/newLayered
+load fromSaved
+save-layered res/fromSaved
+
+#Saves layered image as an image
+save-as-image basic png res/fromSavedPNG
+load newLayered
+save-as-image basic jpeg res/newLayeredJPG
+save-as-image fromSaved basic ppm res/fromSavedPPM

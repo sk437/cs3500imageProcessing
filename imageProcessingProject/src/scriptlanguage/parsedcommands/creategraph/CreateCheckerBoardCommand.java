@@ -1,6 +1,6 @@
 package scriptlanguage.parsedcommands.creategraph;
 
-import imageInput.imageprogram.CheckerBoard;
+import imageInput.CheckerBoard;
 import imageasgraph.GraphOfPixels;
 import imageasgraph.ImageToGraphConverter;
 import java.util.HashMap;

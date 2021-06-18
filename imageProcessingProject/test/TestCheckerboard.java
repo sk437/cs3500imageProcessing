@@ -1,8 +1,8 @@
 import static org.junit.Assert.assertEquals;
 
 
-import imageInput.imageprogram.CheckerBoard;
-import imageinput.imageprogram.ImageProgram;
+import imageInput.CheckerBoard;
+import imageInput.ImageProgram;
 import java.util.ArrayList;
 import org.junit.Test;
 import pixel.PixelAsColors;

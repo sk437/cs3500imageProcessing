@@ -2,8 +2,8 @@ import static org.junit.Assert.assertEquals;
 
 import imageasgraph.GraphOfPixels;
 import imageasgraph.ImageToGraphConverter;
-import imageInput.imageprogram.CheckerBoard;
-import imageinput.imageprogram.ImageProgram;
+import imageInput.CheckerBoard;
+import imageInput.ImageProgram;
 import org.junit.Test;
 import pixel.PixelAsColors;
 import pixel.SimplePixel;

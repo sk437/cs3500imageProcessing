@@ -56,6 +56,17 @@ public class TestLoadCommand {
       //This catch clause should be run, allowing the program to continue.
     }
 
+    test.parseCommand("set-current-layer layer").alterLanguageState(test);
+
+
+    try {
+      //This command should update the current reference and thus the below command should pass.
+      //No exception in the try clause should be logged.
+      test.parseCommand("update-color existing 0 0 123 50 50 50").execute(graphs, layeredImages);
+    } catch (IllegalArgumentException e) {
+      throw new IllegalStateException("THIS SHOULD NOT BE REACHED");
+    }
+
     newExecutableCommand.alterLanguageState(test);
 
     try {
@@ -65,6 +76,14 @@ public class TestLoadCommand {
     } catch (IllegalArgumentException e) {
       throw new IllegalStateException("THIS SHOULD NOT BE REACHED");
 
+    }
+
+    try {
+      test.parseCommand("update-color 0 0 123 50 50 50").execute(graphs, layeredImages);
+      throw new IllegalStateException("THIS SHOULD NOT BE REACHED");
+    } catch (IllegalArgumentException e) {
+      //This command should fail to update the current reference, and thus the catch block
+      //should be run.
     }
   }
 

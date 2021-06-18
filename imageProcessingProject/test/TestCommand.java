@@ -384,24 +384,10 @@ public class TestCommand {
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void testFailBlurNoCurrentLayer() {
-    List<String> blurInputsCurrentLayer = new ArrayList<String>(
-        Arrays.asList("blur", "existingImage"));
-    Command.applyMutator.returnExecutable(blurInputsCurrentLayer, "existingImage", null);
-  }
-
-  @Test(expected = IllegalArgumentException.class)
   public void testFailSharpenNoCurrentImage() {
     List<String> sharpenInputsSingle = new ArrayList<String>(
         Collections.singletonList("sharpen"));
     Command.applyMutator.returnExecutable(sharpenInputsSingle, null, null);
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testFailSharpenNoCurrentLayer() {
-    List<String> sharpenInputsCurrentLayer = new ArrayList<String>(
-        Arrays.asList("sharpen", "existingImage"));
-    Command.applyMutator.returnExecutable(sharpenInputsCurrentLayer, "existingImage", null);
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -412,26 +398,11 @@ public class TestCommand {
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void testFailSepiaNoCurrentLayer() {
-    List<String> sepiaInputsCurrentLayer = new ArrayList<String>(
-        Arrays.asList("sepia", "existingImage"));
-    Command.applyMutator.returnExecutable(sepiaInputsCurrentLayer, "existingImage", null);
-  }
-
-  @Test(expected = IllegalArgumentException.class)
   public void testFailGreyscaleNoCurrentImage() {
     List<String> greyscaleInputsSingle = new ArrayList<String>(
         Collections.singletonList("greyscale"));
     Command.applyMutator.returnExecutable(greyscaleInputsSingle, null, null);
   }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testFailGreyscaleNoCurrentLayer() {
-    List<String> greyscaleInputsCurrentLayer = new ArrayList<String>(
-        Arrays.asList("greyscale", "existingImage"));
-    Command.applyMutator.returnExecutable(greyscaleInputsCurrentLayer, "existingImage", null);
-  }
-
 
   @Test(expected = IllegalArgumentException.class)
   public void testFailApplyMutatorNullList(){
@@ -513,13 +484,6 @@ public class TestCommand {
     List<String> noCurrentsSingle = new ArrayList<String>(
         Arrays.asList("png", "outputImages/birbNEW"));
     Command.save.returnExecutable(noCurrentsSingle, null, "birb");
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testFailSaveNoCurrentLayer() {
-    List<String> currentLayer = new ArrayList<String>(
-        Arrays.asList("existingImage", "png", "outputImages/birbNEW"));
-    Command.save.returnExecutable(currentLayer, "existingImage", null);
   }
 
   @Test(expected = IllegalArgumentException.class)

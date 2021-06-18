@@ -41,22 +41,22 @@ public enum Command {
         case "checkerboard":
           Command.assertValidNumInputs(10, inputs);
           intInputs = Command.convertIntegerInputs(2,10,inputs);
-          return new CreateCheckerBoardCommand(inputs.get(0), intInputs.get(0), intInputs.get(1),
+          return new CreateCheckerBoardCommand(inputs.get(1), intInputs.get(0), intInputs.get(1),
               intInputs.get(2), intInputs.get(3), intInputs.get(4), intInputs.get(5), intInputs.get(6),
               intInputs.get(7));
         case "empty":
           Command.assertValidNumInputs(2, inputs);
-          return new CreateEmptyImageCommand(inputs.get(0));
+          return new CreateEmptyImageCommand(inputs.get(1));
         case "transparent":
           Command.assertValidNumInputs(4, inputs);
           intInputs = Command.convertIntegerInputs(2,4,inputs);
-          return new CreateTransparentCommand(inputs.get(0), intInputs.get(0), intInputs.get(1));
+          return new CreateTransparentCommand(inputs.get(1), intInputs.get(0), intInputs.get(1));
         case "copy":
           Command.assertValidNumInputs(3,inputs);
-          return new CreateCopyCommand(inputs.get(0), inputs.get(2));
+          return new CreateCopyCommand(inputs.get(1), inputs.get(2));
         case "from-image":
           Command.assertValidNumInputs(3,inputs);
-          return new CreateFromImageCommand(inputs.get(0), inputs.get(2));
+          return new CreateFromImageCommand(inputs.get(1), inputs.get(2));
         default:
           throw new IllegalArgumentException("Invalid type specified for this command");
       }
@@ -97,10 +97,6 @@ public enum Command {
           return new UpdateColorCommand(currentImage, currentLayer, intInputs.get(0), intInputs.get(1),
                intInputs.get(2), intInputs.get(3), intInputs.get(4), intInputs.get(5));
         case 7:
-          if (currentLayer == null) {
-            throw new IllegalArgumentException("This command cannot be called with the given amount"
-                + " of inputs, because there is no default layer");
-          }
           intInputs = Command.convertIntegerInputs(1,7,inputs);
           return new UpdateColorCommand(inputs.get(0), currentLayer, intInputs.get(0), intInputs.get(1),
               intInputs.get(2), intInputs.get(3), intInputs.get(4), intInputs.get(5));
@@ -131,10 +127,6 @@ public enum Command {
               }
               return new BlurCommand(currentImage, currentLayer);
             case 2:
-              if (currentLayer == null) {
-                throw new IllegalArgumentException("This command cannot be called with the given amount"
-                    + " of inputs, because there is no default layer");
-              }
               return new BlurCommand(inputs.get(1), currentLayer);
             case 3:
               return new BlurCommand(inputs.get(1), inputs.get(2));
@@ -150,10 +142,6 @@ public enum Command {
               }
               return new SharpenCommand(currentImage, currentLayer);
             case 2:
-              if (currentLayer == null) {
-                throw new IllegalArgumentException("This command cannot be called with the given amount"
-                    + " of inputs, because there is no default layer");
-              }
               return new SharpenCommand(inputs.get(1), currentLayer);
             case 3:
               return new SharpenCommand(inputs.get(1), inputs.get(2));
@@ -169,10 +157,6 @@ public enum Command {
               }
               return new SepiaCommand(currentImage, currentLayer);
             case 2:
-              if (currentLayer == null) {
-                throw new IllegalArgumentException("This command cannot be called with the given amount"
-                    + " of inputs, because there is no default layer");
-              }
               return new SepiaCommand(inputs.get(1), currentLayer);
             case 3:
               return new SepiaCommand(inputs.get(1), inputs.get(2));
@@ -188,10 +172,6 @@ public enum Command {
               }
               return new GreyscaleCommand(currentImage, currentLayer);
             case 2:
-              if (currentLayer == null) {
-                throw new IllegalArgumentException("This command cannot be called with the given amount"
-                    + " of inputs, because there is no default layer");
-              }
               return new GreyscaleCommand(inputs.get(1), currentLayer);
             case 3:
               return new GreyscaleCommand(inputs.get(1), inputs.get(2));
@@ -216,10 +196,6 @@ public enum Command {
           }
           return new SaveCommand(currentImage, currentLayer, inputs.get(0), inputs.get(1));
         case 3:
-          if (currentLayer == null) {
-            throw new IllegalArgumentException("This command cannot be called with the given amount"
-                + " of inputs, because there is no default layer");
-          }
           return new SaveCommand(inputs.get(0), currentLayer, inputs.get(1), inputs.get(2));
         case 4:
           return new SaveCommand(inputs.get(0), inputs.get(1), inputs.get(2), inputs.get(3));

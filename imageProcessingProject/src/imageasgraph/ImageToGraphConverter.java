@@ -1,8 +1,6 @@
 package imageasgraph;
 
-import static imageasgraph.InputType.ppm;
-
-import imageinput.imageprogram.ImageProgram;
+import imageInput.ImageProgram;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;

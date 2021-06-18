@@ -1,0 +1,24 @@
+#Create images
+create-image checkerboard checkerboardImage 20 25 255 0 0 0 0 0
+create-image empty useless
+create-image transparent transparentImage 50 40
+create-image copy checkerboardTwo checkerboardImage
+create-image from-image birb outputImages/birb.jpg
+
+#Update colors of images
+update-color checkerboardTwo 0 0 15 16 17 18
+load transparentImage
+update-color 10 10 255 255 0 0
+
+#Apply mutators to images
+apply-mutator blur birb
+apply-mutator sharpen birb
+apply-mutator sepia
+load checkerboardImage
+apply-mutator greyscale
+
+#Save images
+save ppm res/checkerboard
+save birb jpeg res/birb
+load transparentImage
+save png res/transparent

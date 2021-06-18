@@ -20,7 +20,6 @@ public class TestBasicBlendCommand {
   private HashMap<String, GraphOfPixels> graphs;
   private HashMap<String, LayeredImage> layeredImages;
   private ParsedCommand newFailCommandNonExistingDest;
-  private ParsedCommand newFailCommandNonExistingSource;
   private ParsedCommand newExecutableCommand;
   private LanguageSyntax test;
 
@@ -44,7 +43,6 @@ public class TestBasicBlendCommand {
     layeredImages.put("existing", ex1);
 
     newFailCommandNonExistingDest = new BasicBlendCommand("non-existing", "png", "outputImages/birb.jpg");
-    newFailCommandNonExistingSource = new BasicBlendCommand("existing", "png", "where/what");
     newExecutableCommand = new BasicBlendCommand("existing", "png", "outputImages/testBlend");
   }
 
@@ -90,12 +88,6 @@ public class TestBasicBlendCommand {
   public void testFailInvalidDestination() {
     this.setUp();
     newFailCommandNonExistingDest.execute(graphs, layeredImages);
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testFailInvalidSource() {
-    this.setUp();
-    newFailCommandNonExistingSource.execute(graphs, layeredImages);
   }
 
   @Test
