@@ -19,6 +19,9 @@ public class LayeredImageIterator implements Iterator<FixedSizeGraph> {
    * @param layers The layers to be iterated over
    */
   public LayeredImageIterator(HashMap<String, LayerData> layers) {
+    if (layers == null) {
+      throw new IllegalArgumentException("Null layers");
+    }
     FixedSizeGraph[] layerArray = new FixedSizeGraph[layers.size()];
     for (LayerData info : layers.values()) {
       layerArray[info.getPos()] = info.getImage();
@@ -33,6 +36,9 @@ public class LayeredImageIterator implements Iterator<FixedSizeGraph> {
 
   @Override
   public FixedSizeGraph next() {
+    if (!this.hasNext()) {
+      throw new IllegalArgumentException("No more items");
+    }
     return layers.remove(0);
   }
 }
