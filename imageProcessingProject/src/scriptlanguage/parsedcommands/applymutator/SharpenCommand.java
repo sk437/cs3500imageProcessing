@@ -24,6 +24,9 @@ public class SharpenCommand implements ParsedCommand {
    * @throws IllegalArgumentException If given a null imageToUpdate
    */
   public SharpenCommand(String imageToUpdate, String layerToUpdate) throws IllegalArgumentException {
+    if (imageToUpdate == null) {
+      throw new IllegalArgumentException("Null image name");
+    }
     this.imageToUpdate = imageToUpdate;
     this.layerToUpdate = layerToUpdate;
   }

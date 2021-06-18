@@ -12,8 +12,8 @@ import scriptlanguage.parsedcommands.ParsedCommand;
  * image.
  */
 public class GreyscaleCommand implements ParsedCommand {
-  String imageToUpdate;
-  String layerToUpdate;
+  private String imageToUpdate;
+  private String layerToUpdate;
 
   /**
    * Constructs a new GreyscaleCommand, to be applied to an existing GraphOfPixels or layer of an

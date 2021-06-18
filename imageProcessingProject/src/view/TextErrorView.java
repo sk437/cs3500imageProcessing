@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 /**
- * Represents a textual view that only throws errors.
+ * Represents a textual view that only has basic message rendering capacity.
  */
 public class TextErrorView implements ErrorView{
 

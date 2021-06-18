@@ -12,8 +12,8 @@ import scriptlanguage.parsedcommands.ParsedCommand;
  * image.
  */
 public class BlurCommand implements ParsedCommand {
-  String imageToUpdate;
-  String layerToUpdate;
+  private String imageToUpdate;
+  private String layerToUpdate;
 
   /**
    * Constructs a new BlurCommand, to be applied to either an existing image or existing layer of

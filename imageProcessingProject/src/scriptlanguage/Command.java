@@ -37,7 +37,7 @@ public enum Command {
         throw new IllegalArgumentException("Not enough inputs");
       }
       List<Integer> intInputs;
-      switch(inputs.get(1)) {
+      switch(inputs.get(0)) {
         case "checkerboard":
           Command.assertValidNumInputs(10, inputs);
           intInputs = Command.convertIntegerInputs(2,10,inputs);
@@ -97,6 +97,10 @@ public enum Command {
           return new UpdateColorCommand(currentImage, currentLayer, intInputs.get(0), intInputs.get(1),
                intInputs.get(2), intInputs.get(3), intInputs.get(4), intInputs.get(5));
         case 7:
+          if (currentLayer == null) {
+            throw new IllegalArgumentException("This command cannot be called with the given amount"
+                + " of inputs, because there is no default layer");
+          }
           intInputs = Command.convertIntegerInputs(1,7,inputs);
           return new UpdateColorCommand(inputs.get(0), currentLayer, intInputs.get(0), intInputs.get(1),
               intInputs.get(2), intInputs.get(3), intInputs.get(4), intInputs.get(5));
@@ -127,6 +131,10 @@ public enum Command {
               }
               return new BlurCommand(currentImage, currentLayer);
             case 2:
+              if (currentLayer == null) {
+                throw new IllegalArgumentException("This command cannot be called with the given amount"
+                    + " of inputs, because there is no default layer");
+              }
               return new BlurCommand(inputs.get(1), currentLayer);
             case 3:
               return new BlurCommand(inputs.get(1), inputs.get(2));
@@ -142,6 +150,10 @@ public enum Command {
               }
               return new SharpenCommand(currentImage, currentLayer);
             case 2:
+              if (currentLayer == null) {
+                throw new IllegalArgumentException("This command cannot be called with the given amount"
+                    + " of inputs, because there is no default layer");
+              }
               return new SharpenCommand(inputs.get(1), currentLayer);
             case 3:
               return new SharpenCommand(inputs.get(1), inputs.get(2));
@@ -157,6 +169,10 @@ public enum Command {
               }
               return new SepiaCommand(currentImage, currentLayer);
             case 2:
+              if (currentLayer == null) {
+                throw new IllegalArgumentException("This command cannot be called with the given amount"
+                    + " of inputs, because there is no default layer");
+              }
               return new SepiaCommand(inputs.get(1), currentLayer);
             case 3:
               return new SepiaCommand(inputs.get(1), inputs.get(2));
@@ -172,6 +188,10 @@ public enum Command {
               }
               return new GreyscaleCommand(currentImage, currentLayer);
             case 2:
+              if (currentLayer == null) {
+                throw new IllegalArgumentException("This command cannot be called with the given amount"
+                    + " of inputs, because there is no default layer");
+              }
               return new GreyscaleCommand(inputs.get(1), currentLayer);
             case 3:
               return new GreyscaleCommand(inputs.get(1), inputs.get(2));
@@ -196,6 +216,10 @@ public enum Command {
           }
           return new SaveCommand(currentImage, currentLayer, inputs.get(0), inputs.get(1));
         case 3:
+          if (currentLayer == null) {
+            throw new IllegalArgumentException("This command cannot be called with the given amount"
+                + " of inputs, because there is no default layer");
+          }
           return new SaveCommand(inputs.get(0), currentLayer, inputs.get(1), inputs.get(2));
         case 4:
           return new SaveCommand(inputs.get(0), inputs.get(1), inputs.get(2), inputs.get(3));
@@ -228,6 +252,7 @@ public enum Command {
     public ParsedCommand returnExecutable(List<String> inputs, String currentImage,
         String currentLayer) {
       Command.assertNonNullInputs(inputs);
+      Command.assertValidNumInputs(1, inputs);
       return new LoadCommand(inputs.get(0));
     }
   },
@@ -236,6 +261,7 @@ public enum Command {
     public ParsedCommand returnExecutable(List<String> inputs, String currentImage,
         String currentLayer) {
       Command.assertNonNullInputs(inputs);
+      Command.assertValidNumInputs(1, inputs);
       return new LoadLayerCommand(inputs.get(0));
     }
   },
@@ -378,17 +404,17 @@ public enum Command {
             throw new IllegalArgumentException("This command cannot be called with the given amount"
                 + " of inputs, because there is no default image and/or layer");
           }
-          newVisibility = Boolean.parseBoolean(inputs.get(0));
+          newVisibility = Command.assertValidBooleanInput(inputs.get(0));
           return new UpdateVisibilityCommand(currentImage, currentLayer, newVisibility);
         case 2:
           if (currentLayer == null) {
             throw new IllegalArgumentException("This command cannot be called with the given amount"
                 + " of inputs, because there is no default layer");
           }
-          newVisibility = Boolean.parseBoolean(inputs.get(1));
+          newVisibility = Command.assertValidBooleanInput(inputs.get(1));
           return new UpdateVisibilityCommand(inputs.get(0), currentLayer, newVisibility);
         case 3:
-          newVisibility = Boolean.parseBoolean(inputs.get(2));
+          newVisibility = Command.assertValidBooleanInput(inputs.get(2));
           return new UpdateVisibilityCommand(inputs.get(0), inputs.get(1), newVisibility);
         default:
           throw new IllegalArgumentException("Invalid number of inputs");
@@ -442,6 +468,20 @@ public enum Command {
     }
   }
 
+
+  /**
+   * Determines whether an intended boolean value has a proper format.
+   * @param bool The String that will be checked for a boolean value
+   * @return The Boolean value held in the String if properly parsed
+   * @throws IllegalArgumentException If the given String is improperly formatted
+   */
+  private static boolean assertValidBooleanInput(String bool) throws IllegalArgumentException {
+    if ((!bool.equals("true") && !bool.equals("True")) && (!bool.equals("false") && !bool.equals("False"))) {
+      throw new IllegalArgumentException("Boolean input is not boolean value");
+    }
+    return Boolean.parseBoolean(bool);
+  }
+
   /**
    * Given a list of inputs, returns a new list of integers by converting all elements in the given
    * list beginning at the start and going up to (but not including) the end index to integers,
@@ -467,4 +507,5 @@ public enum Command {
     }
     return intInputs;
   }
+
 }

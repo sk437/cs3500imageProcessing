@@ -12,8 +12,8 @@ import scriptlanguage.parsedcommands.ParsedCommand;
  * image.
  */
 public class SepiaCommand implements ParsedCommand {
-  String imageToUpdate;
-  String layerToUpdate;
+  private String imageToUpdate;
+  private String layerToUpdate;
 
   /**
    * Constructs a new SepiaCommand, to be applied to an existing GraphOfPixels or layer of an
@@ -24,6 +24,9 @@ public class SepiaCommand implements ParsedCommand {
    * @throws IllegalArgumentException If given a null imageToUpdate
    */
   public SepiaCommand(String imageToUpdate, String layerToUpdate) throws IllegalArgumentException {
+    if (imageToUpdate == null) {
+      throw new IllegalArgumentException("Null image name");
+    }
     this.imageToUpdate = imageToUpdate;
     this.layerToUpdate = layerToUpdate;
   }

@@ -72,6 +72,9 @@ public class EmptyNode extends AbstractNode {
 
   @Override
   public void setOpacity(int newOpacity) throws IllegalArgumentException {
+    if (newOpacity < PixelAsColors.minColor || newOpacity > PixelAsColors.maxColor) {
+      throw new IllegalArgumentException("Invalid opacity given.");
+    }
     //This will never have effect due to this being an empty node.
   }
 

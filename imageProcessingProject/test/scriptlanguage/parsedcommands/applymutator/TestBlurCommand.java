@@ -1,0 +1,148 @@
+package scriptlanguage.parsedcommands.applymutator;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import imageasgraph.GraphOfPixels;
+import imageasgraph.ImageToGraphConverter;
+import java.util.HashMap;
+import layeredimage.LayeredImage;
+import layeredimage.LayeredImageV0;
+import org.junit.Test;
+import pixel.SimplePixel;
+import scriptlanguage.LanguageSyntax;
+import scriptlanguage.LanguageSyntaxImpl;
+import scriptlanguage.parsedcommands.ParsedCommand;
+
+/**
+ * Tests the functionality of blurring an image through scripts.
+ */
+public class TestBlurCommand {
+
+  private HashMap<String, GraphOfPixels> graphs;
+  private HashMap<String, LayeredImage> layeredImages;
+  private ParsedCommand newFailCommandNonExistingDestImage;
+  private ParsedCommand newFailCommandNonExistingDestLayer;
+  private ParsedCommand newExecutableCommandSingle;
+  private ParsedCommand newExecutableCommandLayer;
+  private LanguageSyntax test;
+
+  /**
+   * A method to set up proxy graphs and layeredImages.
+   */
+  public void setUp() {
+    test = new LanguageSyntaxImpl();
+    LayeredImage ex1 = new LayeredImageV0(1024, 768);
+    ex1.addLayer("new");
+    ex1.getLayer(0).getPixelAt(0, 0).setOpacity(255);
+    ex1.getLayer(0).getPixelAt(0, 0).updateColors(new SimplePixel(16, 16, 16));
+    GraphOfPixels ex2 = ImageToGraphConverter.createEmptyGraph();
+    ex2.getPixelAt(0, 0).updateColors(new SimplePixel(16, 16, 16));
+
+    graphs = new HashMap<String, GraphOfPixels>();
+    graphs.put("existingImage", ex2);
+    layeredImages = new HashMap<String, LayeredImage>();
+    layeredImages.put("existing", ex1);
+
+    newFailCommandNonExistingDestImage = new BlurCommand("non-existing", "new");
+    newFailCommandNonExistingDestLayer = new BlurCommand("existing", "none");
+    newExecutableCommandSingle = new BlurCommand("existingImage", null);
+    newExecutableCommandLayer = new BlurCommand("existing", "new");
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testFailConstructionNullImageAdding() {
+    ParsedCommand fail = new BlurCommand(null, "birb");
+  }
+
+
+  @Test
+  public void testSuccessfulExecute() {
+    this.setUp();
+    assertEquals(16, graphs.get("existingImage").getPixelAt(0, 0).getRed());
+    assertEquals(16, graphs.get("existingImage").getPixelAt(0, 0).getGreen());
+    assertEquals(16, graphs.get("existingImage").getPixelAt(0, 0).getBlue());
+    newExecutableCommandSingle.execute(graphs, layeredImages);
+    assertEquals(4, graphs.get("existingImage").getPixelAt(0, 0).getRed());
+    assertEquals(4, graphs.get("existingImage").getPixelAt(0, 0).getGreen());
+    assertEquals(4, graphs.get("existingImage").getPixelAt(0, 0).getBlue());
+
+    assertEquals(16, layeredImages.get("existing").getLayer(0).getPixelAt(0, 0).getRed());
+    assertEquals(16, layeredImages.get("existing").getLayer(0).getPixelAt(0, 0).getGreen());
+    assertEquals(16, layeredImages.get("existing").getLayer(0).getPixelAt(0, 0).getBlue());
+    newExecutableCommandLayer.execute(graphs, layeredImages);
+    assertEquals(4, layeredImages.get("existing").getLayer(0).getPixelAt(0, 0).getRed());
+    assertEquals(4, layeredImages.get("existing").getLayer(0).getPixelAt(0, 0).getGreen());
+    assertEquals(4, layeredImages.get("existing").getLayer(0).getPixelAt(0, 0).getBlue());
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testFailInvalidDestination() {
+    this.setUp();
+    newFailCommandNonExistingDestImage.execute(graphs, layeredImages);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testFailInvalidSource() {
+    this.setUp();
+    newFailCommandNonExistingDestLayer.execute(graphs, layeredImages);
+  }
+
+  @Test
+  public void testAlterLanguageState() {
+    //Since the current image and field layers are private and inaccessible, we can test if they
+    // have been updated through testing whether scripts that rely on them pass without exception.
+    //This class should have no effect on this,
+    // so we should catch an exception both before and after.
+    this.setUp();
+
+    try {
+      ParsedCommand updateColorTest = test.parseCommand("update-color existing 0 0 123 50 50 50");
+      throw new IllegalStateException("THIS SHOULD NOT BE REACHED");
+    } catch (IllegalArgumentException e) {
+      //We do not want to see an exception occur here to show that the current values are null.
+    }
+
+    try {
+      ParsedCommand updateColorTest = test.parseCommand("update-color 0 0 123 50 50 50");
+      throw new IllegalStateException("THIS SHOULD NOT BE REACHED");
+    } catch (IllegalArgumentException e) {
+      //We do not want to see an exception occur here to show that the current values are null.
+    }
+
+    newExecutableCommandSingle.execute(graphs, layeredImages);
+
+    try {
+      ParsedCommand updateColorTest = test.parseCommand("update-color existing 0 0 123 50 50 50");
+      throw new IllegalStateException("THIS SHOULD NOT BE REACHED");
+    } catch (IllegalArgumentException e) {
+      //We do not want to see an exception occur here to show that the current values are null.
+    }
+
+    try {
+      ParsedCommand updateColorTest = test.parseCommand("update-color 0 0 123 50 50 50");
+      throw new IllegalStateException("THIS SHOULD NOT BE REACHED");
+    } catch (IllegalArgumentException e) {
+      //We do not want to see an exception occur here to show that the current values are null.
+    }
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testExecuteNullGraphs() {
+    this.setUp();
+    newExecutableCommandSingle.execute(null, layeredImages);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testExecuteNullLayeredImages() {
+    this.setUp();
+    newExecutableCommandSingle.execute(graphs, null);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testAlterStateNullGraphs() {
+    this.setUp();
+    newExecutableCommandSingle.alterLanguageState(null);
+  }
+}

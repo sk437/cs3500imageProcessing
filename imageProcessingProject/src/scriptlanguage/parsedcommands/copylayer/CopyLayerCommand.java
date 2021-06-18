@@ -24,7 +24,7 @@ public class CopyLayerCommand implements ParsedCommand {
    * @throws IllegalArgumentException If given a null input
    */
   public CopyLayerCommand(String imageToAddTo, String layerToAdd, String layerToCopy) throws IllegalArgumentException {
-    if (imageToAddTo == null || layerToAdd == null || layerToAdd == null) {
+    if (imageToAddTo == null || layerToAdd == null || layerToCopy == null) {
       throw new IllegalArgumentException("Null input");
     }
     this.imageToAddTo = imageToAddTo;

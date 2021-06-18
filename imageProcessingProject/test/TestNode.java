@@ -1,4 +1,6 @@
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import imageasgraph.EmptyNode;
 import imageasgraph.GraphOfPixels;
@@ -179,6 +181,100 @@ public class TestNode {
         forNeighbors.getNearby(1, -1));
     assertEquals(new EmptyNode(),
         forNeighbors.getNearby(2, 0));
+  }
+
+  @Test
+  public void testGetOpacity() {
+    this.setUp();
+    //New nodes are created with no transparency.
+    assertEquals(255, pn0.getOpacity());
+    assertEquals(3, pn0.getRed());
+    assertEquals(4, pn0.getGreen());
+    assertEquals(5, pn0.getBlue());
+
+    pn0.setOpacity(123);
+    assertEquals(123, pn0.getOpacity());
+    assertEquals(3, pn0.getRed());
+    assertEquals(4, pn0.getGreen());
+    assertEquals(5, pn0.getBlue());
+
+
+    //Empty nodes have max transparency.
+    assertEquals(0, empty0.getOpacity());
+    assertEquals(0, empty0.getRed());
+    assertEquals(0, empty0.getGreen());
+    assertEquals(0, empty0.getBlue());
+  }
+
+  @Test
+  public void testSetOpacity() {
+    this.setUp();
+    //Ensure new node has no transparency.
+    assertEquals(255, pn0.getOpacity());
+    assertEquals(3, pn0.getRed());
+    assertEquals(4, pn0.getGreen());
+    assertEquals(5, pn0.getBlue());
+
+    pn0.setOpacity(123);
+    assertEquals(123, pn0.getOpacity());
+    assertEquals(3, pn0.getRed());
+    assertEquals(4, pn0.getGreen());
+    assertEquals(5, pn0.getBlue());
+
+    pn0.setOpacity(0);
+    assertEquals(0, pn0.getOpacity());
+    assertEquals(0, pn0.getRed());
+    assertEquals(0, pn0.getGreen());
+    assertEquals(0, pn0.getBlue());
+
+    //Empty nodes ALWAYS have max transparency.
+    assertEquals(0, empty0.getOpacity());
+    assertEquals(0, empty0.getRed());
+    assertEquals(0, empty0.getGreen());
+    assertEquals(0, empty0.getBlue());
+    empty0.setOpacity(123);
+    assertEquals(0, empty0.getOpacity());
+    assertEquals(0, empty0.getRed());
+    assertEquals(0, empty0.getGreen());
+    assertEquals(0, empty0.getBlue());
+  }
+
+
+  @Test
+  public void testIsTransparent() {
+    this.setUp();
+    //New nodes are created with no transparency.
+    assertFalse(pn0.isTransparent());
+
+    pn0.setOpacity(123);
+    assertFalse(pn0.isTransparent());
+
+    //Empty nodes have max transparency.
+    assertTrue(empty0.isTransparent());
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testSetPixelNegativeOpacity() {
+    this.setUp();
+    pn0.setOpacity(-5);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testSetPixelTooLargeOpacity() {
+    this.setUp();
+    pn0.setOpacity(10000);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testSetEmptyNegativeOpacity() {
+    this.setUp();
+    empty0.setOpacity(-5);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testSetEmptyTooLargeOpacity() {
+    this.setUp();
+    empty0.setOpacity(10000);
   }
 
 }
