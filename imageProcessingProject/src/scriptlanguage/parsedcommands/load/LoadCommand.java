@@ -20,6 +20,9 @@ public class LoadCommand implements ParsedCommand {
    * @throws IllegalArgumentException If given a null input
    */
   public LoadCommand(String imageToLoad) throws IllegalArgumentException {
+    if (imageToLoad == null) {
+      throw new IllegalArgumentException("Null input");
+    }
     this.imageToLoad = imageToLoad;
   }
 

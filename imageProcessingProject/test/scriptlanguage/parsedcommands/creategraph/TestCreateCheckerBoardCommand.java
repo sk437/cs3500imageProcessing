@@ -78,30 +78,30 @@ public class TestCreateCheckerBoardCommand {
     this.setUp();
 
     try {
-      ParsedCommand updateColorTest = test.parseCommand("update-color existing 0 0 123 50 50 50");
+      test.parseCommand("update-color existing 0 0 123 50 50 50").execute(graphs, layeredImages);
       throw new IllegalStateException("THIS SHOULD NOT BE REACHED");
     } catch (IllegalArgumentException e) {
       //We do not want to see an exception occur here to show that the current values are null.
     }
 
     try {
-      ParsedCommand updateColorTest = test.parseCommand("update-color 0 0 123 50 50 50");
+      test.parseCommand("update-color 0 0 123 50 50 50").execute(graphs, layeredImages);
       throw new IllegalStateException("THIS SHOULD NOT BE REACHED");
     } catch (IllegalArgumentException e) {
       //We do not want to see an exception occur here to show that the current values are null.
     }
 
-    newExecutableCommand.execute(graphs, layeredImages);
+    newExecutableCommand.alterLanguageState(test);
 
     try {
-      ParsedCommand updateColorTest = test.parseCommand("update-color existing 0 0 123 50 50 50");
+      test.parseCommand("update-color existing 0 0 123 50 50 50").execute(graphs, layeredImages);
       throw new IllegalStateException("THIS SHOULD NOT BE REACHED");
     } catch (IllegalArgumentException e) {
       //We do not want to see an exception occur here to show that the current values are null.
     }
 
     try {
-      ParsedCommand updateColorTest = test.parseCommand("update-color 0 0 123 50 50 50");
+      test.parseCommand("update-color 0 0 123 50 50 50").execute(graphs, layeredImages);
       throw new IllegalStateException("THIS SHOULD NOT BE REACHED");
     } catch (IllegalArgumentException e) {
       //We do not want to see an exception occur here to show that the current values are null.

@@ -1,6 +1,7 @@
-package scriptlanguage.parsedcommands.applymutator;
+package scriptlanguage.parsedcommands.savelayeredimage;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import imageasgraph.GraphOfPixels;
 import imageasgraph.ImageToGraphConverter;
@@ -14,15 +15,13 @@ import scriptlanguage.LanguageSyntaxImpl;
 import scriptlanguage.parsedcommands.ParsedCommand;
 
 /**
- * Tests the functionality of making an image greyscale through scripts.
+ * Tests the functionality of saving layered images through scripts.
  */
-public class TestGreyscaleCommand {
+public class TestSaveLayeredCommand {
   private HashMap<String, GraphOfPixels> graphs;
   private HashMap<String, LayeredImage> layeredImages;
-  private ParsedCommand newFailCommandNonExistingDestImage;
-  private ParsedCommand newFailCommandNonExistingDestLayer;
   private ParsedCommand newExecutableCommandSingle;
-  private ParsedCommand newExecutableCommandLayer;
+  private ParsedCommand failExecutableNonExistentImage;
   private LanguageSyntax test;
 
   /**
@@ -30,60 +29,59 @@ public class TestGreyscaleCommand {
    */
   public void setUp() {
     test = new LanguageSyntaxImpl();
-    LayeredImage ex1 = new LayeredImageV0(1024, 768);
-    ex1.addLayer("new");
-    ex1.getLayer(0).getPixelAt(0, 0).setOpacity(255);
-    ex1.getLayer(0).getPixelAt(0, 0).updateColors(new SimplePixel(16, 32, 64));
-    GraphOfPixels ex2 = ImageToGraphConverter.createEmptyGraph();
-    ex2.getPixelAt(0, 0).updateColors(new SimplePixel(16, 32, 64));
-
     graphs = new HashMap<String, GraphOfPixels>();
-    graphs.put("existingImage", ex2);
     layeredImages = new HashMap<String, LayeredImage>();
+    LayeredImage ex1 = new LayeredImageV0(1, 1);
+    ex1.addLayer("secondLayer");
+    ex1.getLayer("secondLayer").getPixelAt(0, 0).setOpacity(214);
+    ex1.getLayer("secondLayer").getPixelAt(0, 0).updateColors(new SimplePixel(111, 111, 111));
+    ex1.addLayer("firstLayer");
+    ex1.getLayer("firstLayer").getPixelAt(0, 0).setOpacity(124);
+    ex1.getLayer("firstLayer").getPixelAt(0, 0).updateColors(new SimplePixel(50, 50, 50));
     layeredImages.put("existing", ex1);
 
-    newFailCommandNonExistingDestImage = new GreyscaleCommand("non-existing", "new");
-    newFailCommandNonExistingDestLayer = new GreyscaleCommand("existing", "none");
-    newExecutableCommandSingle = new GreyscaleCommand("existingImage", null);
-    newExecutableCommandLayer = new GreyscaleCommand("existing", "new");
+    newExecutableCommandSingle = new SaveLayeredCommand("existing", "outputImages/testSaveLayered");
+    failExecutableNonExistentImage = new SaveLayeredCommand("what", "outputImages/testSaveLayered");
+  }
+
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testFailConstructionNullImageName() {
+    ParsedCommand fail = new SaveLayeredCommand(null, "outputImages/testSaveLayered");
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void testFailConstructionNullImageAdding() {
-    ParsedCommand fail = new GreyscaleCommand(null, "birb");
+  public void testFailConstructionNullFileName() {
+    ParsedCommand fail = new SaveLayeredCommand("existing", null);
   }
 
 
   @Test
-  public void testSuccessfulExecute() {
+  public void testSuccessfulExecuteSingleImage() {
     this.setUp();
-    assertEquals(16, graphs.get("existingImage").getPixelAt(0, 0).getRed());
-    assertEquals(32, graphs.get("existingImage").getPixelAt(0, 0).getGreen());
-    assertEquals(64, graphs.get("existingImage").getPixelAt(0, 0).getBlue());
     newExecutableCommandSingle.execute(graphs, layeredImages);
-    assertEquals(31, graphs.get("existingImage").getPixelAt(0, 0).getRed());
-    assertEquals(31, graphs.get("existingImage").getPixelAt(0, 0).getGreen());
-    assertEquals(31, graphs.get("existingImage").getPixelAt(0, 0).getBlue());
+    LayeredImage exported = new LayeredImageV0("outputImages/testSaveLayered");
+    assertEquals(2, exported.getNumLayers());
+    assertEquals(1, exported.getWidth());
+    assertEquals(1, exported.getHeight());
+    assertEquals("firstLayer", exported.getLayerNames().get(0));
+    assertEquals("secondLayer", exported.getLayerNames().get(1));
 
-    assertEquals(16, layeredImages.get("existing").getLayer(0).getPixelAt(0, 0).getRed());
-    assertEquals(32, layeredImages.get("existing").getLayer(0).getPixelAt(0, 0).getGreen());
-    assertEquals(64, layeredImages.get("existing").getLayer(0).getPixelAt(0, 0).getBlue());
-    newExecutableCommandLayer.execute(graphs, layeredImages);
-    assertEquals(31, layeredImages.get("existing").getLayer(0).getPixelAt(0, 0).getRed());
-    assertEquals(31, layeredImages.get("existing").getLayer(0).getPixelAt(0, 0).getGreen());
-    assertEquals(31, layeredImages.get("existing").getLayer(0).getPixelAt(0, 0).getBlue());
+    assertEquals(50, exported.getLayer(0).getPixelAt(0, 0).getRed());
+    assertEquals(50, exported.getLayer(0).getPixelAt(0, 0).getGreen());
+    assertEquals(50, exported.getLayer(0).getPixelAt(0, 0).getBlue());
+    assertEquals(124, exported.getLayer(0).getPixelAt(0, 0).getOpacity());
+
+    assertEquals(111, exported.getLayer(1).getPixelAt(0, 0).getRed());
+    assertEquals(111, exported.getLayer(1).getPixelAt(0, 0).getGreen());
+    assertEquals(111, exported.getLayer(1).getPixelAt(0, 0).getBlue());
+    assertEquals(214, exported.getLayer(1).getPixelAt(0, 0).getOpacity());
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void testFailInvalidDestination() {
+  public void testFailImageDoesNotExist() {
     this.setUp();
-    newFailCommandNonExistingDestImage.execute(graphs, layeredImages);
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testFailInvalidSource() {
-    this.setUp();
-    newFailCommandNonExistingDestLayer.execute(graphs, layeredImages);
+    failExecutableNonExistentImage.execute(graphs, layeredImages);
   }
 
   @Test

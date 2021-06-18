@@ -13,6 +13,7 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -191,11 +192,24 @@ public class LayeredImageV0 implements LayeredImage {
 
   @Override
   public List<String> getLayerNames() {
-    ArrayList<String> toReturn = new ArrayList<String>();
-    for (String name : this.layers.keySet()) {
-      toReturn.add(name);
+    String[] toReturn = new String[this.layers.size()];
+    for (LayerData info : this.layers.values()) {
+      toReturn[info.getPos()] = this.getLayerNameAtPos(info.getPos());
     }
-    return toReturn;
+    return new ArrayList<String>(Arrays.asList(toReturn));
+  }
+
+  private String getLayerNameAtPos(int index) {
+    if (index < 0 || index > this.layers.size()) {
+      throw new IllegalArgumentException("Index to get layer name does not exist");
+    }
+    String layerName = null;
+    for (String layer : this.layers.keySet()) {
+      if (this.layers.get(layer).getPos() == index) {
+        layerName = layer;
+      }
+    }
+    return layerName;
   }
 
   @Override

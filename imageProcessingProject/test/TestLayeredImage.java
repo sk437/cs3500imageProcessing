@@ -471,7 +471,7 @@ public class TestLayeredImage {
     assertEquals(121,example.getLayer("new").getPixelAt(1,1).getBlue());
     example.loadImageAsLayer("newPNG", "outputImages/example2.png");
     assertEquals(2, example.getNumLayers());
-    assertEquals(new ArrayList<String>(Arrays.asList( "new", "newPNG")), example.getLayerNames());
+    assertEquals(new ArrayList<String>(Arrays.asList("newPNG", "new")), example.getLayerNames());
     assertEquals(55,example.getLayer("newPNG").getPixelAt(0,0).getRed());
     assertEquals(66,example.getLayer("newPNG").getPixelAt(0,0).getGreen());
     assertEquals(77,example.getLayer("newPNG").getPixelAt(0,0).getBlue());
@@ -486,7 +486,7 @@ public class TestLayeredImage {
     assertEquals(77,example.getLayer("newPNG").getPixelAt(1,1).getBlue());
     example.loadImageAsLayer("newJPG", "outputImages/example.jpeg");
     assertEquals(3, example.getNumLayers());
-    assertEquals(new ArrayList<String>(Arrays.asList("new", "newPNG", "newJPG")), example.getLayerNames());
+    assertEquals(new ArrayList<String>(Arrays.asList("newJPG", "newPNG", "new")), example.getLayerNames());
     assertEquals(123,example.getLayer("newJPG").getPixelAt(0,0).getRed(), 21);
     assertEquals(123,example.getLayer("newJPG").getPixelAt(0,0).getGreen(), 21);
     assertEquals(123,example.getLayer("newJPG").getPixelAt(0,0).getBlue(), 21);

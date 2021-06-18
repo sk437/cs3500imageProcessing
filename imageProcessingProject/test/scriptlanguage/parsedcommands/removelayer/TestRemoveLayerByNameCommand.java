@@ -1,28 +1,23 @@
-package scriptlanguage.parsedcommands.applymutator;
+package scriptlanguage.parsedcommands.removelayer;
 
 import static org.junit.Assert.*;
 
 import imageasgraph.GraphOfPixels;
-import imageasgraph.ImageToGraphConverter;
 import java.util.HashMap;
 import layeredimage.LayeredImage;
 import layeredimage.LayeredImageV0;
 import org.junit.Test;
-import pixel.SimplePixel;
 import scriptlanguage.LanguageSyntax;
 import scriptlanguage.LanguageSyntaxImpl;
 import scriptlanguage.parsedcommands.ParsedCommand;
+import scriptlanguage.parsedcommands.movelayer.MoveLayerCommand;
 
-/**
- * Tests the functionality of making an image greyscale through scripts.
- */
-public class TestGreyscaleCommand {
+public class TestRemoveLayerByNameCommand {
   private HashMap<String, GraphOfPixels> graphs;
   private HashMap<String, LayeredImage> layeredImages;
-  private ParsedCommand newFailCommandNonExistingDestImage;
-  private ParsedCommand newFailCommandNonExistingDestLayer;
-  private ParsedCommand newExecutableCommandSingle;
-  private ParsedCommand newExecutableCommandLayer;
+  private ParsedCommand newExecutableCommand;
+  private ParsedCommand failExecutableNonExistentImage;
+  private ParsedCommand failExecutableNonExistentLayer;
   private LanguageSyntax test;
 
   /**
@@ -30,61 +25,58 @@ public class TestGreyscaleCommand {
    */
   public void setUp() {
     test = new LanguageSyntaxImpl();
-    LayeredImage ex1 = new LayeredImageV0(1024, 768);
-    ex1.addLayer("new");
-    ex1.getLayer(0).getPixelAt(0, 0).setOpacity(255);
-    ex1.getLayer(0).getPixelAt(0, 0).updateColors(new SimplePixel(16, 32, 64));
-    GraphOfPixels ex2 = ImageToGraphConverter.createEmptyGraph();
-    ex2.getPixelAt(0, 0).updateColors(new SimplePixel(16, 32, 64));
-
     graphs = new HashMap<String, GraphOfPixels>();
-    graphs.put("existingImage", ex2);
     layeredImages = new HashMap<String, LayeredImage>();
+    LayeredImage ex1 = new LayeredImageV0(1, 1);
+    ex1.addLayer("secondLayer");
+    ex1.getLayer("secondLayer").getPixelAt(0, 0).setOpacity(255);
+    ex1.addLayer("firstLayer");
     layeredImages.put("existing", ex1);
+    newExecutableCommand = new RemoveLayerByNameCommand("existing", "firstLayer");
+    failExecutableNonExistentImage = new RemoveLayerByNameCommand("non-existent", "firstLayer");
+    failExecutableNonExistentLayer = new RemoveLayerByNameCommand("existing", "non-existent");
+  }
 
-    newFailCommandNonExistingDestImage = new GreyscaleCommand("non-existing", "new");
-    newFailCommandNonExistingDestLayer = new GreyscaleCommand("existing", "none");
-    newExecutableCommandSingle = new GreyscaleCommand("existingImage", null);
-    newExecutableCommandLayer = new GreyscaleCommand("existing", "new");
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testFailConstructionNullImageName() {
+    ParsedCommand fail = new RemoveLayerByNameCommand(null, "firstLayer");
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void testFailConstructionNullImageAdding() {
-    ParsedCommand fail = new GreyscaleCommand(null, "birb");
+  public void testFailConstructionNullLayerName() {
+    ParsedCommand fail = new RemoveLayerByNameCommand("existing", null);
   }
 
 
   @Test
   public void testSuccessfulExecute() {
     this.setUp();
-    assertEquals(16, graphs.get("existingImage").getPixelAt(0, 0).getRed());
-    assertEquals(32, graphs.get("existingImage").getPixelAt(0, 0).getGreen());
-    assertEquals(64, graphs.get("existingImage").getPixelAt(0, 0).getBlue());
-    newExecutableCommandSingle.execute(graphs, layeredImages);
-    assertEquals(31, graphs.get("existingImage").getPixelAt(0, 0).getRed());
-    assertEquals(31, graphs.get("existingImage").getPixelAt(0, 0).getGreen());
-    assertEquals(31, graphs.get("existingImage").getPixelAt(0, 0).getBlue());
-
-    assertEquals(16, layeredImages.get("existing").getLayer(0).getPixelAt(0, 0).getRed());
-    assertEquals(32, layeredImages.get("existing").getLayer(0).getPixelAt(0, 0).getGreen());
-    assertEquals(64, layeredImages.get("existing").getLayer(0).getPixelAt(0, 0).getBlue());
-    newExecutableCommandLayer.execute(graphs, layeredImages);
-    assertEquals(31, layeredImages.get("existing").getLayer(0).getPixelAt(0, 0).getRed());
-    assertEquals(31, layeredImages.get("existing").getLayer(0).getPixelAt(0, 0).getGreen());
-    assertEquals(31, layeredImages.get("existing").getLayer(0).getPixelAt(0, 0).getBlue());
+    //GetLayerNames iterates through a layered image and PRINTS THE LAYERS FROM TOP TO BOTTOM
+    assertEquals(2, layeredImages.get("existing").getNumLayers());
+    assertEquals("firstLayer", layeredImages.get("existing").getLayerNames().get(0));
+    assertEquals("secondLayer", layeredImages.get("existing").getLayerNames().get(1));
+    newExecutableCommand.execute(graphs, layeredImages);
+    assertEquals(1, layeredImages.get("existing").getNumLayers());
+    assertEquals("secondLayer", layeredImages.get("existing").getLayerNames().get(0));
+    //secondLayer has the only pixel with opacity 255, so we check if it moved to top.
+    assertEquals(255, layeredImages.get("existing").getLayer(0).getPixelAt(0, 0).getOpacity());
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void testFailInvalidDestination() {
+  public void testFailImageDoesNotExist() {
     this.setUp();
-    newFailCommandNonExistingDestImage.execute(graphs, layeredImages);
+    failExecutableNonExistentImage.execute(graphs, layeredImages);
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void testFailInvalidSource() {
+  public void testFailLayerDoesNotExist() {
     this.setUp();
-    newFailCommandNonExistingDestLayer.execute(graphs, layeredImages);
+    failExecutableNonExistentLayer.execute(graphs, layeredImages);
   }
+
+
+
 
   @Test
   public void testAlterLanguageState() {
@@ -108,7 +100,7 @@ public class TestGreyscaleCommand {
       //We do not want to see an exception occur here to show that the current values are null.
     }
 
-    newExecutableCommandSingle.alterLanguageState(test);
+    newExecutableCommand.alterLanguageState(test);
 
     try {
       test.parseCommand("update-color existing 0 0 123 50 50 50").execute(graphs, layeredImages);
@@ -128,18 +120,18 @@ public class TestGreyscaleCommand {
   @Test(expected = IllegalArgumentException.class)
   public void testExecuteNullGraphs() {
     this.setUp();
-    newExecutableCommandSingle.execute(null, layeredImages);
+    newExecutableCommand.execute(null, layeredImages);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testExecuteNullLayeredImages() {
     this.setUp();
-    newExecutableCommandSingle.execute(graphs, null);
+    newExecutableCommand.execute(graphs, null);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testAlterStateNullGraphs() {
     this.setUp();
-    newExecutableCommandSingle.alterLanguageState(null);
+    newExecutableCommand.alterLanguageState(null);
   }
 }
