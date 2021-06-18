@@ -1,0 +1,13 @@
+testScript
+
+#Test Command
+create-layered-image test1 outputImages/misc
+load test1
+set-current-layer rainbow
+remove-layer galaxy
+apply-mutator greyscale
+set-current-layer birb
+apply-mutator sharpen
+save-layered outputImages/testControllerFile
+save-as-image basic png outputImages/testControllerFile/testControllerFile
+quit

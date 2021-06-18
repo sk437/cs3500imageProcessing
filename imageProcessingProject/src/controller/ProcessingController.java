@@ -40,7 +40,7 @@ public class ProcessingController implements ImageProcessingController{
     if (fileInput == null || output == null) {
       throw new IllegalArgumentException("One or more inputs are null");
     }
-    this.view = new TextErrorView();
+    this.view = new TextErrorView(output);
     FileReader newScript;
     try {
       newScript = new FileReader(fileInput);
