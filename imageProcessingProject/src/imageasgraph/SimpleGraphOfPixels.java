@@ -16,12 +16,12 @@ import pixel.SimplePixel;
  */
 public class SimpleGraphOfPixels extends AbstractGraphOfPixels {
 
-  private AbstractNode topLeft;
+  private Node.AbstractNode topLeft;
   private int width;
   private int height;
 
   SimpleGraphOfPixels() {
-    this.topLeft = new EmptyNode();
+    this.topLeft = new Node.EmptyNode();
     this.width = 0;
     this.height = 0;
   }
@@ -118,14 +118,14 @@ public class SimpleGraphOfPixels extends AbstractGraphOfPixels {
     if (below >= this.height || below < 0) {
       throw new IllegalArgumentException("Index not in bounds");
     }
-    AbstractNode currentTop = this.topLeft;
+    Node.AbstractNode currentTop = this.topLeft;
     for (int row = 0; row < below; row += 1) {
       currentTop = currentTop.getBelowAsUpdatable();
     }
-    AbstractNode currentLeft = new EmptyNode();
+    Node.AbstractNode currentLeft = new Node.EmptyNode();
     PixelAsColors white = new SimplePixel(255, 255, 255);
     for (int col = 0; col < this.width; col += 1) {
-      AbstractNode toAdd = new PixelNode(new SimplePixel(white));
+      Node.AbstractNode toAdd = new Node.PixelNode(new SimplePixel(white));
       toAdd.updateAbove(currentTop);
       toAdd.updateBelow(currentTop.getBelowAsUpdatable());
       toAdd.updateLeft(currentLeft);
@@ -135,7 +135,7 @@ public class SimpleGraphOfPixels extends AbstractGraphOfPixels {
       currentLeft = toAdd;
       currentTop = currentTop.getRightAsUpdatable();
     }
-    currentLeft.updateRight(new EmptyNode());
+    currentLeft.updateRight(new Node.EmptyNode());
     this.height += 1;
   }
 
@@ -146,14 +146,14 @@ public class SimpleGraphOfPixels extends AbstractGraphOfPixels {
     if (after >= this.width || after < 0) {
       throw new IllegalArgumentException("Index not in bounds");
     }
-    AbstractNode currentLeft = this.topLeft;
+    Node.AbstractNode currentLeft = this.topLeft;
     for (int col = 0; col < after; col += 1) {
       currentLeft = currentLeft.getRightAsUpdatable();
     }
-    AbstractNode currentTop = new EmptyNode();
+    Node.AbstractNode currentTop = new Node.EmptyNode();
     PixelAsColors white = new SimplePixel(255, 255, 255);
     for (int row = 0; row < this.height; row += 1) {
-      AbstractNode toAdd = new PixelNode(new SimplePixel(white));
+      Node.AbstractNode toAdd = new Node.PixelNode(new SimplePixel(white));
       toAdd.updateAbove(currentTop);
       toAdd.updateLeft(currentLeft);
       toAdd.updateRight(currentLeft.getRightAsUpdatable());
@@ -163,13 +163,13 @@ public class SimpleGraphOfPixels extends AbstractGraphOfPixels {
       currentLeft = currentLeft.getBelowAsUpdatable();
       currentTop = toAdd;
     }
-    currentTop.updateBelow(new EmptyNode());
+    currentTop.updateBelow(new Node.EmptyNode());
     this.width += 1;
   }
 
   @Override
-  void addFirstNode(AbstractNode n) throws IllegalArgumentException {
-    if (n.equals(new EmptyNode())) {
+  void addFirstNode(Node.AbstractNode n) throws IllegalArgumentException {
+    if (n.equals(new Node.EmptyNode())) {
       throw new IllegalArgumentException("Starting node cannot be empty");
     }
     if (width != 0 || height != 0) {

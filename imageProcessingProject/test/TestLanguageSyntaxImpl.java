@@ -8,29 +8,29 @@ import layeredimage.LayeredImageV0;
 import org.junit.Test;
 import scriptlanguage.LanguageSyntax;
 import scriptlanguage.LanguageSyntaxImpl;
-import scriptlanguage.parsedcommands.addimagelayer.AddImageLayerCommand;
-import scriptlanguage.parsedcommands.addlayer.AddLayerCommand;
-import scriptlanguage.parsedcommands.applymutator.BlurCommand;
-import scriptlanguage.parsedcommands.applymutator.GreyscaleCommand;
-import scriptlanguage.parsedcommands.applymutator.SepiaCommand;
-import scriptlanguage.parsedcommands.applymutator.SharpenCommand;
-import scriptlanguage.parsedcommands.blend.BasicBlendCommand;
-import scriptlanguage.parsedcommands.copylayer.CopyLayerCommand;
-import scriptlanguage.parsedcommands.creategraph.CreateCheckerBoardCommand;
-import scriptlanguage.parsedcommands.creategraph.CreateCopyCommand;
-import scriptlanguage.parsedcommands.creategraph.CreateEmptyImageCommand;
-import scriptlanguage.parsedcommands.creategraph.CreateFromImageCommand;
-import scriptlanguage.parsedcommands.creategraph.CreateTransparentCommand;
-import scriptlanguage.parsedcommands.createlayered.CreateNewLayeredImageCommand;
-import scriptlanguage.parsedcommands.createlayered.ImportNewLayeredImageCommand;
-import scriptlanguage.parsedcommands.load.LoadCommand;
-import scriptlanguage.parsedcommands.loadlayer.LoadLayerCommand;
-import scriptlanguage.parsedcommands.movelayer.MoveLayerCommand;
-import scriptlanguage.parsedcommands.removelayer.RemoveLayerByNameCommand;
-import scriptlanguage.parsedcommands.save.SaveCommand;
-import scriptlanguage.parsedcommands.savelayeredimage.SaveLayeredCommand;
-import scriptlanguage.parsedcommands.updatecolor.UpdateColorCommand;
-import scriptlanguage.parsedcommands.updatevisibility.UpdateVisibilityCommand;
+import scriptlanguage.ParsedCommand.AddImageLayerCommand;
+import scriptlanguage.ParsedCommand.AddLayerCommand;
+import scriptlanguage.ParsedCommand.BlurCommand;
+import scriptlanguage.ParsedCommand.GreyscaleCommand;
+import scriptlanguage.ParsedCommand.SepiaCommand;
+import scriptlanguage.ParsedCommand.SharpenCommand;
+import scriptlanguage.ParsedCommand.BasicBlendCommand;
+import scriptlanguage.ParsedCommand.CopyLayerCommand;
+import scriptlanguage.ParsedCommand.CreateCheckerBoardCommand;
+import scriptlanguage.ParsedCommand.CreateCopyCommand;
+import scriptlanguage.ParsedCommand.CreateEmptyImageCommand;
+import scriptlanguage.ParsedCommand.CreateFromImageCommand;
+import scriptlanguage.ParsedCommand.CreateTransparentCommand;
+import scriptlanguage.ParsedCommand.CreateNewLayeredImageCommand;
+import scriptlanguage.ParsedCommand.ImportNewLayeredImageCommand;
+import scriptlanguage.ParsedCommand.LoadCommand;
+import scriptlanguage.ParsedCommand.LoadLayerCommand;
+import scriptlanguage.ParsedCommand.MoveLayerCommand;
+import scriptlanguage.ParsedCommand.RemoveLayerByNameCommand;
+import scriptlanguage.ParsedCommand.SaveCommand;
+import scriptlanguage.ParsedCommand.SaveLayeredCommand;
+import scriptlanguage.ParsedCommand.UpdateColorCommand;
+import scriptlanguage.ParsedCommand.UpdateVisibilityCommand;
 
 /**
  * Tests whether commands are parsed correctly and correct function objects are returned.
@@ -79,7 +79,7 @@ public class TestLanguageSyntaxImpl {
   /**
    * Initializes many possible String commands.
    */
-  public void setUp() {
+  private void setUp() {
     graphs = new HashMap<String, GraphOfPixels>();
 
     layeredImages = new HashMap<String, LayeredImage>();
@@ -194,6 +194,9 @@ public class TestLanguageSyntaxImpl {
     test.parseCommand(setCurrentLayer).alterLanguageState(test);
 
     test.parseCommand(updateColorCurrentImage).execute(graphs, layeredImages);
+
+    //ALL FUNCTIONALITY WAS TESTED
+    assertTrue(graphs.containsKey("existingImage"));
   }
 
   @Test
@@ -208,5 +211,8 @@ public class TestLanguageSyntaxImpl {
     test.parseCommand(setCurrentLayer).alterLanguageState(test);
 
     test.parseCommand(updateColorAllCurrents).execute(graphs, layeredImages);
+
+    //ALL FUNCTIONALITY WAS TESTED
+    assertTrue(graphs.containsKey("existingImage"));
   }
 }

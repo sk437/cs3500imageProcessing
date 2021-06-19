@@ -2,11 +2,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import imageasgraph.EmptyNode;
+import imageasgraph.Node.EmptyNode;
 import imageasgraph.GraphOfPixels;
 import imageasgraph.ImageToGraphConverter;
 import imageasgraph.Node;
-import imageasgraph.PixelNode;
+import imageasgraph.Node.PixelNode;
 import org.junit.Test;
 import pixel.PixelAsColors;
 import pixel.SimplePixel;

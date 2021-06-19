@@ -3,7 +3,7 @@ Project Creators: Marko Krstulovic and Kyle Sacks
 
 
 ABOUT/OVERVIEW:
-Sometimes, images have to edited or transformed in order to fit the needs of the people using them. 
+Sometimes, images have to edited or transformed in order to fit the needs of the people using them.
 As such, it is necessary to have software that can facilitate this, allowing for image editing.
 
 This program serves as a simple image processing software. It allows for image manipulation and enhancement.
@@ -62,7 +62,7 @@ Class PixelNode: Represents a node with neighbors and RGB values.
 
 Class Utils: Miscellaneous utility methods.
 ___________________
-Package imageInput:
+Package imageinput:
 Package imageProgram:
 
 Interface ImageProgram: Defines the required methods for a program that can be used to create an

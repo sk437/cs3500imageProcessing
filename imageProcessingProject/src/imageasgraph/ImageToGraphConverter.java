@@ -1,6 +1,6 @@
 package imageasgraph;
 
-import imageInput.ImageProgram;
+import imageinput.ImageProgram;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -38,7 +38,7 @@ public class ImageToGraphConverter {
    */
   public static GraphOfPixels createEmptyGraph() {
     AbstractGraphOfPixels toReturn = new SimpleGraphOfPixels();
-    toReturn.addFirstNode(new PixelNode(new SimplePixel(255, 255, 255)));
+    toReturn.addFirstNode(new Node.PixelNode(new SimplePixel(255, 255, 255)));
     return toReturn;
   }
 
@@ -55,7 +55,7 @@ public class ImageToGraphConverter {
       throw new IllegalArgumentException("Null graph");
     }
     AbstractGraphOfPixels toReturn = new SimpleGraphOfPixels();
-    toReturn.addFirstNode(new PixelNode(new SimplePixel(0, 0, 0)));
+    toReturn.addFirstNode(new Node.PixelNode(new SimplePixel(0, 0, 0)));
     for (int col = 0; col < original.getWidth() - 1; col += 1) {
       toReturn.insertColumn(col);
     }
@@ -104,7 +104,7 @@ public class ImageToGraphConverter {
   }
 
   /**
-   * Converts either a jpg or png file of given name to a GraphOfPixels image
+   * Converts either a jpg or png file of given name to a GraphOfPixels image.
    *
    * @param fileName The name of the file to be converted
    * @return The Graph representation of the given file
@@ -234,7 +234,7 @@ public class ImageToGraphConverter {
       throw new IllegalArgumentException("Invalid dimensions");
     }
     AbstractGraphOfPixels toReturn = new SimpleGraphOfPixels();
-    toReturn.addFirstNode(new PixelNode(new SimplePixel(0, 0, 0)));
+    toReturn.addFirstNode(new Node.PixelNode(new SimplePixel(0, 0, 0)));
     /*
     Creates a graph of the same size as the input, with all white nodes.
      */
@@ -283,7 +283,7 @@ public class ImageToGraphConverter {
       }
     }
     AbstractGraphOfPixels toReturn = new SimpleGraphOfPixels();
-    toReturn.addFirstNode(new PixelNode(new SimplePixel(toConvert.get(0).get(0))));
+    toReturn.addFirstNode(new Node.PixelNode(new SimplePixel(toConvert.get(0).get(0))));
     /*
     Creates a graph of the same size as the input, with all white nodes.
      */

@@ -8,7 +8,7 @@ import java.util.Scanner;
 import layeredimage.LayeredImage;
 import scriptlanguage.LanguageSyntax;
 import scriptlanguage.LanguageSyntaxImpl;
-import scriptlanguage.parsedcommands.ParsedCommand;
+import scriptlanguage.ParsedCommand;
 import view.ErrorView;
 import view.TextErrorView;
 

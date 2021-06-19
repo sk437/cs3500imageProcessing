@@ -3,8 +3,8 @@ import static org.junit.Assert.assertEquals;
 import imageasgraph.GraphOfPixels;
 import imageasgraph.ImageToGraphConverter;
 import mutators.Mutator;
-import mutators.colortransformations.GreyscaleTransform;
-import mutators.colortransformations.SepiaTransform;
+import mutators.Mutator.GreyscaleTransform;
+import mutators.Mutator.SepiaTransform;
 import org.junit.Test;
 import pixel.SimplePixel;
 

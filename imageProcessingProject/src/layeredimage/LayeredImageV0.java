@@ -21,7 +21,8 @@ import java.util.Scanner;
 import layeredimage.blend.Blend;
 
 /**
- * An implementation of a Layered Image ADD DETAILS LATER
+ * An implementation of a Layered Image that represents multiple images on multiple layers of a
+ * structure that can be manipulated or processed individually.
  */
 public class LayeredImageV0 implements LayeredImage {
 

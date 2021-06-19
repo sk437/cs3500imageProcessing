@@ -3,8 +3,8 @@ import static org.junit.Assert.assertEquals;
 import imageasgraph.GraphOfPixels;
 import imageasgraph.ImageToGraphConverter;
 import mutators.Mutator;
-import mutators.filters.BlurFilter;
-import mutators.filters.SharpenFilter;
+import mutators.Mutator.BlurFilter;
+import mutators.Mutator.SharpenFilter;
 import org.junit.Test;
 import pixel.SimplePixel;
 

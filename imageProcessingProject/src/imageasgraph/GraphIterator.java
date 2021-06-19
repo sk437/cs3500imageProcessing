@@ -27,7 +27,7 @@ class GraphIterator implements Iterator<Node> {
 
   @Override
   public boolean hasNext() {
-    return !(this.left.equals(new EmptyNode()));
+    return !(this.left.equals(new Node.EmptyNode()));
   }
 
   @Override
@@ -37,7 +37,7 @@ class GraphIterator implements Iterator<Node> {
     }
     Node toReturn = this.left;
     this.left = this.left.getRight();
-    if (this.left.equals(new EmptyNode())) {
+    if (this.left.equals(new Node.EmptyNode())) {
       this.top = this.top.getBelow();
       this.left = this.top;
     }

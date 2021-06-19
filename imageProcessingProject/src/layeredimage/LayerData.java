@@ -49,7 +49,7 @@ class LayerData {
   }
 
   /**
-   * Returns a reference to the image of this layer
+   * Returns a reference to the image of this layer.
    *
    * @return The image of this layer
    */
@@ -58,7 +58,7 @@ class LayerData {
   }
 
   /**
-   * Returns the position of this layer in it's LayeredImage
+   * Returns the position of this layer in it's LayeredImage.
    *
    * @return The position of this layer
    */
@@ -67,7 +67,7 @@ class LayerData {
   }
 
   /**
-   * Returns whether or not this is a visible layer
+   * Returns whether or not this is a visible layer.
    *
    * @return The visibility of this layer
    */

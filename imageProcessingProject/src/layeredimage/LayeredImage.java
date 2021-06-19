@@ -7,7 +7,7 @@ import layeredimage.blend.Blend;
 
 /**
  * Represents an image which is stored as multiple layered images, and which can access and mutate
- * those layers, save and export one or multiple,
+ * those layers, save and export one or multiple.
  */
 public interface LayeredImage extends Iterable<FixedSizeGraph> {
 

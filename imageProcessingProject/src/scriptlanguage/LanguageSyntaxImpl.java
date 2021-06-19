@@ -3,7 +3,6 @@ package scriptlanguage;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import scriptlanguage.parsedcommands.ParsedCommand;
 
 /**
  * Defines the language which parses commands given by an input script, and executes the command

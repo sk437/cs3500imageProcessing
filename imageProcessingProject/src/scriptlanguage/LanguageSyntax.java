@@ -1,7 +1,5 @@
 package scriptlanguage;
 
-import scriptlanguage.parsedcommands.ParsedCommand;
-
 /**
  * Defines the operations that an instance of the syntax for reading script commands must perform -
  * the ability to parse a given command, and the ability to alter the state of the default

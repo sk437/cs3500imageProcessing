@@ -1,3 +1,0 @@
-1024 768
-rainbow 0 true
-birb 1 true

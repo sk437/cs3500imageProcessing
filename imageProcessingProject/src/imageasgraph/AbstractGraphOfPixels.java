@@ -11,5 +11,5 @@ public abstract class AbstractGraphOfPixels implements GraphOfPixels {
    *
    * @param n The node to be the first node, must be non-empty
    */
-  abstract void addFirstNode(AbstractNode n) throws IllegalArgumentException;
+  abstract void addFirstNode(Node.AbstractNode n) throws IllegalArgumentException;
 }

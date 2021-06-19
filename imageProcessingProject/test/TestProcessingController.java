@@ -56,15 +56,10 @@ public class TestProcessingController {
     String testInputContent = "testScript\n"
         + "\n"
         + "#Test Command\n"
-        + "create-layered-image test1 outputImages/misc\n"
+        + "create-image from-image test1 outputImages/conversionTest.ppm\n"
         + "load test1\n"
-        + "set-current-layer rainbow\n"
-        + "remove-layer galaxy\n"
         + "apply-mutator greyscale\n"
-        + "set-current-layer birb\n"
-        + "apply-mutator sharpen\n"
-        + "save-layered outputImages/testControllerReadable\n"
-        + "save-as-image basic png outputImages/testControllerReadable/testControllerReadable";
+        + "save test1 png outputImages/testControllerReadable\n";
     Readable testInput = new StringReader(testInputContent);
     testOutputReadable = new StringBuilder();
     testOutputFile = new StringBuilder();
@@ -104,22 +99,13 @@ public class TestProcessingController {
     testReadable.run();
     assertEquals(
         "Invalid line 0: Unsupported command given\n", testOutputReadable.toString());
-    LayeredImage newLayeredImage = new LayeredImageV0("outputImages/testControllerReadable");
-    assertEquals(2, newLayeredImage.getNumLayers());
-    assertEquals(1024, newLayeredImage.getWidth());
-    assertEquals(768, newLayeredImage.getHeight());
-
-    assertEquals("birb", newLayeredImage.getLayerNames().get(1));
-    assertEquals("rainbow", newLayeredImage.getLayerNames().get(0));
-    assertEquals(1024, newLayeredImage.getWidth());
-
-    assertTrue(newLayeredImage.getVisibility("birb"));
-    assertTrue(newLayeredImage.getVisibility("rainbow"));
-
-    GraphOfPixels newImageAsSingle = ImageToGraphConverter
-        .convertImage("outputImages/testControllerReadable/testControllerReadable.png");
-    assertEquals(1024, newImageAsSingle.getWidth());
-    assertEquals(768, newImageAsSingle.getHeight());
+    GraphOfPixels newImage = ImageToGraphConverter
+        .convertImage("outputImages/testControllerReadable.png");
+    assertEquals(3, newImage.getWidth());
+    assertEquals(3, newImage.getHeight());
+    assertEquals(54, newImage.getPixelAt(0, 0).getRed());
+    assertEquals(54, newImage.getPixelAt(0, 0).getGreen());
+    assertEquals(54, newImage.getPixelAt(0, 0).getBlue());
   }
 
 }
