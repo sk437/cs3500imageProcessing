@@ -8,22 +8,25 @@ import scriptlanguage.LanguageSyntax;
 import scriptlanguage.parsedcommands.ParsedCommand;
 
 /**
- * Represents a command which creates a new layered image, when given a name and dimensions for
- * that new layered image.
+ * Represents a command which creates a new layered image, when given a name and dimensions for that
+ * new layered image.
  */
 public class CreateNewLayeredImageCommand implements ParsedCommand {
+
   private final String imageName;
   private final LayeredImage processedLayeredImage;
 
   /**
-   * Creates a new CreateNewLayeredImageCommand, which will create a new layered image with the given
-   * name and dimensions.
+   * Creates a new CreateNewLayeredImageCommand, which will create a new layered image with the
+   * given name and dimensions.
+   *
    * @param imageName The name of the layered image to be created
-   * @param width The width of the layered image to be created
-   * @param height The height of the layered image to be created
+   * @param width     The width of the layered image to be created
+   * @param height    The height of the layered image to be created
    * @throws IllegalArgumentException If given a null imageName
    */
-  public CreateNewLayeredImageCommand(String imageName, int width, int height) throws IllegalArgumentException {
+  public CreateNewLayeredImageCommand(String imageName, int width, int height)
+      throws IllegalArgumentException {
     if (imageName == null) {
       throw new IllegalArgumentException("Null input");
     }

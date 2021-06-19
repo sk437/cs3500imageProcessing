@@ -3,10 +3,11 @@ package layeredimage;
 import imageasgraph.FixedSizeGraph;
 
 /**
- * Stores information about a layer - it's actual image, it's position in a layered image,
- * and whether or not it is visible.
+ * Stores information about a layer - it's actual image, it's position in a layered image, and
+ * whether or not it is visible.
  */
 class LayerData {
+
   private final FixedSizeGraph image;
   private int pos;
   private boolean visibility;
@@ -14,8 +15,9 @@ class LayerData {
   /**
    * Constructs a new LayerData about the given image, at the given position, that is initially
    * visible.
+   *
    * @param image The image this LayerData represents
-   * @param pos The position of that image in a Layered Image
+   * @param pos   The position of that image in a Layered Image
    * @throws IllegalArgumentException If the given image is null
    */
   LayerData(FixedSizeGraph image, int pos) throws IllegalArgumentException {
@@ -29,9 +31,11 @@ class LayerData {
 
 
   /**
-   * Constructs a new LayerData about the given image, at the given position, with the given visibility.
-   * @param image The image this LayerData represents
-   * @param pos The position of that image in a Layered Image
+   * Constructs a new LayerData about the given image, at the given position, with the given
+   * visibility.
+   *
+   * @param image      The image this LayerData represents
+   * @param pos        The position of that image in a Layered Image
    * @param visibility The visibility of the image
    * @throws IllegalArgumentException If the given image is null
    */
@@ -46,6 +50,7 @@ class LayerData {
 
   /**
    * Returns a reference to the image of this layer
+   *
    * @return The image of this layer
    */
   FixedSizeGraph getImage() {
@@ -54,6 +59,7 @@ class LayerData {
 
   /**
    * Returns the position of this layer in it's LayeredImage
+   *
    * @return The position of this layer
    */
   int getPos() {
@@ -62,6 +68,7 @@ class LayerData {
 
   /**
    * Returns whether or not this is a visible layer
+   *
    * @return The visibility of this layer
    */
   boolean getVisibility() {
@@ -71,6 +78,7 @@ class LayerData {
   /**
    * Sets the position of this image to the given one, that given position should be valid for it's
    * layered image.
+   *
    * @param newPos The new position
    */
   void setPos(int newPos) {
@@ -79,6 +87,7 @@ class LayerData {
 
   /**
    * Sets the visibility of this image to the given boolean.
+   *
    * @param newVisibility The new visibility for this image.
    */
   void setVisibility(boolean newVisibility) {

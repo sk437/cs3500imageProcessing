@@ -17,6 +17,7 @@ import scriptlanguage.parsedcommands.ParsedCommand;
  * Tests the functionality of blending layers of an image into one image through scripts.
  */
 public class TestBasicBlendCommand {
+
   private HashMap<String, GraphOfPixels> graphs;
   private HashMap<String, LayeredImage> layeredImages;
   private ParsedCommand newFailCommandNonExistingDest;
@@ -42,7 +43,8 @@ public class TestBasicBlendCommand {
     layeredImages = new HashMap<String, LayeredImage>();
     layeredImages.put("existing", ex1);
 
-    newFailCommandNonExistingDest = new BasicBlendCommand("non-existing", "png", "outputImages/birb.jpg");
+    newFailCommandNonExistingDest = new BasicBlendCommand("non-existing", "png",
+        "outputImages/birb.jpg");
     newExecutableCommand = new BasicBlendCommand("existing", "png", "outputImages/testBlend");
   }
 

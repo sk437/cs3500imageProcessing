@@ -11,11 +11,13 @@ import scriptlanguage.parsedcommands.ParsedCommand;
  * layer name of that syntax.
  */
 public class LoadCommand implements ParsedCommand {
+
   private final String imageToLoad;
 
   /**
-   * Creates a new LoadCommand, which will set the default image of an existing syntax to the
-   * given imageName and reset the default layer name.
+   * Creates a new LoadCommand, which will set the default image of an existing syntax to the given
+   * imageName and reset the default layer name.
+   *
    * @param imageToLoad The name of the new default image
    * @throws IllegalArgumentException If given a null input
    */

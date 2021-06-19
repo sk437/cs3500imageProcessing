@@ -31,11 +31,12 @@ public class LayeredImageV0 implements LayeredImage {
 
   /**
    * Creates a new, empty LayeredImageV0.
-   * @param width The width of the new LayeredImage
+   *
+   * @param width  The width of the new LayeredImage
    * @param height The height of the new LayeredImage
    * @throws IllegalArgumentException If the width or height given is 0 or below
    */
-  public LayeredImageV0(int width, int height) throws IllegalArgumentException{
+  public LayeredImageV0(int width, int height) throws IllegalArgumentException {
     if (width <= 0 || height <= 0) {
       throw new IllegalArgumentException("Height or width is equal to or below 0");
     }
@@ -46,6 +47,7 @@ public class LayeredImageV0 implements LayeredImage {
 
   /**
    * Creates a new LayeredImageV0 by loading a LayeredImage file of the given name.
+   *
    * @param fileName The name of the file to be loaded
    * @throws IllegalArgumentException If fileName is null, or if it references an invalid file
    */
@@ -70,7 +72,9 @@ public class LayeredImageV0 implements LayeredImage {
       int position = sc.nextInt();
       boolean visible = sc.nextBoolean();
 
-      LayerData toAdd = new LayerData(ImageToGraphConverter.convertComplexImage(fileName + "/" + key + ".png"), position, visible);
+      LayerData toAdd = new LayerData(
+          ImageToGraphConverter.convertComplexImage(fileName + "/" + key + ".png"), position,
+          visible);
       this.layers.put(key, toAdd);
     }
 
@@ -78,6 +82,7 @@ public class LayeredImageV0 implements LayeredImage {
 
   /**
    * Asserts that the given layerName is non-null and is contained in this image.
+   *
    * @param layerName The layer to be checked.
    * @throws IllegalArgumentException If the layerName given is null or not contained
    */
@@ -92,6 +97,7 @@ public class LayeredImageV0 implements LayeredImage {
 
   /**
    * Asserts that the given layerName is non-null and is not contained in this image.
+   *
    * @param layerName The layer to be checked.
    * @throws IllegalArgumentException If the layerName given is null or contained
    */
@@ -149,8 +155,7 @@ public class LayeredImageV0 implements LayeredImage {
         if (info.getPos() > oldIndex && info.getPos() <= toIndex) {
           info.setPos(info.getPos() - 1);
         }
-      }
-      else {
+      } else {
         if (info.getPos() >= toIndex && info.getPos() < oldIndex) {
           info.setPos(info.getPos() + 1);
         }
@@ -199,7 +204,14 @@ public class LayeredImageV0 implements LayeredImage {
     return new ArrayList<String>(Arrays.asList(toReturn));
   }
 
-  private String getLayerNameAtPos(int index) {
+  /**
+   * Gets the layer name of the layer in this LayeredImage at given index.
+   *
+   * @param index The index of the layer to get the name from
+   * @return The target layer name
+   * @throws IllegalArgumentException If index is invalid
+   */
+  private String getLayerNameAtPos(int index) throws IllegalArgumentException {
     if (index < 0 || index > this.layers.size()) {
       throw new IllegalArgumentException("Index to get layer name does not exist");
     }
@@ -280,8 +292,7 @@ public class LayeredImageV0 implements LayeredImage {
     }
     try {
       Files.createDirectories(Paths.get(fileName));
-    }
-    catch (IOException e) {
+    } catch (IOException e) {
       throw new IllegalArgumentException("Could not create directory.");
     }
 

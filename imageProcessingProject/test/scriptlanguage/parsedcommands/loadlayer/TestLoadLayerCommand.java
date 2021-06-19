@@ -1,7 +1,5 @@
 package scriptlanguage.parsedcommands.loadlayer;
 
-import static org.junit.Assert.*;
-
 import imageasgraph.GraphOfPixels;
 import java.util.HashMap;
 import layeredimage.LayeredImage;
@@ -11,12 +9,12 @@ import pixel.SimplePixel;
 import scriptlanguage.LanguageSyntax;
 import scriptlanguage.LanguageSyntaxImpl;
 import scriptlanguage.parsedcommands.ParsedCommand;
-import scriptlanguage.parsedcommands.load.LoadCommand;
 
 /**
  * Tests the functionality of loading a layer as the current image through scripts.
  */
 public class TestLoadLayerCommand {
+
   private HashMap<String, GraphOfPixels> graphs;
   private HashMap<String, LayeredImage> layeredImages;
   private ParsedCommand newExecutableCommand;

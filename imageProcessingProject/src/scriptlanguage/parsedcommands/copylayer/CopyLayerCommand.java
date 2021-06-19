@@ -11,6 +11,7 @@ import scriptlanguage.parsedcommands.ParsedCommand;
  * name and layer to copy from that existing image.
  */
 public class CopyLayerCommand implements ParsedCommand {
+
   private final String imageToAddTo;
   private final String layerToAdd;
   private final String layerToCopy;
@@ -18,12 +19,14 @@ public class CopyLayerCommand implements ParsedCommand {
   /**
    * Constructs a new CopyLayerCommand, which will copy the layer of the given name in the layered
    * image of the given name and give it the given name for the new layer.
+   *
    * @param imageToAddTo The name of the layered image to be added to
-   * @param layerToAdd The name of the new layer to add
-   * @param layerToCopy The name of the existing layer to copy
+   * @param layerToAdd   The name of the new layer to add
+   * @param layerToCopy  The name of the existing layer to copy
    * @throws IllegalArgumentException If given a null input
    */
-  public CopyLayerCommand(String imageToAddTo, String layerToAdd, String layerToCopy) throws IllegalArgumentException {
+  public CopyLayerCommand(String imageToAddTo, String layerToAdd, String layerToCopy)
+      throws IllegalArgumentException {
     if (imageToAddTo == null || layerToAdd == null || layerToCopy == null) {
       throw new IllegalArgumentException("Null input");
     }

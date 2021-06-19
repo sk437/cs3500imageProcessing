@@ -7,6 +7,7 @@ import layeredimage.LayeredImage;
 import layeredimage.LayeredImageIterator;
 import layeredimage.LayeredImageV0;
 import org.junit.Test;
+
 /**
  * For testing the LayeredImageIterator class
  */
@@ -19,7 +20,7 @@ public class TestLayeredImageIter {
 
   @Test(expected = IllegalArgumentException.class)
   public void testNoMoreItems() {
-    Iterator<FixedSizeGraph> testIter = new LayeredImageV0(10,10).iterator();
+    Iterator<FixedSizeGraph> testIter = new LayeredImageV0(10, 10).iterator();
     testIter.next();
   }
 
@@ -30,7 +31,7 @@ public class TestLayeredImageIter {
     Iterator<FixedSizeGraph> testIter = forIteration.iterator();
     assertEquals(true, testIter.hasNext());
     FixedSizeGraph layer0 = testIter.next();
-    for (Node n :layer0) {
+    for (Node n : layer0) {
       assertEquals(255, n.getOpacity());
       assertEquals(255, n.getRed());
       assertEquals(0, n.getGreen());
@@ -38,14 +39,14 @@ public class TestLayeredImageIter {
     }
     assertEquals(true, testIter.hasNext());
     FixedSizeGraph layer1 = testIter.next();
-    for (Node n :layer1) {
+    for (Node n : layer1) {
       assertEquals(0, n.getOpacity());
       assertEquals(0, n.getRed());
       assertEquals(0, n.getGreen());
       assertEquals(0, n.getBlue());
     }
     FixedSizeGraph layer2 = testIter.next();
-    for (Node n :layer2) {
+    for (Node n : layer2) {
       assertEquals(255, n.getOpacity());
       assertEquals(0, n.getRed());
       assertEquals(0, n.getGreen());

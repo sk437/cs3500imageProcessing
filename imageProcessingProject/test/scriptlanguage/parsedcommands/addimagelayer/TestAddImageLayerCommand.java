@@ -34,7 +34,8 @@ public class TestAddImageLayerCommand {
     layeredImages = new HashMap<String, LayeredImage>();
     layeredImages.put("existing", ex1);
 
-    newFailCommandNonExistingDest = new AddImageLayerCommand("non-existing", "new", "outputImages/birb.jpg");
+    newFailCommandNonExistingDest = new AddImageLayerCommand("non-existing", "new",
+        "outputImages/birb.jpg");
     newFailCommandNonExistingSource = new AddImageLayerCommand("existing", "new", "nope");
     newExecutableCommand = new AddImageLayerCommand("existing", "new", "outputImages/birb.jpg");
   }

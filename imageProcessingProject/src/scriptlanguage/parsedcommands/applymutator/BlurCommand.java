@@ -12,12 +12,14 @@ import scriptlanguage.parsedcommands.ParsedCommand;
  * image.
  */
 public class BlurCommand implements ParsedCommand {
+
   private String imageToUpdate;
   private String layerToUpdate;
 
   /**
    * Constructs a new BlurCommand, to be applied to either an existing image or existing layer of
    * and existing image.
+   *
    * @param imageToUpdate The name of the image to be blurred, or the layeredImage which contains
    *                      the layer to be blurred.
    * @param layerToUpdate The name of the layer to be blurred, might be null if this command is
@@ -40,14 +42,12 @@ public class BlurCommand implements ParsedCommand {
     }
     if (graphs.containsKey(imageToUpdate)) {
       graphs.get(imageToUpdate).applyMutator(new BlurFilter());
-    }
-    else if (layeredImages.containsKey(imageToUpdate)) {
+    } else if (layeredImages.containsKey(imageToUpdate)) {
       if (layerToUpdate == null) {
         throw new IllegalArgumentException("Null layer to be blurred");
       }
       layeredImages.get(imageToUpdate).getLayer(layerToUpdate).applyMutator(new BlurFilter());
-    }
-    else {
+    } else {
       throw new IllegalArgumentException("The image this command is trying to blur does not exist");
     }
   }

@@ -1,0 +1,142 @@
+USEME:
+Project Creators: Marko Krstulovic and Kyle Sacks
+
+List of Commands:
+
+Important Notations: () -> Optional Arguments | [ ] -> Variable number of arguments | @ -> Variable Argument | / -> Either/or
+
+NOTE:
+For commands with (@ImageName) and (@LayerName):
+If no arguments are provided for either, program will use currently loaded image and layer (if @ImageName is a non-layered image, there may be no layer loaded).
+If one argument is provided, it will be assumed to be the @ImageName and the default (loaded) layer name will be used.
+If both arguments are provided, they will be used in this described order.
+
+NOTE:
+For commands with only (@ImageName): If image name is not specified, program will use currently loaded image name.
+
+
+
+create-image @ImageName @ImageType [ @Arg0 @Arg1 ... @ArgN ]
+Creates a new simple image based off of image type and then following arguments.
+@ImageName must not be the name of an image that already exists
+@ImageType must be one of:
+"transparent": Further arguments: @Width @Height, both non-negative, non-zero Integers
+"empty": Further arguments: NONE
+"checkerboard": Further arguments: @TileSizeInPixels @NumberOfTiles @Color1Red @Color1Green @Color1Blue @Color2Red @Color2Green @Color2Blue, 
+	All of these must be non-negative integers, Number of Tiles and TileSize must be non-zero, Number of TIles must be a perfect square
+"copy": Further arguments: @NameOfImageToCopy, Must reference image that has already been created by this session of the processor
+"from-image": Further arguments: @ReadFileLocation, Must be a valid file location for the image
+Examples:
+create-image transparent transparentImage 50 40
+create-image empty useless
+create-image checkerboard checkerboardImage 20 25 255 0 0 0 0 0
+create-image copy checkerboardTwo checkerboardImage
+create-image from-image birb birb.jpg
+
+
+create-layered-image @ImageName (@FileName)/[(@Width) (@Height)]
+Creates a new layered image by either reading a file from specified location, or creating a new empty one with specified width and height.
+@ImageName must not be the name of an image that already exists
+@FileName must reference an existing or locatable file.
+@Width and @Height must be non-negative and non-zero integers
+Examples:
+create-layered-image newLayered 10 15
+create-layered-image fromSaved exampleLayeredImage
+
+
+update-color (@ImageName) (@LayerName) @PixelX @PixelY @Alpha @Red @Green @Blue
+Updates the color of the pixel at specified positon in specified image/layer with new colors/opacity.
+@ImageName must be the name of an image that already exists
+@LayerName must be the name of a layer from a layered image that already exists
+@PixelX, @PixelY, @Alpha, @Red, @Green, @Blue must be non-negative values integers
+Example: update-color checkerboardTwo 0 0 15 16 17 18
+
+apply-mutator @MutatorType (@ImageName) (@LayerName) [ @Arg0 @Arg1 ... @ArgN]
+Apply mutator applies color transformations/filters to simple images or layers of layered images based off mutator type, and then following arguments,
+NOTE: At this moment, no mutators have further arguments.
+@ImageName must be the name of an image that already exists
+@LayerName must be the name of a layer from a layered image that already exists
+"blur": Applies a blur filter effect.
+"sharpen": Applies a sharpen filter effect.
+"sepia": Applies a sepia color transformation.
+"greyscale": Applies a greyscale color transformation.
+Examples:
+apply-mutator blur birb
+apply-mutator sharpen birb
+apply-mutator sepia
+apply-mutator greyscale
+
+save (@ImageName) (@LayerName) @OutputType @FileName
+Saves a simple image or a layer of a layered image as specified image type and file name
+@ImageName must be the name of an image that already exists
+@LayerName must be the name of a layer from a layered image that already exists
+@FileName must be reachable file
+@OutputType must be one of: "ppm", "png", "jpeg"
+Examples:
+save birb jpeg birb
+save png transparent
+
+save-layered (@ImageName) @FileName
+Saves a layered image, with layer data, as a file structure in desired location.
+@ImageName must be the name of a LAYERED image that already exists
+@FileName must be in a reachable location,
+Example: save-layered newLayered newLayered
+
+load @ImageName
+Sets given image as the current default for other commands and clears the currently set layer.
+@ImageName must be the name of an image that already exists
+Example: load transparentImage
+
+set-current-layer @LayerName
+Sets the given layer as the current default for other commands.
+@LayerName must be the name of a layer from the given layered image that already exists
+Example: set-current-layer emptyLayer
+
+add-layer (@ImageName) @LayerName
+Adds a layer to the given layered image with the given name.
+@ImageName must be the name of a LAYERED image that already exists
+@LayerName must not be the name of an existing layer from the given layered image
+Example: add-layer newLayered emptyLayer
+
+copy-layer (@ImageName) @LayerName @LayerToCopy
+Adds a new layer to the given layered image that is a copy of the layer that has name @LayerToCopy
+@ImageName must be the name of a LAYERED image that already exists
+@LayerName must not be the name of an existing layer from the given layered image
+@LayerToCopy must be the name of a layer from the same layered image that already exists
+Example: copy-layer fromSaved newRedLayer red-layer
+
+add-image-as-layer (@ImageName) @LayerName @FileName
+Loads an image file as a new layer of the given layered image.
+@ImageName must be the name of a LAYERED image that already exists
+@LayerName must not be the name of an existing layer from the given layered image
+@FileName must be reachable and must contain a file of the same size as the layered image
+Example: add-image-as-layer fromImageLayer transparentImage.png
+
+move-layer (@ImageName) @LayerName @NewPosition
+Moves a layer from the given layered image to a new position within the same layered image.
+@ImageName must be the name of a LAYERED image that already exists
+@LayerName must be the name of a layer from the given layered image that already exists
+@NewPosition must be an integer and must be a non-negative integer that is less than the number of layers in a layered image
+Example: move-layer fromSaved blue-layer 0
+
+remove-layer (@ImageName) @LayerName
+Removes a layer with given name from given layered image.
+@ImageName must be the name of a LAYERED image that already exists
+@LayerName must be the name of a layer from the given layered image that already exists
+Example: remove-layer newLayered emptyLayer2
+
+save-as-image (@ImageName) @BlendType @OutputType @FileName
+Saves a layered image as a simple image of given type using given method of blending.
+@ImageName must be the name of a LAYERED image that already exists
+@BlendType must be a method of blending: "basic"
+@OutputType must be one of the supported image types: "ppm", "png", "jpeg"
+@FileName must be reachable
+Example: save-as-image fromSaved basic ppm fromSavedPPM
+
+
+update-visibility (@ImageName) (@LayerName) @Visibility
+Updates the visiblity of a layer in the given layered image.
+@ImageName must be the name of an LAYERED image that already exists
+@LayerName must be the name of a layer from the given layered image that already exists
+@Visibility must be a boolean value of format: "True", "true", "False", "false"
+Example: update-visibility fromSaved invisible-layer true

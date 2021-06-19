@@ -18,6 +18,7 @@ import scriptlanguage.parsedcommands.ParsedCommand;
  * Tests the functionality of updating the visibility of a layer in an image through scripts.
  */
 public class TestUpdateVisibilityCommand {
+
   private HashMap<String, GraphOfPixels> graphs;
   private HashMap<String, LayeredImage> layeredImages;
   private ParsedCommand newExecutableCommand;
@@ -47,9 +48,11 @@ public class TestUpdateVisibilityCommand {
     graphs.put("existingImage", ex2);
 
     newExecutableCommand = new UpdateVisibilityCommand("existing", "secondLayer", false);
-    failExecutableNonExistentImage = new UpdateVisibilityCommand("non-existent", "secondLayer", false);
+    failExecutableNonExistentImage = new UpdateVisibilityCommand("non-existent", "secondLayer",
+        false);
     failExecutableNonExistentLayer = new UpdateVisibilityCommand("existing", "non-existent", false);
-    failExecutableExistingImageButSingle = new UpdateVisibilityCommand("existingImage", "secondLayer", false);
+    failExecutableExistingImageButSingle = new UpdateVisibilityCommand("existingImage",
+        "secondLayer", false);
   }
 
 
@@ -89,7 +92,6 @@ public class TestUpdateVisibilityCommand {
     this.setUp();
     failExecutableExistingImageButSingle.execute(graphs, layeredImages);
   }
-
 
 
   @Test

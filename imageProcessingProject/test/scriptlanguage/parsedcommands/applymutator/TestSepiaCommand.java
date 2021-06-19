@@ -1,6 +1,6 @@
 package scriptlanguage.parsedcommands.applymutator;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import imageasgraph.GraphOfPixels;
 import imageasgraph.ImageToGraphConverter;
@@ -17,6 +17,7 @@ import scriptlanguage.parsedcommands.ParsedCommand;
  * Tests the functionality of making an image sepia through scripts.
  */
 public class TestSepiaCommand {
+
   private HashMap<String, GraphOfPixels> graphs;
   private HashMap<String, LayeredImage> layeredImages;
   private ParsedCommand newFailCommandNonExistingDestImage;

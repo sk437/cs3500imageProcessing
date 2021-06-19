@@ -10,13 +10,11 @@ public class PixelNode extends AbstractNode {
 
   private final AbstractNode[] neighbors;
   private final PixelAsColors pixel;
-  //private boolean isTransparent;
   private int opacity;
 
   /**
    * Constructs a new PixelNode, and initializes all of it's neighbors to be empty and it's pixel to
    * contain the same colors as the given one.
-   * TODO: FIX DOCUMENTATION OF BOTH CONSTRUCTORS
    *
    * @throws IllegalArgumentException if the given PixelAsColors is null
    */
@@ -30,7 +28,6 @@ public class PixelNode extends AbstractNode {
     this.neighbors[1] = new EmptyNode();
     this.neighbors[2] = new EmptyNode();
     this.neighbors[3] = new EmptyNode();
-    //this.isTransparent = false;
     this.opacity = PixelAsColors.maxColor;
   }
 
@@ -53,7 +50,6 @@ public class PixelNode extends AbstractNode {
     this.neighbors[1] = new EmptyNode();
     this.neighbors[2] = new EmptyNode();
     this.neighbors[3] = new EmptyNode();
-    //this.isTransparent = false;
     this.opacity = opacity;
   }
 
@@ -86,23 +82,11 @@ public class PixelNode extends AbstractNode {
     if (newColors == null) {
       throw new IllegalArgumentException("Null input");
     }
-    /*
-    if (this.isTransparent) {
-      return;
-    }
-
-     */
     this.pixel.setRGB(newColors.getRed(), newColors.getGreen(), newColors.getBlue());
   }
 
   @Override
   public void editColors(int deltaRed, int deltaGreen, int deltaBlue) {
-    /*
-    if (this.isTransparent) {
-      return;
-    }
-
-     */
     this.pixel.editRGB(deltaRed, deltaGreen, deltaBlue);
   }
 
@@ -198,27 +182,4 @@ public class PixelNode extends AbstractNode {
 
     this.opacity = newOpacity;
   }
-
-  /*
-  @Override
-  public void makeTransparent() {
-    this.updateColors(new SimplePixel(0,0,0));
-    this.isTransparent = true;
-  }
-
-  @Override
-  public void colorInTransparent(PixelAsColors newColors)
-      throws IllegalArgumentException, IllegalStateException {
-    if (!this.isTransparent()) {
-      throw new IllegalStateException("This node is already visible");
-    }
-    if (newColors == null) {
-      throw new IllegalArgumentException("Null color");
-    }
-    this.isTransparent = false;
-    this.updateColors(newColors);
-  }
-   */
-
-
 }

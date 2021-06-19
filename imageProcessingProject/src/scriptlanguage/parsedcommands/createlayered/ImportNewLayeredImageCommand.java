@@ -11,17 +11,20 @@ import scriptlanguage.parsedcommands.ParsedCommand;
  * Represents a command which will import a layered image file as a new layered image.
  */
 public class ImportNewLayeredImageCommand implements ParsedCommand {
+
   private final String imageName;
   private final LayeredImage processedImage;
 
   /**
-   * Creates a new ImportNewLayeredImageCommand, which creates a layered image of the given name
-   * by reading a file of the given fileName.
+   * Creates a new ImportNewLayeredImageCommand, which creates a layered image of the given name by
+   * reading a file of the given fileName.
+   *
    * @param imageName The name of the image to be created
-   * @param fileName The name of the file to be read
+   * @param fileName  The name of the file to be read
    * @throws IllegalArgumentException If given a null input
    */
-  public ImportNewLayeredImageCommand(String imageName, String fileName) throws IllegalArgumentException {
+  public ImportNewLayeredImageCommand(String imageName, String fileName)
+      throws IllegalArgumentException {
     if (imageName == null || fileName == null) {
       throw new IllegalArgumentException("Null input");
     }

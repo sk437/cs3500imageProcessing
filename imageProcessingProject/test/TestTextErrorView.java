@@ -1,7 +1,6 @@
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
-import javax.swing.text.View;
 import org.junit.Test;
 import view.ErrorView;
 import view.TextErrorView;

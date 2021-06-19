@@ -1,6 +1,5 @@
 import static org.junit.Assert.assertEquals;
 
-
 import imageInput.CheckerBoard;
 import imageInput.ImageProgram;
 import java.util.ArrayList;

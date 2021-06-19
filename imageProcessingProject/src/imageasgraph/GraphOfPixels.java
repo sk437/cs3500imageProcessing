@@ -1,13 +1,12 @@
 package imageasgraph;
 
-import mutators.Mutator;
-
 /**
  * Represents an image as a graph of pixels, which can be manipulated in various ways and written as
  * an output to a given type of file. Should be instantiated using the ImageToGraphConverter builder
  * class.
  */
 public interface GraphOfPixels extends FixedSizeGraph {
+
   /**
    * Inserts a new row below the given row.
    *

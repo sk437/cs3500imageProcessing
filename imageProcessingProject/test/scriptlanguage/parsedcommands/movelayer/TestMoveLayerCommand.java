@@ -1,6 +1,6 @@
 package scriptlanguage.parsedcommands.movelayer;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import imageasgraph.GraphOfPixels;
 import java.util.HashMap;
@@ -10,12 +10,13 @@ import org.junit.Test;
 import scriptlanguage.LanguageSyntax;
 import scriptlanguage.LanguageSyntaxImpl;
 import scriptlanguage.parsedcommands.ParsedCommand;
-import scriptlanguage.parsedcommands.creategraph.CreateEmptyImageCommand;
 
 /**
- * Tests the functionality of moving a layer in a layered image to a different position through scripts.
+ * Tests the functionality of moving a layer in a layered image to a different position through
+ * scripts.
  */
 public class TestMoveLayerCommand {
+
   private HashMap<String, GraphOfPixels> graphs;
   private HashMap<String, LayeredImage> layeredImages;
   private ParsedCommand newExecutableCommand;
@@ -89,7 +90,6 @@ public class TestMoveLayerCommand {
     this.setUp();
     failExecutableIndexTooLarge.execute(graphs, layeredImages);
   }
-
 
 
   @Test

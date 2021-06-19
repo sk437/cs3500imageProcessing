@@ -10,11 +10,13 @@ import scriptlanguage.parsedcommands.ParsedCommand;
  * Represents a command which alters the default layer name of a syntax.
  */
 public class LoadLayerCommand implements ParsedCommand {
+
   private final String layerToLoad;
 
   /**
-   * Creates a new LoadLayerCommand, which will set the default layer name of a syntax to the
-   * given string.
+   * Creates a new LoadLayerCommand, which will set the default layer name of a syntax to the given
+   * string.
+   *
    * @param layerToLoad The new default layer name
    */
   public LoadLayerCommand(String layerToLoad) {

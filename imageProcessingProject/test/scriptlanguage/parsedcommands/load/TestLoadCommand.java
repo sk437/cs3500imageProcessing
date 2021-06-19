@@ -14,6 +14,7 @@ import scriptlanguage.parsedcommands.ParsedCommand;
  * Tests the functionality of loading an image as the current image through scripts.
  */
 public class TestLoadCommand {
+
   private HashMap<String, GraphOfPixels> graphs;
   private HashMap<String, LayeredImage> layeredImages;
   private ParsedCommand newExecutableCommand;
@@ -57,7 +58,6 @@ public class TestLoadCommand {
     }
 
     test.parseCommand("set-current-layer layer").alterLanguageState(test);
-
 
     try {
       //This command should update the current reference and thus the below command should pass.

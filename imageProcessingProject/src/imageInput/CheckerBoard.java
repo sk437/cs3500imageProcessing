@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import pixel.PixelAsColors;
 
 /**
- * Programmatically creates a checkerboard image.
+ * Represents a class that, when constructed, stores a double ArrayList of pixel values that
+ * resembles a checkerboard and can output that double array.
  */
 public class CheckerBoard implements ImageProgram {
 

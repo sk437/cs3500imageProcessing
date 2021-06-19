@@ -10,6 +10,7 @@ import scriptlanguage.parsedcommands.ParsedCommand;
  * Represents a command which can be used to create a new layer on an existing layered image.
  */
 public class AddImageLayerCommand implements ParsedCommand {
+
   private final String imageToAddTo;
   private final String layerToAdd;
   private final String fileToRead;
@@ -17,12 +18,14 @@ public class AddImageLayerCommand implements ParsedCommand {
   /**
    * Constructs a new AddImageLayerCommand, which adds to an image of the given name a layer of the
    * given name by reading the file of the given filename.
+   *
    * @param imageToAddTo The name of the of the image this command will add a layer to
-   * @param layerToAdd The name of the layer to be added
-   * @param fileToRead The name of the file to read and created into a layer
+   * @param layerToAdd   The name of the layer to be added
+   * @param fileToRead   The name of the file to read and created into a layer
    * @throws IllegalArgumentException If given a null input
    */
-  public AddImageLayerCommand(String imageToAddTo, String layerToAdd, String fileToRead) throws IllegalArgumentException {
+  public AddImageLayerCommand(String imageToAddTo, String layerToAdd, String fileToRead)
+      throws IllegalArgumentException {
     if (imageToAddTo == null || layerToAdd == null || fileToRead == null) {
       throw new IllegalArgumentException("Null input");
     }

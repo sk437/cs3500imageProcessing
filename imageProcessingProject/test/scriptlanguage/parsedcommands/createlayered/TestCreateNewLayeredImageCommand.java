@@ -1,8 +1,9 @@
 package scriptlanguage.parsedcommands.createlayered;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import imageasgraph.FixedSizeGraph;
 import imageasgraph.GraphOfPixels;
 import java.util.HashMap;
 import layeredimage.LayeredImage;
@@ -10,13 +11,12 @@ import org.junit.Test;
 import scriptlanguage.LanguageSyntax;
 import scriptlanguage.LanguageSyntaxImpl;
 import scriptlanguage.parsedcommands.ParsedCommand;
-import scriptlanguage.parsedcommands.creategraph.CreateFromImageCommand;
-import scriptlanguage.parsedcommands.creategraph.CreateTransparentCommand;
 
 /**
  * Tests the functionality of creating a new layered image through scripts.
  */
 public class TestCreateNewLayeredImageCommand {
+
   private HashMap<String, GraphOfPixels> graphs;
   private HashMap<String, LayeredImage> layeredImages;
   private ParsedCommand newExecutableCommand;

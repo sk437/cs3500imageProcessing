@@ -17,6 +17,7 @@ import pixel.SimplePixel;
  * For testing the Layered Image class and related classes
  */
 public class TestLayeredImage {
+
   private LayeredImage layeredImage0;
 
   /**
@@ -30,6 +31,7 @@ public class TestLayeredImage {
   public void testZeroWidthConstructor() {
     new LayeredImageV0(0, 14);
   }
+
   @Test(expected = IllegalArgumentException.class)
   public void testZeroHeightConstructor() {
     new LayeredImageV0(13, 0);
@@ -102,7 +104,7 @@ public class TestLayeredImage {
       assertEquals(0, n.getGreen());
       assertEquals(0, n.getBlue());
     }
-    assertEquals(0, fromFile.getLayer(0).getPixelAt(0,0).getOpacity());
+    assertEquals(0, fromFile.getLayer(0).getPixelAt(0, 0).getOpacity());
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -136,7 +138,8 @@ public class TestLayeredImage {
     assertEquals(new ArrayList<String>(), this.layeredImage0.getLayerNames());
     this.layeredImage0.addLayer("new-layer");
     assertEquals(1, this.layeredImage0.getNumLayers());
-    assertEquals(new ArrayList<String>(Arrays.asList("new-layer")), this.layeredImage0.getLayerNames());
+    assertEquals(new ArrayList<String>(Arrays.asList("new-layer")),
+        this.layeredImage0.getLayerNames());
     assertEquals(11, this.layeredImage0.getLayer("new-layer").getHeight());
     assertEquals(10, this.layeredImage0.getLayer("new-layer").getWidth());
     assertEquals(this.layeredImage0.getLayer("new-layer"), this.layeredImage0.getLayer(0));
@@ -203,7 +206,8 @@ public class TestLayeredImage {
     assertEquals(20, exampleImage.getLayer("copy-of-red-layer").getHeight());
     assertEquals(20, exampleImage.getLayer("copy-of-red-layer").getWidth());
     assertEquals(exampleImage.getLayer("copy-of-red-layer"), exampleImage.getLayer(0));
-    assertEquals(new ArrayList<String>(Arrays.asList("copy-of-red-layer", "invisible-layer", "blue-layer", "red-layer")),
+    assertEquals(new ArrayList<String>(
+            Arrays.asList("copy-of-red-layer", "invisible-layer", "blue-layer", "red-layer")),
         exampleImage.getLayerNames());
     for (Node n : exampleImage.getLayer("copy-of-red-layer")) {
       assertEquals(255, n.getOpacity());
@@ -211,10 +215,11 @@ public class TestLayeredImage {
       assertEquals(0, n.getGreen());
       assertEquals(0, n.getBlue());
     }
-    exampleImage.getLayer("red-layer").getPixelAt(0,0).updateColors(new SimplePixel(0,255,0));
-    assertEquals(0,exampleImage.getLayer("copy-of-red-layer").getPixelAt(0,0).getGreen());
-    exampleImage.getLayer("copy-of-red-layer").getPixelAt(1,0).updateColors(new SimplePixel(0,255,0));
-    assertEquals(0,exampleImage.getLayer("red-layer").getPixelAt(1,0).getGreen());
+    exampleImage.getLayer("red-layer").getPixelAt(0, 0).updateColors(new SimplePixel(0, 255, 0));
+    assertEquals(0, exampleImage.getLayer("copy-of-red-layer").getPixelAt(0, 0).getGreen());
+    exampleImage.getLayer("copy-of-red-layer").getPixelAt(1, 0)
+        .updateColors(new SimplePixel(0, 255, 0));
+    assertEquals(0, exampleImage.getLayer("red-layer").getPixelAt(1, 0).getGreen());
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -226,7 +231,7 @@ public class TestLayeredImage {
   @Test(expected = IllegalArgumentException.class)
   public void testMoveLayerNonExistentLayerName() {
     this.setUp();
-    this.layeredImage0.moveLayer("layer",12);
+    this.layeredImage0.moveLayer("layer", 12);
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -245,21 +250,21 @@ public class TestLayeredImage {
   public void testMoveLayer() {
     LayeredImage exampleImage = new LayeredImageV0("outputImages/exampleLayeredImage");
     assertEquals(3, exampleImage.getNumLayers());
-    assertEquals(exampleImage.getLayer(0),exampleImage.getLayer("invisible-layer"));
-    assertEquals(exampleImage.getLayer(1),exampleImage.getLayer("blue-layer"));
-    assertEquals(exampleImage.getLayer(2),exampleImage.getLayer("red-layer"));
+    assertEquals(exampleImage.getLayer(0), exampleImage.getLayer("invisible-layer"));
+    assertEquals(exampleImage.getLayer(1), exampleImage.getLayer("blue-layer"));
+    assertEquals(exampleImage.getLayer(2), exampleImage.getLayer("red-layer"));
     exampleImage.moveLayer("red-layer", 0);
-    assertEquals(exampleImage.getLayer(0),exampleImage.getLayer("red-layer"));
-    assertEquals(exampleImage.getLayer(1),exampleImage.getLayer("invisible-layer"));
-    assertEquals(exampleImage.getLayer(2),exampleImage.getLayer("blue-layer"));
+    assertEquals(exampleImage.getLayer(0), exampleImage.getLayer("red-layer"));
+    assertEquals(exampleImage.getLayer(1), exampleImage.getLayer("invisible-layer"));
+    assertEquals(exampleImage.getLayer(2), exampleImage.getLayer("blue-layer"));
     exampleImage.moveLayer("invisible-layer", 2);
-    assertEquals(exampleImage.getLayer(0),exampleImage.getLayer("red-layer"));
-    assertEquals(exampleImage.getLayer(1),exampleImage.getLayer("blue-layer"));
-    assertEquals(exampleImage.getLayer(2),exampleImage.getLayer("invisible-layer"));
+    assertEquals(exampleImage.getLayer(0), exampleImage.getLayer("red-layer"));
+    assertEquals(exampleImage.getLayer(1), exampleImage.getLayer("blue-layer"));
+    assertEquals(exampleImage.getLayer(2), exampleImage.getLayer("invisible-layer"));
     exampleImage.moveLayer("invisible-layer", 2);
-    assertEquals(exampleImage.getLayer(0),exampleImage.getLayer("red-layer"));
-    assertEquals(exampleImage.getLayer(1),exampleImage.getLayer("blue-layer"));
-    assertEquals(exampleImage.getLayer(2),exampleImage.getLayer("invisible-layer"));
+    assertEquals(exampleImage.getLayer(0), exampleImage.getLayer("red-layer"));
+    assertEquals(exampleImage.getLayer(1), exampleImage.getLayer("blue-layer"));
+    assertEquals(exampleImage.getLayer(2), exampleImage.getLayer("invisible-layer"));
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -348,16 +353,16 @@ public class TestLayeredImage {
   public void testRemoveLayer() {
     LayeredImage exampleImage = new LayeredImageV0("outputImages/exampleLayeredImage");
     assertEquals(3, exampleImage.getNumLayers());
-    assertEquals(exampleImage.getLayer(0),exampleImage.getLayer("invisible-layer"));
-    assertEquals(exampleImage.getLayer(1),exampleImage.getLayer("blue-layer"));
-    assertEquals(exampleImage.getLayer(2),exampleImage.getLayer("red-layer"));
+    assertEquals(exampleImage.getLayer(0), exampleImage.getLayer("invisible-layer"));
+    assertEquals(exampleImage.getLayer(1), exampleImage.getLayer("blue-layer"));
+    assertEquals(exampleImage.getLayer(2), exampleImage.getLayer("red-layer"));
     exampleImage.removeLayer("invisible-layer");
     assertEquals(2, exampleImage.getNumLayers());
-    assertEquals(exampleImage.getLayer(1),exampleImage.getLayer("red-layer"));
-    assertEquals(exampleImage.getLayer(0),exampleImage.getLayer("blue-layer"));
+    assertEquals(exampleImage.getLayer(1), exampleImage.getLayer("red-layer"));
+    assertEquals(exampleImage.getLayer(0), exampleImage.getLayer("blue-layer"));
     exampleImage.removeLayer("blue-layer");
     assertEquals(1, exampleImage.getNumLayers());
-    assertEquals(exampleImage.getLayer(0),exampleImage.getLayer("red-layer"));
+    assertEquals(exampleImage.getLayer(0), exampleImage.getLayer("red-layer"));
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -387,18 +392,18 @@ public class TestLayeredImage {
   @Test
   public void testGetLayer() {
     LayeredImage exampleImage = new LayeredImageV0("outputImages/exampleLayeredImage");
-    assertEquals(255, exampleImage.getLayer("red-layer").getPixelAt(0,0).getRed());
-    assertEquals(0, exampleImage.getLayer("red-layer").getPixelAt(0,0).getGreen());
-    assertEquals(0, exampleImage.getLayer("red-layer").getPixelAt(0,0).getBlue());
-    assertEquals(0, exampleImage.getLayer("blue-layer").getPixelAt(0,0).getRed());
-    assertEquals(0, exampleImage.getLayer("blue-layer").getPixelAt(0,0).getGreen());
-    assertEquals(255, exampleImage.getLayer("blue-layer").getPixelAt(0,0).getBlue());
-    assertEquals(255, exampleImage.getLayer(2).getPixelAt(0,0).getRed());
-    assertEquals(0, exampleImage.getLayer(2).getPixelAt(0,0).getGreen());
-    assertEquals(0, exampleImage.getLayer(2).getPixelAt(0,0).getBlue());
-    assertEquals(0, exampleImage.getLayer(1).getPixelAt(0,0).getRed());
-    assertEquals(0, exampleImage.getLayer(1).getPixelAt(0,0).getGreen());
-    assertEquals(255, exampleImage.getLayer(1).getPixelAt(0,0).getBlue());
+    assertEquals(255, exampleImage.getLayer("red-layer").getPixelAt(0, 0).getRed());
+    assertEquals(0, exampleImage.getLayer("red-layer").getPixelAt(0, 0).getGreen());
+    assertEquals(0, exampleImage.getLayer("red-layer").getPixelAt(0, 0).getBlue());
+    assertEquals(0, exampleImage.getLayer("blue-layer").getPixelAt(0, 0).getRed());
+    assertEquals(0, exampleImage.getLayer("blue-layer").getPixelAt(0, 0).getGreen());
+    assertEquals(255, exampleImage.getLayer("blue-layer").getPixelAt(0, 0).getBlue());
+    assertEquals(255, exampleImage.getLayer(2).getPixelAt(0, 0).getRed());
+    assertEquals(0, exampleImage.getLayer(2).getPixelAt(0, 0).getGreen());
+    assertEquals(0, exampleImage.getLayer(2).getPixelAt(0, 0).getBlue());
+    assertEquals(0, exampleImage.getLayer(1).getPixelAt(0, 0).getRed());
+    assertEquals(0, exampleImage.getLayer(1).getPixelAt(0, 0).getGreen());
+    assertEquals(255, exampleImage.getLayer(1).getPixelAt(0, 0).getBlue());
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -434,7 +439,7 @@ public class TestLayeredImage {
   @Test(expected = IllegalArgumentException.class)
   public void testLoadImageAsLayerNonExistentFile() {
     this.setUp();
-    this.layeredImage0.loadImageAsLayer("new","atlantis.png");
+    this.layeredImage0.loadImageAsLayer("new", "atlantis.png");
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -451,54 +456,55 @@ public class TestLayeredImage {
 
   @Test
   public void testLoadImageAsLayer() {
-    LayeredImage example = new LayeredImageV0(2,2);
+    LayeredImage example = new LayeredImageV0(2, 2);
     assertEquals(0, example.getNumLayers());
     assertEquals(new ArrayList<String>(), example.getLayerNames());
     example.loadImageAsLayer("new", "outputImages/example.ppm");
     assertEquals(1, example.getNumLayers());
     assertEquals(new ArrayList<String>(Arrays.asList("new")), example.getLayerNames());
-    assertEquals(123,example.getLayer("new").getPixelAt(0,0).getRed());
-    assertEquals(123,example.getLayer("new").getPixelAt(0,0).getGreen());
-    assertEquals(123,example.getLayer("new").getPixelAt(0,0).getBlue());
-    assertEquals(211,example.getLayer("new").getPixelAt(1,0).getRed());
-    assertEquals(211,example.getLayer("new").getPixelAt(1,0).getGreen());
-    assertEquals(211,example.getLayer("new").getPixelAt(1,0).getBlue());
-    assertEquals(112,example.getLayer("new").getPixelAt(0,1).getRed());
-    assertEquals(112,example.getLayer("new").getPixelAt(0,1).getGreen());
-    assertEquals(112,example.getLayer("new").getPixelAt(0,1).getBlue());
-    assertEquals(121,example.getLayer("new").getPixelAt(1,1).getRed());
-    assertEquals(121,example.getLayer("new").getPixelAt(1,1).getGreen());
-    assertEquals(121,example.getLayer("new").getPixelAt(1,1).getBlue());
+    assertEquals(123, example.getLayer("new").getPixelAt(0, 0).getRed());
+    assertEquals(123, example.getLayer("new").getPixelAt(0, 0).getGreen());
+    assertEquals(123, example.getLayer("new").getPixelAt(0, 0).getBlue());
+    assertEquals(211, example.getLayer("new").getPixelAt(1, 0).getRed());
+    assertEquals(211, example.getLayer("new").getPixelAt(1, 0).getGreen());
+    assertEquals(211, example.getLayer("new").getPixelAt(1, 0).getBlue());
+    assertEquals(112, example.getLayer("new").getPixelAt(0, 1).getRed());
+    assertEquals(112, example.getLayer("new").getPixelAt(0, 1).getGreen());
+    assertEquals(112, example.getLayer("new").getPixelAt(0, 1).getBlue());
+    assertEquals(121, example.getLayer("new").getPixelAt(1, 1).getRed());
+    assertEquals(121, example.getLayer("new").getPixelAt(1, 1).getGreen());
+    assertEquals(121, example.getLayer("new").getPixelAt(1, 1).getBlue());
     example.loadImageAsLayer("newPNG", "outputImages/example2.png");
     assertEquals(2, example.getNumLayers());
     assertEquals(new ArrayList<String>(Arrays.asList("newPNG", "new")), example.getLayerNames());
-    assertEquals(55,example.getLayer("newPNG").getPixelAt(0,0).getRed());
-    assertEquals(66,example.getLayer("newPNG").getPixelAt(0,0).getGreen());
-    assertEquals(77,example.getLayer("newPNG").getPixelAt(0,0).getBlue());
-    assertEquals(55,example.getLayer("newPNG").getPixelAt(1,0).getRed());
-    assertEquals(66,example.getLayer("newPNG").getPixelAt(1,0).getGreen());
-    assertEquals(77,example.getLayer("newPNG").getPixelAt(1,0).getBlue());
-    assertEquals(55,example.getLayer("newPNG").getPixelAt(0,1).getRed());
-    assertEquals(66,example.getLayer("newPNG").getPixelAt(0,1).getGreen());
-    assertEquals(77,example.getLayer("newPNG").getPixelAt(0,1).getBlue());
-    assertEquals(55,example.getLayer("newPNG").getPixelAt(1,1).getRed());
-    assertEquals(66,example.getLayer("newPNG").getPixelAt(1,1).getGreen());
-    assertEquals(77,example.getLayer("newPNG").getPixelAt(1,1).getBlue());
+    assertEquals(55, example.getLayer("newPNG").getPixelAt(0, 0).getRed());
+    assertEquals(66, example.getLayer("newPNG").getPixelAt(0, 0).getGreen());
+    assertEquals(77, example.getLayer("newPNG").getPixelAt(0, 0).getBlue());
+    assertEquals(55, example.getLayer("newPNG").getPixelAt(1, 0).getRed());
+    assertEquals(66, example.getLayer("newPNG").getPixelAt(1, 0).getGreen());
+    assertEquals(77, example.getLayer("newPNG").getPixelAt(1, 0).getBlue());
+    assertEquals(55, example.getLayer("newPNG").getPixelAt(0, 1).getRed());
+    assertEquals(66, example.getLayer("newPNG").getPixelAt(0, 1).getGreen());
+    assertEquals(77, example.getLayer("newPNG").getPixelAt(0, 1).getBlue());
+    assertEquals(55, example.getLayer("newPNG").getPixelAt(1, 1).getRed());
+    assertEquals(66, example.getLayer("newPNG").getPixelAt(1, 1).getGreen());
+    assertEquals(77, example.getLayer("newPNG").getPixelAt(1, 1).getBlue());
     example.loadImageAsLayer("newJPG", "outputImages/example.jpeg");
     assertEquals(3, example.getNumLayers());
-    assertEquals(new ArrayList<String>(Arrays.asList("newJPG", "newPNG", "new")), example.getLayerNames());
-    assertEquals(123,example.getLayer("newJPG").getPixelAt(0,0).getRed(), 21);
-    assertEquals(123,example.getLayer("newJPG").getPixelAt(0,0).getGreen(), 21);
-    assertEquals(123,example.getLayer("newJPG").getPixelAt(0,0).getBlue(), 21);
-    assertEquals(211,example.getLayer("newJPG").getPixelAt(1,0).getRed(), 21);
-    assertEquals(211,example.getLayer("newJPG").getPixelAt(1,0).getGreen(), 21);
-    assertEquals(211,example.getLayer("newJPG").getPixelAt(1,0).getBlue(), 21);
-    assertEquals(112,example.getLayer("newJPG").getPixelAt(0,1).getRed(), 21);
-    assertEquals(112,example.getLayer("newJPG").getPixelAt(0,1).getGreen(), 21);
-    assertEquals(112,example.getLayer("newJPG").getPixelAt(0,1).getBlue(), 21);
-    assertEquals(121,example.getLayer("newJPG").getPixelAt(1,1).getRed(), 21);
-    assertEquals(121,example.getLayer("newJPG").getPixelAt(1,1).getGreen(), 21);
-    assertEquals(121,example.getLayer("newJPG").getPixelAt(1,1).getBlue(), 21);
+    assertEquals(new ArrayList<String>(Arrays.asList("newJPG", "newPNG", "new")),
+        example.getLayerNames());
+    assertEquals(123, example.getLayer("newJPG").getPixelAt(0, 0).getRed(), 21);
+    assertEquals(123, example.getLayer("newJPG").getPixelAt(0, 0).getGreen(), 21);
+    assertEquals(123, example.getLayer("newJPG").getPixelAt(0, 0).getBlue(), 21);
+    assertEquals(211, example.getLayer("newJPG").getPixelAt(1, 0).getRed(), 21);
+    assertEquals(211, example.getLayer("newJPG").getPixelAt(1, 0).getGreen(), 21);
+    assertEquals(211, example.getLayer("newJPG").getPixelAt(1, 0).getBlue(), 21);
+    assertEquals(112, example.getLayer("newJPG").getPixelAt(0, 1).getRed(), 21);
+    assertEquals(112, example.getLayer("newJPG").getPixelAt(0, 1).getGreen(), 21);
+    assertEquals(112, example.getLayer("newJPG").getPixelAt(0, 1).getBlue(), 21);
+    assertEquals(121, example.getLayer("newJPG").getPixelAt(1, 1).getRed(), 21);
+    assertEquals(121, example.getLayer("newJPG").getPixelAt(1, 1).getGreen(), 21);
+    assertEquals(121, example.getLayer("newJPG").getPixelAt(1, 1).getBlue(), 21);
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -533,73 +539,74 @@ public class TestLayeredImage {
 
   @Test
   public void testSaveAsImage() {
-    LayeredImage someOverlap =  new LayeredImageV0(4,1);
+    LayeredImage someOverlap = new LayeredImageV0(4, 1);
     someOverlap.addLayer("blue-layer");
-    someOverlap.getLayer("blue-layer").getPixelAt(0,0).setOpacity(255);
-    someOverlap.getLayer("blue-layer").getPixelAt(1,0).setOpacity(255);
-    someOverlap.getLayer("blue-layer").getPixelAt(2,0).setOpacity(255);
-    someOverlap.getLayer("blue-layer").getPixelAt(3,0).setOpacity(255);
-    someOverlap.getLayer("blue-layer").getPixelAt(0,0).updateColors(new SimplePixel(0,0,255));
-    someOverlap.getLayer("blue-layer").getPixelAt(1,0).updateColors(new SimplePixel(0,0,255));
-    someOverlap.getLayer("blue-layer").getPixelAt(2,0).updateColors(new SimplePixel(0,0,255));
-    someOverlap.getLayer("blue-layer").getPixelAt(3,0).updateColors(new SimplePixel(0,0,255));
+    someOverlap.getLayer("blue-layer").getPixelAt(0, 0).setOpacity(255);
+    someOverlap.getLayer("blue-layer").getPixelAt(1, 0).setOpacity(255);
+    someOverlap.getLayer("blue-layer").getPixelAt(2, 0).setOpacity(255);
+    someOverlap.getLayer("blue-layer").getPixelAt(3, 0).setOpacity(255);
+    someOverlap.getLayer("blue-layer").getPixelAt(0, 0).updateColors(new SimplePixel(0, 0, 255));
+    someOverlap.getLayer("blue-layer").getPixelAt(1, 0).updateColors(new SimplePixel(0, 0, 255));
+    someOverlap.getLayer("blue-layer").getPixelAt(2, 0).updateColors(new SimplePixel(0, 0, 255));
+    someOverlap.getLayer("blue-layer").getPixelAt(3, 0).updateColors(new SimplePixel(0, 0, 255));
     someOverlap.addLayer("green-layer");
-    someOverlap.getLayer("green-layer").getPixelAt(0,0).setOpacity(255);
-    someOverlap.getLayer("green-layer").getPixelAt(1,0).setOpacity(255);
-    someOverlap.getLayer("green-layer").getPixelAt(2,0).setOpacity(255);
-    someOverlap.getLayer("green-layer").getPixelAt(0,0).updateColors(new SimplePixel(0,255,0));
-    someOverlap.getLayer("green-layer").getPixelAt(1,0).updateColors(new SimplePixel(0,255,0));
-    someOverlap.getLayer("green-layer").getPixelAt(2,0).updateColors(new SimplePixel(0,255,0));
+    someOverlap.getLayer("green-layer").getPixelAt(0, 0).setOpacity(255);
+    someOverlap.getLayer("green-layer").getPixelAt(1, 0).setOpacity(255);
+    someOverlap.getLayer("green-layer").getPixelAt(2, 0).setOpacity(255);
+    someOverlap.getLayer("green-layer").getPixelAt(0, 0).updateColors(new SimplePixel(0, 255, 0));
+    someOverlap.getLayer("green-layer").getPixelAt(1, 0).updateColors(new SimplePixel(0, 255, 0));
+    someOverlap.getLayer("green-layer").getPixelAt(2, 0).updateColors(new SimplePixel(0, 255, 0));
     someOverlap.addLayer("red-layer");
-    someOverlap.getLayer("red-layer").getPixelAt(0,0).setOpacity(255);
-    someOverlap.getLayer("red-layer").getPixelAt(1,0).setOpacity(255);
-    someOverlap.getLayer("red-layer").getPixelAt(0,0).updateColors(new SimplePixel(255,0,0));
-    someOverlap.getLayer("red-layer").getPixelAt(1,0).updateColors(new SimplePixel(255,0,0));
+    someOverlap.getLayer("red-layer").getPixelAt(0, 0).setOpacity(255);
+    someOverlap.getLayer("red-layer").getPixelAt(1, 0).setOpacity(255);
+    someOverlap.getLayer("red-layer").getPixelAt(0, 0).updateColors(new SimplePixel(255, 0, 0));
+    someOverlap.getLayer("red-layer").getPixelAt(1, 0).updateColors(new SimplePixel(255, 0, 0));
     someOverlap.addLayer("purple-layer");
-    someOverlap.getLayer("purple-layer").getPixelAt(0,0).setOpacity(255);
-    someOverlap.getLayer("purple-layer").getPixelAt(0,0).updateColors(new SimplePixel(255,0,255));
+    someOverlap.getLayer("purple-layer").getPixelAt(0, 0).setOpacity(255);
+    someOverlap.getLayer("purple-layer").getPixelAt(0, 0)
+        .updateColors(new SimplePixel(255, 0, 255));
     someOverlap.saveAsImage(new BasicBlend(), OutputType.png, "outputImages/layeredPNG");
     someOverlap.saveAsImage(new BasicBlend(), OutputType.ppm, "outputImages/layeredPPM");
     someOverlap.saveAsImage(new BasicBlend(), OutputType.jpeg, "outputImages/layeredJPG");
     GraphOfPixels result = ImageToGraphConverter.convertImage("outputImages/layeredPNG.png");
-    assertEquals(255,result.getPixelAt(0,0).getRed());
-    assertEquals(0,result.getPixelAt(0,0).getGreen());
-    assertEquals(255,result.getPixelAt(0,0).getBlue());
-    assertEquals(255,result.getPixelAt(1,0).getRed());
-    assertEquals(0,result.getPixelAt(1,0).getGreen());
-    assertEquals(0,result.getPixelAt(1,0).getBlue());
-    assertEquals(0,result.getPixelAt(2,0).getRed());
-    assertEquals(255,result.getPixelAt(2,0).getGreen());
-    assertEquals(0,result.getPixelAt(2,0).getBlue());
-    assertEquals(0,result.getPixelAt(3,0).getRed());
-    assertEquals(0,result.getPixelAt(3,0).getGreen());
-    assertEquals(255,result.getPixelAt(3,0).getBlue());
+    assertEquals(255, result.getPixelAt(0, 0).getRed());
+    assertEquals(0, result.getPixelAt(0, 0).getGreen());
+    assertEquals(255, result.getPixelAt(0, 0).getBlue());
+    assertEquals(255, result.getPixelAt(1, 0).getRed());
+    assertEquals(0, result.getPixelAt(1, 0).getGreen());
+    assertEquals(0, result.getPixelAt(1, 0).getBlue());
+    assertEquals(0, result.getPixelAt(2, 0).getRed());
+    assertEquals(255, result.getPixelAt(2, 0).getGreen());
+    assertEquals(0, result.getPixelAt(2, 0).getBlue());
+    assertEquals(0, result.getPixelAt(3, 0).getRed());
+    assertEquals(0, result.getPixelAt(3, 0).getGreen());
+    assertEquals(255, result.getPixelAt(3, 0).getBlue());
     result = ImageToGraphConverter.convertImage("outputImages/layeredPPM.ppm");
-    assertEquals(255,result.getPixelAt(0,0).getRed());
-    assertEquals(0,result.getPixelAt(0,0).getGreen());
-    assertEquals(255,result.getPixelAt(0,0).getBlue());
-    assertEquals(255,result.getPixelAt(1,0).getRed());
-    assertEquals(0,result.getPixelAt(1,0).getGreen());
-    assertEquals(0,result.getPixelAt(1,0).getBlue());
-    assertEquals(0,result.getPixelAt(2,0).getRed());
-    assertEquals(255,result.getPixelAt(2,0).getGreen());
-    assertEquals(0,result.getPixelAt(2,0).getBlue());
-    assertEquals(0,result.getPixelAt(3,0).getRed());
-    assertEquals(0,result.getPixelAt(3,0).getGreen());
-    assertEquals(255,result.getPixelAt(3,0).getBlue());
+    assertEquals(255, result.getPixelAt(0, 0).getRed());
+    assertEquals(0, result.getPixelAt(0, 0).getGreen());
+    assertEquals(255, result.getPixelAt(0, 0).getBlue());
+    assertEquals(255, result.getPixelAt(1, 0).getRed());
+    assertEquals(0, result.getPixelAt(1, 0).getGreen());
+    assertEquals(0, result.getPixelAt(1, 0).getBlue());
+    assertEquals(0, result.getPixelAt(2, 0).getRed());
+    assertEquals(255, result.getPixelAt(2, 0).getGreen());
+    assertEquals(0, result.getPixelAt(2, 0).getBlue());
+    assertEquals(0, result.getPixelAt(3, 0).getRed());
+    assertEquals(0, result.getPixelAt(3, 0).getGreen());
+    assertEquals(255, result.getPixelAt(3, 0).getBlue());
     result = ImageToGraphConverter.convertImage("outputImages/layeredJPG.jpeg");
-    assertEquals(255,result.getPixelAt(0,0).getRed(), 21);
-    assertEquals(0,result.getPixelAt(0,0).getGreen(), 21);
-    assertEquals(141,result.getPixelAt(0,0).getBlue());
-    assertEquals(255,result.getPixelAt(1,0).getRed(), 21);
-    assertEquals(0,result.getPixelAt(1,0).getGreen(), 21);
-    assertEquals(116,result.getPixelAt(1,0).getBlue(), 21);
-    assertEquals(60,result.getPixelAt(2,0).getRed(), 21);
-    assertEquals(186,result.getPixelAt(2,0).getGreen(), 21);
-    assertEquals(185,result.getPixelAt(2,0).getBlue(), 21);
-    assertEquals(0,result.getPixelAt(3,0).getRed(), 21);
-    assertEquals(65,result.getPixelAt(3,0).getGreen(), 21);
-    assertEquals(64,result.getPixelAt(3,0).getBlue(), 21);
+    assertEquals(255, result.getPixelAt(0, 0).getRed(), 21);
+    assertEquals(0, result.getPixelAt(0, 0).getGreen(), 21);
+    assertEquals(141, result.getPixelAt(0, 0).getBlue());
+    assertEquals(255, result.getPixelAt(1, 0).getRed(), 21);
+    assertEquals(0, result.getPixelAt(1, 0).getGreen(), 21);
+    assertEquals(116, result.getPixelAt(1, 0).getBlue(), 21);
+    assertEquals(60, result.getPixelAt(2, 0).getRed(), 21);
+    assertEquals(186, result.getPixelAt(2, 0).getGreen(), 21);
+    assertEquals(185, result.getPixelAt(2, 0).getBlue(), 21);
+    assertEquals(0, result.getPixelAt(3, 0).getRed(), 21);
+    assertEquals(65, result.getPixelAt(3, 0).getGreen(), 21);
+    assertEquals(64, result.getPixelAt(3, 0).getBlue(), 21);
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -610,7 +617,7 @@ public class TestLayeredImage {
 
   @Test
   public void testSaveAsLayeredImage() {
-    LayeredImage testLayered = new LayeredImageV0(20,20);
+    LayeredImage testLayered = new LayeredImageV0(20, 20);
     testLayered.addLayer("red-layer");
     testLayered.addLayer("blue-layer");
     testLayered.addLayer("invisible-layer");
@@ -618,12 +625,12 @@ public class TestLayeredImage {
     FixedSizeGraph redLayer = testLayered.getLayer("red-layer");
     for (Node n : redLayer) {
       n.setOpacity(255);
-      n.updateColors(new SimplePixel(255,0,0));
+      n.updateColors(new SimplePixel(255, 0, 0));
     }
     FixedSizeGraph blueLayer = testLayered.getLayer("blue-layer");
     for (Node n : blueLayer) {
       n.setOpacity(255);
-      n.updateColors(new SimplePixel(0,0,255));
+      n.updateColors(new SimplePixel(0, 0, 255));
     }
     testLayered.saveAsLayeredImage("outputImages/exampleLayeredImage");
     LayeredImage exampleImage = new LayeredImageV0("outputImages/exampleLayeredImage");
@@ -647,6 +654,6 @@ public class TestLayeredImage {
       assertEquals(0, n.getGreen());
       assertEquals(0, n.getBlue());
     }
-    assertEquals(0, exampleImage.getLayer(0).getPixelAt(0,0).getOpacity());
+    assertEquals(0, exampleImage.getLayer(0).getPixelAt(0, 0).getOpacity());
   }
 }

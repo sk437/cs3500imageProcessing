@@ -4,17 +4,17 @@ load transparentImage
 update-color 5 10 255 255 255 0
 update-color 5 11 255 255 0 255
 update-color 5 9 255 0 255 255
-save png res/transparentImage
+save png transparentImage
 
 #Create layered images
 create-layered-image newLayered 10 15
-create-layered-image fromSaved outputImages/exampleLayeredImage
+create-layered-image fromSaved exampleLayeredImage
 
 #Adds layers to the examples
 add-layer newLayered emptyLayer
 add-layer newLayered emptyLayer2
 load newLayered
-add-image-as-layer fromImageLayer res/transparentImage.png
+add-image-as-layer fromImageLayer transparentImage.png
 copy-layer fromSaved newRedLayer red-layer
 
 #Updating colors of some pixels within layers
@@ -32,10 +32,10 @@ set-current-layer emptyLayer
 apply-mutator sepia
 
 #Saving an individual layer
-save fromSaved blue-layer png res/blueLayer
+save fromSaved blue-layer png blueLayer
 load newLayered
 set-current-layer emptyLayer
-save png res/empty
+save png empty
 
 #Moves some layers around
 move-layer fromSaved blue-layer 0
@@ -56,12 +56,12 @@ load fromSaved
 remove-layer red-layer
 
 #Save as a layered image
-save-layered newLayered res/newLayered
+save-layered newLayered newLayered
 load fromSaved
-save-layered res/fromSaved
+save-layered fromSaved
 
 #Saves layered image as an image
-save-as-image basic png res/fromSavedPNG
+save-as-image basic png fromSavedPNG
 load newLayered
-save-as-image basic jpeg res/newLayeredJPG
-save-as-image fromSaved basic ppm res/fromSavedPPM
+save-as-image basic jpeg newLayeredJPG
+save-as-image fromSaved basic ppm fromSavedPPM

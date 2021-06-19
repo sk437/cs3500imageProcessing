@@ -5,16 +5,15 @@ import imageasgraph.ImageToGraphConverter;
 import imageasgraph.InputType;
 import imageasgraph.Node;
 import imageasgraph.OutputType;
-import java.awt.Image;
 import java.util.Iterator;
 import org.junit.Test;
 import pixel.SimplePixel;
 
 /**
- * For testing the new functionality involving reading and writing files from existing
- * classes.
+ * For testing the new functionality involving reading and writing files from existing classes.
  */
 public class TestReadWriteNewFunctionality {
+
   // NOTE: Tests involving JPG files have ranges, because JPGS do not convert RGB values exactly
   @Test(expected = IllegalArgumentException.class)
   public void testConvertStringInputNull() {
@@ -74,37 +73,37 @@ public class TestReadWriteNewFunctionality {
 
   @Test(expected = IllegalArgumentException.class)
   public void testCreateTransparentZeroWidth() {
-    ImageToGraphConverter.createTransparentGraph(0,5);
+    ImageToGraphConverter.createTransparentGraph(0, 5);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testCreateTransparentZeroHeight() {
-    ImageToGraphConverter.createTransparentGraph(33,0);
+    ImageToGraphConverter.createTransparentGraph(33, 0);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testCreateTransparentInvalidWidth() {
-    ImageToGraphConverter.createTransparentGraph(-2,5);
+    ImageToGraphConverter.createTransparentGraph(-2, 5);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testCreateTransparentInvalidHeight() {
-    ImageToGraphConverter.createTransparentGraph(1,-5);
+    ImageToGraphConverter.createTransparentGraph(1, -5);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testCreateTransparentBothZero() {
-    ImageToGraphConverter.createTransparentGraph(0,0);
+    ImageToGraphConverter.createTransparentGraph(0, 0);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testCreateTransparentBothInvalid() {
-    ImageToGraphConverter.createTransparentGraph(-23,-7);
+    ImageToGraphConverter.createTransparentGraph(-23, -7);
   }
 
   @Test
   public void testCreateTransparent() {
-    GraphOfPixels transparent = ImageToGraphConverter.createTransparentGraph(5,6);
+    GraphOfPixels transparent = ImageToGraphConverter.createTransparentGraph(5, 6);
     assertEquals(5, transparent.getWidth());
     assertEquals(6, transparent.getHeight());
     for (Node n : transparent) {
@@ -113,7 +112,7 @@ public class TestReadWriteNewFunctionality {
       assertEquals(n.getGreen(), 0);
       assertEquals(n.getBlue(), 0);
     }
-    GraphOfPixels transparent2 = ImageToGraphConverter.createTransparentGraph(15,7);
+    GraphOfPixels transparent2 = ImageToGraphConverter.createTransparentGraph(15, 7);
     assertEquals(15, transparent2.getWidth());
     assertEquals(7, transparent2.getHeight());
     for (Node n : transparent2) {
@@ -131,8 +130,8 @@ public class TestReadWriteNewFunctionality {
 
   @Test
   public void testCreateCopy() {
-    GraphOfPixels graphToCopy0 = ImageToGraphConverter.createTransparentGraph(5,6);
-    graphToCopy0.getPixelAt(3,3).updateColors(new SimplePixel(10,15,20));
+    GraphOfPixels graphToCopy0 = ImageToGraphConverter.createTransparentGraph(5, 6);
+    graphToCopy0.getPixelAt(3, 3).updateColors(new SimplePixel(10, 15, 20));
     GraphOfPixels graphToCopy1 = ImageToGraphConverter.convertPPM("outputImages/graphExample.ppm");
     GraphOfPixels copy0 = ImageToGraphConverter.createCopyOfGraph(graphToCopy0);
     GraphOfPixels copy1 = ImageToGraphConverter.createCopyOfGraph(graphToCopy1);
@@ -160,17 +159,17 @@ public class TestReadWriteNewFunctionality {
       assertEquals(copy1Next.getGreen(), graph1Next.getGreen());
       assertEquals(copy1Next.getBlue(), graph1Next.getBlue());
     }
-    graphToCopy0.getPixelAt(0,0).updateColors(new SimplePixel(255, 13, 15));
-    graphToCopy0.getPixelAt(0,0).setOpacity(13);
-    assertEquals(0, copy0.getPixelAt(0,0).getRed());
-    assertEquals(0, copy0.getPixelAt(0,0).getGreen());
-    assertEquals(0, copy0.getPixelAt(0,0).getBlue());
-    assertEquals(0, copy0.getPixelAt(0,0).getOpacity());
-    copy1.getPixelAt(0,0).updateColors(new SimplePixel(15,16,17));
-    assertEquals(1, graphToCopy1.getPixelAt(0,0).getRed());
-    assertEquals(1, graphToCopy1.getPixelAt(0,0).getGreen());
-    assertEquals(1, graphToCopy1.getPixelAt(0,0).getBlue());
-    assertEquals(255, graphToCopy1.getPixelAt(0,0).getOpacity());
+    graphToCopy0.getPixelAt(0, 0).updateColors(new SimplePixel(255, 13, 15));
+    graphToCopy0.getPixelAt(0, 0).setOpacity(13);
+    assertEquals(0, copy0.getPixelAt(0, 0).getRed());
+    assertEquals(0, copy0.getPixelAt(0, 0).getGreen());
+    assertEquals(0, copy0.getPixelAt(0, 0).getBlue());
+    assertEquals(0, copy0.getPixelAt(0, 0).getOpacity());
+    copy1.getPixelAt(0, 0).updateColors(new SimplePixel(15, 16, 17));
+    assertEquals(1, graphToCopy1.getPixelAt(0, 0).getRed());
+    assertEquals(1, graphToCopy1.getPixelAt(0, 0).getGreen());
+    assertEquals(1, graphToCopy1.getPixelAt(0, 0).getBlue());
+    assertEquals(255, graphToCopy1.getPixelAt(0, 0).getOpacity());
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -190,7 +189,8 @@ public class TestReadWriteNewFunctionality {
 
   @Test
   public void testConvertComplex() {
-    GraphOfPixels convertedJPG = ImageToGraphConverter.convertComplexImage("outputImages/conversionTest.jpg");
+    GraphOfPixels convertedJPG = ImageToGraphConverter
+        .convertComplexImage("outputImages/conversionTest.jpg");
     assertEquals(3, convertedJPG.getWidth());
     assertEquals(3, convertedJPG.getHeight());
     for (Node n : convertedJPG) {
@@ -199,7 +199,8 @@ public class TestReadWriteNewFunctionality {
       assertEquals(0, n.getBlue());
       assertEquals(255, n.getOpacity());
     }
-    GraphOfPixels convertedPNG = ImageToGraphConverter.convertComplexImage("outputImages/conversionTest.png");
+    GraphOfPixels convertedPNG = ImageToGraphConverter
+        .convertComplexImage("outputImages/conversionTest.png");
     assertEquals(3, convertedPNG.getWidth());
     assertEquals(3, convertedPNG.getHeight());
     for (Node n : convertedPNG) {
@@ -227,7 +228,8 @@ public class TestReadWriteNewFunctionality {
 
   @Test
   public void testConvertFile() {
-    GraphOfPixels convertedJPG = ImageToGraphConverter.convertImage("outputImages/conversionTest.jpg");
+    GraphOfPixels convertedJPG = ImageToGraphConverter
+        .convertImage("outputImages/conversionTest.jpg");
     assertEquals(3, convertedJPG.getWidth());
     assertEquals(3, convertedJPG.getHeight());
     for (Node n : convertedJPG) {
@@ -236,7 +238,8 @@ public class TestReadWriteNewFunctionality {
       assertEquals(0, n.getBlue());
       assertEquals(255, n.getOpacity());
     }
-    GraphOfPixels convertedPNG = ImageToGraphConverter.convertImage("outputImages/conversionTest.png");
+    GraphOfPixels convertedPNG = ImageToGraphConverter
+        .convertImage("outputImages/conversionTest.png");
     assertEquals(3, convertedPNG.getWidth());
     assertEquals(3, convertedPNG.getHeight());
     for (Node n : convertedPNG) {
@@ -245,7 +248,8 @@ public class TestReadWriteNewFunctionality {
       assertEquals(0, n.getBlue());
       assertEquals(255, n.getOpacity());
     }
-    GraphOfPixels convertedPPM = ImageToGraphConverter.convertImage("outputImages/conversionTest.ppm");
+    GraphOfPixels convertedPPM = ImageToGraphConverter
+        .convertImage("outputImages/conversionTest.ppm");
     assertEquals(3, convertedPPM.getWidth());
     assertEquals(3, convertedPPM.getHeight());
     for (Node n : convertedPPM) {
@@ -264,18 +268,18 @@ public class TestReadWriteNewFunctionality {
 
     assertEquals(2, writtenFile.getHeight());
     assertEquals(2, writtenFile.getWidth());
-    assertEquals(123, writtenFile.getPixelAt(0,0).getRed());
-    assertEquals(123, writtenFile.getPixelAt(0,0).getGreen());
-    assertEquals(123, writtenFile.getPixelAt(0,0).getBlue());
-    assertEquals(211, writtenFile.getPixelAt(1,0).getRed());
-    assertEquals(211, writtenFile.getPixelAt(1,0).getGreen());
-    assertEquals(211, writtenFile.getPixelAt(1,0).getBlue());
-    assertEquals(112, writtenFile.getPixelAt(0,1).getRed());
-    assertEquals(112, writtenFile.getPixelAt(0,1).getGreen());
-    assertEquals(112, writtenFile.getPixelAt(0,1).getBlue());
-    assertEquals(121, writtenFile.getPixelAt(1,1).getRed());
-    assertEquals(121, writtenFile.getPixelAt(1,1).getGreen());
-    assertEquals(121, writtenFile.getPixelAt(1,1).getBlue());
+    assertEquals(123, writtenFile.getPixelAt(0, 0).getRed());
+    assertEquals(123, writtenFile.getPixelAt(0, 0).getGreen());
+    assertEquals(123, writtenFile.getPixelAt(0, 0).getBlue());
+    assertEquals(211, writtenFile.getPixelAt(1, 0).getRed());
+    assertEquals(211, writtenFile.getPixelAt(1, 0).getGreen());
+    assertEquals(211, writtenFile.getPixelAt(1, 0).getBlue());
+    assertEquals(112, writtenFile.getPixelAt(0, 1).getRed());
+    assertEquals(112, writtenFile.getPixelAt(0, 1).getGreen());
+    assertEquals(112, writtenFile.getPixelAt(0, 1).getBlue());
+    assertEquals(121, writtenFile.getPixelAt(1, 1).getRed());
+    assertEquals(121, writtenFile.getPixelAt(1, 1).getGreen());
+    assertEquals(121, writtenFile.getPixelAt(1, 1).getBlue());
   }
 
   @Test
@@ -286,17 +290,17 @@ public class TestReadWriteNewFunctionality {
 
     assertEquals(2, writtenFile.getHeight());
     assertEquals(2, writtenFile.getWidth());
-    assertEquals(123, writtenFile.getPixelAt(0,0).getRed(), 21);
-    assertEquals(123, writtenFile.getPixelAt(0,0).getGreen(), 21);
-    assertEquals(123, writtenFile.getPixelAt(0,0).getBlue(), 21);
-    assertEquals(211, writtenFile.getPixelAt(1,0).getRed(), 21);
-    assertEquals(211, writtenFile.getPixelAt(1,0).getGreen(), 21);
-    assertEquals(211, writtenFile.getPixelAt(1,0).getBlue(), 21);
-    assertEquals(112, writtenFile.getPixelAt(0,1).getRed(), 21);
-    assertEquals(112, writtenFile.getPixelAt(0,1).getGreen(), 21);
-    assertEquals(112, writtenFile.getPixelAt(0,1).getBlue(), 21);
-    assertEquals(121, writtenFile.getPixelAt(1,1).getRed(), 21);
-    assertEquals(121, writtenFile.getPixelAt(1,1).getGreen(), 21);
-    assertEquals(121, writtenFile.getPixelAt(1,1).getBlue(), 21);
+    assertEquals(123, writtenFile.getPixelAt(0, 0).getRed(), 21);
+    assertEquals(123, writtenFile.getPixelAt(0, 0).getGreen(), 21);
+    assertEquals(123, writtenFile.getPixelAt(0, 0).getBlue(), 21);
+    assertEquals(211, writtenFile.getPixelAt(1, 0).getRed(), 21);
+    assertEquals(211, writtenFile.getPixelAt(1, 0).getGreen(), 21);
+    assertEquals(211, writtenFile.getPixelAt(1, 0).getBlue(), 21);
+    assertEquals(112, writtenFile.getPixelAt(0, 1).getRed(), 21);
+    assertEquals(112, writtenFile.getPixelAt(0, 1).getGreen(), 21);
+    assertEquals(112, writtenFile.getPixelAt(0, 1).getBlue(), 21);
+    assertEquals(121, writtenFile.getPixelAt(1, 1).getRed(), 21);
+    assertEquals(121, writtenFile.getPixelAt(1, 1).getGreen(), 21);
+    assertEquals(121, writtenFile.getPixelAt(1, 1).getBlue(), 21);
   }
 }

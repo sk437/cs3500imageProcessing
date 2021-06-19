@@ -1,19 +1,9 @@
 import controller.ImageProcessingController;
 import controller.ProcessingController;
-import imageasgraph.FixedSizeGraph;
 import imageasgraph.GraphOfPixels;
 import imageasgraph.ImageToGraphConverter;
 import imageasgraph.Node;
 import imageasgraph.OutputType;
-import imageasgraph.SimpleGraphOfPixels;
-import java.io.InputStreamReader;
-import layeredimage.LayeredImage;
-import layeredimage.LayeredImageV0;
-import layeredimage.blend.BasicBlend;
-import mutators.colortransformations.GreyscaleTransform;
-import mutators.colortransformations.SepiaTransform;
-import mutators.filters.BlurFilter;
-import mutators.filters.SharpenFilter;
 import pixel.SimplePixel;
 
 /**
@@ -80,7 +70,8 @@ public class TestSimpleGraphOfPixels {
       System.out.println(g.getPixelAt(0,0).getRed());
     }
 
-    //GraphOfPixels graph2 = ImageToGraphConverter.convertComplexImage("outputImages/birbBetter.jpg");
+    //GraphOfPixels graph2 = ImageToGraphConverter.convertComplexImage(
+    "outputImages/birbBetter.jpg");
     //graph2.writeToFile(OutputType.jpeg, "outputImages/birbBetterJPG");
 
     LayeredImage layered1 = new LayeredImageV0(1024, 768);
@@ -95,7 +86,8 @@ public class TestSimpleGraphOfPixels {
     layered2.saveAsLayeredImage("outputImages/misc2");
 
      */
-    ImageProcessingController controller = new ProcessingController("outputImages/TestScript.txt", System.out);
+    ImageProcessingController controller = new ProcessingController("outputImages/TestScript.txt",
+        System.out);
     //controller.run();
     /*
     LayeredImage testLayered = new LayeredImageV0(20,20);
@@ -116,8 +108,8 @@ public class TestSimpleGraphOfPixels {
     testLayered.saveAsLayeredImage("outputImages/exampleLayeredImage");
     */
     GraphOfPixels example2 = ImageToGraphConverter.convertImage("outputImages/example.ppm");
-    for (Node n: example2) {
-      n.updateColors(new SimplePixel(55,66,77));
+    for (Node n : example2) {
+      n.updateColors(new SimplePixel(55, 66, 77));
     }
     example2.writeToFile(OutputType.png, "outputImages/example2");
   }

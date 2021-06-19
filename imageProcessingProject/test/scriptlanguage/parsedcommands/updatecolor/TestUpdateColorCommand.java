@@ -1,6 +1,6 @@
 package scriptlanguage.parsedcommands.updatecolor;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import imageasgraph.GraphOfPixels;
 import imageasgraph.ImageToGraphConverter;
@@ -8,16 +8,15 @@ import java.util.HashMap;
 import layeredimage.LayeredImage;
 import layeredimage.LayeredImageV0;
 import org.junit.Test;
-import pixel.SimplePixel;
 import scriptlanguage.LanguageSyntax;
 import scriptlanguage.LanguageSyntaxImpl;
 import scriptlanguage.parsedcommands.ParsedCommand;
-import scriptlanguage.parsedcommands.save.SaveCommand;
 
 /**
  * Tests the functionality of updating the color of a pixel in an image or layer through scripts.
  */
 public class TestUpdateColorCommand {
+
   private HashMap<String, GraphOfPixels> graphs;
   private HashMap<String, LayeredImage> layeredImages;
   private ParsedCommand newExecutableCommandSingle;
@@ -49,18 +48,27 @@ public class TestUpdateColorCommand {
     GraphOfPixels ex2 = ImageToGraphConverter.createEmptyGraph();
     graphs.put("existingImage", ex2);
 
-    newExecutableCommandSingle = new UpdateColorCommand("existingImage", null, 0, 0, 75, 123, 123, 123);
-    newExecutableCommandLayer = new UpdateColorCommand("existing", "secondLayer", 0, 0, 13, 32, 32, 32);
-    failExecutableNonExistentImage = new UpdateColorCommand("what", null,  0, 0, 75, 123, 123, 123);
-    failExecutableNonExistentLayer = new UpdateColorCommand("existing", "non-existent",  0, 0, 75, 123, 123, 123);
-    failExecutableNullLayer = new UpdateColorCommand("existing", null,  0, 0, 75, 123, 123, 123);
-    failExecutableTooSmallOpacity = new UpdateColorCommand("existingImage", null, 0, 0, -1, 123, 123, 123);
-    failExecutableTooLargeOpacity = new UpdateColorCommand("existingImage", null, 0, 0, 1000, 123, 123, 123);
+    newExecutableCommandSingle = new UpdateColorCommand("existingImage", null, 0, 0, 75, 123, 123,
+        123);
+    newExecutableCommandLayer = new UpdateColorCommand("existing", "secondLayer", 0, 0, 13, 32, 32,
+        32);
+    failExecutableNonExistentImage = new UpdateColorCommand("what", null, 0, 0, 75, 123, 123, 123);
+    failExecutableNonExistentLayer = new UpdateColorCommand("existing", "non-existent", 0, 0, 75,
+        123, 123, 123);
+    failExecutableNullLayer = new UpdateColorCommand("existing", null, 0, 0, 75, 123, 123, 123);
+    failExecutableTooSmallOpacity = new UpdateColorCommand("existingImage", null, 0, 0, -1, 123,
+        123, 123);
+    failExecutableTooLargeOpacity = new UpdateColorCommand("existingImage", null, 0, 0, 1000, 123,
+        123, 123);
 
-    failExecutableNegativeX = new UpdateColorCommand("existingImage", null, -3, 0, 75, 123, 123, 123);
-    failExecutableNegativeY = new UpdateColorCommand("existingImage", null, 0, -3, 75, 123, 123, 123);
-    failExecutableTooLargeX = new UpdateColorCommand("existingImage", null, 100, 0, 75, 123, 123, 123);
-    failExecutableTooLargeY = new UpdateColorCommand("existingImage", null, 0, 100, 75, 123, 123, 123);
+    failExecutableNegativeX = new UpdateColorCommand("existingImage", null, -3, 0, 75, 123, 123,
+        123);
+    failExecutableNegativeY = new UpdateColorCommand("existingImage", null, 0, -3, 75, 123, 123,
+        123);
+    failExecutableTooLargeX = new UpdateColorCommand("existingImage", null, 100, 0, 75, 123, 123,
+        123);
+    failExecutableTooLargeY = new UpdateColorCommand("existingImage", null, 0, 100, 75, 123, 123,
+        123);
   }
 
 
@@ -151,7 +159,6 @@ public class TestUpdateColorCommand {
     this.setUp();
     failExecutableTooLargeY.execute(graphs, layeredImages);
   }
-
 
 
   @Test

@@ -16,6 +16,7 @@ import scriptlanguage.parsedcommands.ParsedCommand;
  * Tests the functionality of creating an image from an existing one through scripts.
  */
 public class TestCreateFromImageCommand {
+
   private HashMap<String, GraphOfPixels> graphs;
   private HashMap<String, LayeredImage> layeredImages;
   private ParsedCommand newExecutableCommand;

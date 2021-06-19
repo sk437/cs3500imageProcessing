@@ -1,12 +1,11 @@
 package view;
 
 import java.io.IOException;
-import java.util.Objects;
 
 /**
  * Represents a textual view that only has basic message rendering capacity.
  */
-public class TextErrorView implements ErrorView{
+public class TextErrorView implements ErrorView {
 
   private final Appendable out;
 
@@ -14,7 +13,13 @@ public class TextErrorView implements ErrorView{
     this.out = System.out;
   }
 
-  public TextErrorView(Appendable output) {
+  /**
+   * Creates a new TextErrorView object with a specified output.
+   *
+   * @param output The desired output location
+   * @throws IllegalArgumentException If any inputs are null
+   */
+  public TextErrorView(Appendable output) throws IllegalArgumentException {
     if (output == null) {
       throw new IllegalArgumentException("Null given output");
     }
@@ -29,7 +34,7 @@ public class TextErrorView implements ErrorView{
     }
     try {
       this.out.append(message);
-    } catch(IOException e) {
+    } catch (IOException e) {
       throw new IllegalArgumentException("Could not write to output");
     }
   }

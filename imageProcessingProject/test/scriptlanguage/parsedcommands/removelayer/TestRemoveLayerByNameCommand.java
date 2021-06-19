@@ -1,6 +1,6 @@
 package scriptlanguage.parsedcommands.removelayer;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import imageasgraph.GraphOfPixels;
 import java.util.HashMap;
@@ -10,9 +10,12 @@ import org.junit.Test;
 import scriptlanguage.LanguageSyntax;
 import scriptlanguage.LanguageSyntaxImpl;
 import scriptlanguage.parsedcommands.ParsedCommand;
-import scriptlanguage.parsedcommands.movelayer.MoveLayerCommand;
 
+/**
+ * Tests the functionality of removing a layer in a layered image through scripts.
+ */
 public class TestRemoveLayerByNameCommand {
+
   private HashMap<String, GraphOfPixels> graphs;
   private HashMap<String, LayeredImage> layeredImages;
   private ParsedCommand newExecutableCommand;
@@ -74,8 +77,6 @@ public class TestRemoveLayerByNameCommand {
     this.setUp();
     failExecutableNonExistentLayer.execute(graphs, layeredImages);
   }
-
-
 
 
   @Test

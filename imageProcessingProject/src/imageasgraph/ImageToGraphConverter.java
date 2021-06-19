@@ -3,16 +3,15 @@ package imageasgraph;
 import imageInput.ImageProgram;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Scanner;
 import javax.imageio.ImageIO;
 import pixel.PixelAsColors;
 import pixel.SimplePixel;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  * Contains methods which can convert a given image, of various types, into an image as a graph of
@@ -45,16 +44,18 @@ public class ImageToGraphConverter {
 
   /**
    * Creates a copy of the given GraphOfPixels.
+   *
    * @param original The graph of pixels to copy
    * @return The copy of the given graph
    * @throws IllegalArgumentException If the given graph is null
    */
-  public static GraphOfPixels createCopyOfGraph(FixedSizeGraph original) throws IllegalArgumentException {
+  public static GraphOfPixels createCopyOfGraph(FixedSizeGraph original)
+      throws IllegalArgumentException {
     if (original == null) {
       throw new IllegalArgumentException("Null graph");
     }
     AbstractGraphOfPixels toReturn = new SimpleGraphOfPixels();
-    toReturn.addFirstNode(new PixelNode(new SimplePixel(0,0,0)));
+    toReturn.addFirstNode(new PixelNode(new SimplePixel(0, 0, 0)));
     for (int col = 0; col < original.getWidth() - 1; col += 1) {
       toReturn.insertColumn(col);
     }
@@ -65,7 +66,8 @@ public class ImageToGraphConverter {
     Iterator<Node> originalNodes = original.iterator();
     while (copyNodes.hasNext()) {
       Node copyNext = copyNodes.next();
-      Node originalNext = originalNodes.next(); // Can do this because both iterators should be same length
+      Node originalNext = originalNodes
+          .next(); // Can do this because both iterators should be same length
       int storedOpacity = originalNext.getOpacity();
       originalNext.setOpacity(255); // Done so transparent pixels are not copied as black
       copyNext.updateColors(new SimplePixel(originalNext.getRed(), originalNext.getGreen(),
@@ -78,10 +80,12 @@ public class ImageToGraphConverter {
 
   /**
    * Converts the file of the given name to a GraphOfPixels image.
+   *
    * @param fileName The name of the file to be converted
    * @return The Graph representation of the given file
+   * @throws IllegalArgumentException If any inputs are null, or input types are not supported
    */
-  public static GraphOfPixels convertImage(String fileName) {
+  public static GraphOfPixels convertImage(String fileName) throws IllegalArgumentException {
     if (fileName == null) {
       throw new IllegalArgumentException("Null input");
     }
@@ -99,7 +103,15 @@ public class ImageToGraphConverter {
     }
   }
 
-  public static GraphOfPixels convertComplexImage(String fileName) {
+  /**
+   * Converts either a jpg or png file of given name to a GraphOfPixels image
+   *
+   * @param fileName The name of the file to be converted
+   * @return The Graph representation of the given file
+   * @throws IllegalArgumentException If any inputs are null, the file can not be read, or input
+   *                                  types are not supported
+   */
+  public static GraphOfPixels convertComplexImage(String fileName) throws IllegalArgumentException {
     if (fileName == null) {
       throw new IllegalArgumentException("Null fileName");
     }
@@ -112,9 +124,8 @@ public class ImageToGraphConverter {
 
     BufferedImage newImage;
     try {
-       newImage = ImageIO.read(newFile);
-    }
-    catch (IOException e) {
+      newImage = ImageIO.read(newFile);
+    } catch (IOException e) {
       throw new IllegalArgumentException("Could not read file.");
     }
 
@@ -132,9 +143,9 @@ public class ImageToGraphConverter {
       for (int x = 0; x < newImage.getWidth(); x += 1) {
         int argb = newImage.getRGB(x, y);
         int alpha = (argb >> 24) & 0xFF;
-        int red =   (argb >> 16) & 0xFF;
+        int red = (argb >> 16) & 0xFF;
         int green = (argb >> 8) & 0xFF;
-        int blue =  argb & 0xFF;
+        int blue = argb & 0xFF;
         int[] pixelValues = {
             alpha, red, green, blue
         };
@@ -146,13 +157,13 @@ public class ImageToGraphConverter {
     for (Node n : toReturn) {
       int[] currentPixelData = newPixelData.get(data);
       n.setOpacity(currentPixelData[0]);
-      n.updateColors(new SimplePixel(currentPixelData[1], currentPixelData[2], currentPixelData[3]));
+      n.updateColors(
+          new SimplePixel(currentPixelData[1], currentPixelData[2], currentPixelData[3]));
       data += 1;
     }
 
     return toReturn;
   }
-
 
 
   /**
@@ -209,12 +220,21 @@ public class ImageToGraphConverter {
     return convertFromDoubleArray(toReturn);
   }
 
-  public static GraphOfPixels createTransparentGraph(int width, int height) {
+  /**
+   * Creates a graph with transparent pixels of given width and height.
+   *
+   * @param width  The width of the new graph
+   * @param height The height of the new graph
+   * @return The Graph representation
+   * @throws IllegalArgumentException If dimensions are invalid
+   */
+  public static GraphOfPixels createTransparentGraph(int width, int height)
+      throws IllegalArgumentException {
     if (width <= 0 || height <= 0) {
       throw new IllegalArgumentException("Invalid dimensions");
     }
     AbstractGraphOfPixels toReturn = new SimpleGraphOfPixels();
-    toReturn.addFirstNode(new PixelNode(new SimplePixel(0,0,0)));
+    toReturn.addFirstNode(new PixelNode(new SimplePixel(0, 0, 0)));
     /*
     Creates a graph of the same size as the input, with all white nodes.
      */

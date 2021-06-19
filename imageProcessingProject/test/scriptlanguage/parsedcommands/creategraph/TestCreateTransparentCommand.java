@@ -1,6 +1,8 @@
 package scriptlanguage.parsedcommands.creategraph;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import imageasgraph.GraphOfPixels;
 import java.util.HashMap;
@@ -14,6 +16,7 @@ import scriptlanguage.parsedcommands.ParsedCommand;
  * Tests the functionality of creating a transparent image through scripts.
  */
 public class TestCreateTransparentCommand {
+
   private HashMap<String, GraphOfPixels> graphs;
   private java.util.HashMap<String, LayeredImage> layeredImages;
   private ParsedCommand newExecutableCommand;

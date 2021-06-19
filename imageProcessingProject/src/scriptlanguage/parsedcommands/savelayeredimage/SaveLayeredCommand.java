@@ -7,10 +7,10 @@ import scriptlanguage.LanguageSyntax;
 import scriptlanguage.parsedcommands.ParsedCommand;
 
 /**
- * Represents a command which saves a layered image, as an image file
- * of a specified name.
+ * Represents a command which saves a layered image, as an image file of a specified name.
  */
 public class SaveLayeredCommand implements ParsedCommand {
+
   private final String imageToSave;
   private final String fileName;
 

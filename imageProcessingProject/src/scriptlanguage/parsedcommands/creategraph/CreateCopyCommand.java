@@ -11,14 +11,16 @@ import scriptlanguage.parsedcommands.ParsedCommand;
  * Represents a command which creates a new image as a copy of an existing image.
  */
 public class CreateCopyCommand implements ParsedCommand {
+
   private final String imageName;
   private final String toCopy;
 
   /**
    * Creates a new CreateCopyCommand, which will create a new image with the given name by copying
    * an existing image of the other given name
+   *
    * @param imageName The name of the new image to be created
-   * @param toCopy The name of the image to be copied
+   * @param toCopy    The name of the image to be copied
    */
   public CreateCopyCommand(String imageName, String toCopy) {
     if (imageName == null || toCopy == null) {
@@ -38,7 +40,8 @@ public class CreateCopyCommand implements ParsedCommand {
       throw new IllegalArgumentException("There is already an image with that name");
     }
     if (!graphs.containsKey(toCopy)) {
-      throw new IllegalArgumentException("The image this command is supposed to copy does not exist");
+      throw new IllegalArgumentException(
+          "The image this command is supposed to copy does not exist");
     }
     graphs.put(imageName, ImageToGraphConverter.createCopyOfGraph(graphs.get(toCopy)));
   }

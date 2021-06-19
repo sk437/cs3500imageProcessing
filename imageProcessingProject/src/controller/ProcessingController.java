@@ -1,12 +1,8 @@
 package controller;
 
 import imageasgraph.GraphOfPixels;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.InputStreamReader;
-import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Scanner;
 import layeredimage.LayeredImage;
@@ -19,14 +15,21 @@ import view.TextErrorView;
 /**
  * Represents a controller object to execute scripts based on inputs.
  */
-public class ProcessingController implements ImageProcessingController{
+public class ProcessingController implements ImageProcessingController {
 
   private final ErrorView view;
   private final Readable input;
   private final HashMap<String, GraphOfPixels> singleImages;
   private final HashMap<String, LayeredImage> layeredImages;
 
-  public ProcessingController(Readable input, Appendable output) {
+  /**
+   * Creates a controller instance using a readable input.
+   *
+   * @param input  The Readable input for the program
+   * @param output The Appendable where information is outputted
+   * @throws IllegalArgumentException If any parameters are null
+   */
+  public ProcessingController(Readable input, Appendable output) throws IllegalArgumentException {
     if (input == null || output == null) {
       throw new IllegalArgumentException("One or more inputs are null");
     }
@@ -36,7 +39,14 @@ public class ProcessingController implements ImageProcessingController{
     this.layeredImages = new HashMap<String, LayeredImage>();
   }
 
-  public ProcessingController(String fileInput, Appendable output) {
+  /**
+   * Creates a controller instance using a String file.
+   *
+   * @param fileInput The String input for the program representing a file
+   * @param output    The Appendable where information is outputted
+   * @throws IllegalArgumentException If any parameters are null
+   */
+  public ProcessingController(String fileInput, Appendable output) throws IllegalArgumentException {
     if (fileInput == null || output == null) {
       throw new IllegalArgumentException("One or more inputs are null");
     }
@@ -44,7 +54,7 @@ public class ProcessingController implements ImageProcessingController{
     FileReader newScript;
     try {
       newScript = new FileReader(fileInput);
-    } catch(FileNotFoundException e) {
+    } catch (FileNotFoundException e) {
       throw new IllegalArgumentException("File not found");
     }
     this.input = newScript;

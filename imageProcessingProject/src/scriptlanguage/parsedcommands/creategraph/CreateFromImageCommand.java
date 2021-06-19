@@ -11,14 +11,16 @@ import scriptlanguage.parsedcommands.ParsedCommand;
  * Represents a command which creates a new image from an existing file.
  */
 public class CreateFromImageCommand implements ParsedCommand {
+
   private final String imageName;
   private final GraphOfPixels processedFile;
 
   /**
    * Creates a new CreateFromImageCommand, which creates a new image of the given name by reading
    * the file of the given name.
+   *
    * @param imageName The name of the image to be created
-   * @param fileName The name of the file to be read
+   * @param fileName  The name of the file to be read
    * @throws IllegalArgumentException If given a null input
    */
   public CreateFromImageCommand(String imageName, String fileName) throws IllegalArgumentException {

@@ -1,10 +1,11 @@
 package scriptlanguage.parsedcommands.creategraph;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import imageasgraph.GraphOfPixels;
 import imageasgraph.ImageToGraphConverter;
-import java.awt.Image;
 import java.util.HashMap;
 import layeredimage.LayeredImage;
 import org.junit.Test;
@@ -17,6 +18,7 @@ import scriptlanguage.parsedcommands.ParsedCommand;
  * Tests the functionality of creating a copy of an existing image through scripts.
  */
 public class TestCreateCopyCommand {
+
   private HashMap<String, GraphOfPixels> graphs;
   private HashMap<String, LayeredImage> layeredImages;
   private ParsedCommand newExecutableCommand;

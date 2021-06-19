@@ -1,0 +1,4 @@
+20 20
+invisible-layer 0 false
+blue-layer 1 true
+red-layer 2 true

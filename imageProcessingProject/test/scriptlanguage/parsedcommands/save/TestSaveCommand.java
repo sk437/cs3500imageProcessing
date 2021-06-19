@@ -1,6 +1,6 @@
 package scriptlanguage.parsedcommands.save;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import imageasgraph.GraphOfPixels;
 import imageasgraph.ImageToGraphConverter;
@@ -12,12 +12,12 @@ import pixel.SimplePixel;
 import scriptlanguage.LanguageSyntax;
 import scriptlanguage.LanguageSyntaxImpl;
 import scriptlanguage.parsedcommands.ParsedCommand;
-import scriptlanguage.parsedcommands.movelayer.MoveLayerCommand;
 
 /**
  * Tests the functionality of saving empty images or specific layers through scripts.
  */
 public class TestSaveCommand {
+
   private HashMap<String, GraphOfPixels> graphs;
   private HashMap<String, LayeredImage> layeredImages;
   private ParsedCommand newExecutableCommandSingle;
@@ -47,11 +47,16 @@ public class TestSaveCommand {
     ex2.getPixelAt(0, 0).updateColors(new SimplePixel(123, 123, 123));
     graphs.put("existingImage", ex2);
 
-    newExecutableCommandSingle = new SaveCommand("existingImage", null, "ppm", "outputImages/testSaveSingle");
-    newExecutableCommandLayer = new SaveCommand("existing", "secondLayer", "png", "outputImages/testSaveLayer");
-    failExecutableNonExistentImage = new SaveCommand("what", null, "ppm", "outputImages/testSaveSingle");
-    failExecutableNonExistentLayer = new SaveCommand("existing", "non-existent", "png", "outputImages/testSaveSingle");
-    failExecutableNullLayer = new SaveCommand("existing", null, "png", "outputImages/testSaveSingle");
+    newExecutableCommandSingle = new SaveCommand("existingImage", null, "ppm",
+        "outputImages/testSaveSingle");
+    newExecutableCommandLayer = new SaveCommand("existing", "secondLayer", "png",
+        "outputImages/testSaveLayer");
+    failExecutableNonExistentImage = new SaveCommand("what", null, "ppm",
+        "outputImages/testSaveSingle");
+    failExecutableNonExistentLayer = new SaveCommand("existing", "non-existent", "png",
+        "outputImages/testSaveSingle");
+    failExecutableNullLayer = new SaveCommand("existing", null, "png",
+        "outputImages/testSaveSingle");
   }
 
 
@@ -62,7 +67,8 @@ public class TestSaveCommand {
 
   @Test(expected = IllegalArgumentException.class)
   public void testFailConstructionNullOutputType() {
-    ParsedCommand fail = new SaveCommand("existingImage", "none", null, "outputImages/testSaveSingle");
+    ParsedCommand fail = new SaveCommand("existingImage", "none", null,
+        "outputImages/testSaveSingle");
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -115,7 +121,6 @@ public class TestSaveCommand {
     this.setUp();
     failExecutableNullLayer.execute(graphs, layeredImages);
   }
-
 
 
   @Test

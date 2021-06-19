@@ -10,14 +10,16 @@ import scriptlanguage.parsedcommands.ParsedCommand;
  * Represents a command to add a new, empty layer to an existing layeredImage.
  */
 public class AddLayerCommand implements ParsedCommand {
+
   private final String imageToAddTo;
   private final String layerToAdd;
 
   /**
    * Constructs a new AddLayerCommand, which will add a layer of the given name to a layeredImage
    * with the given name.
+   *
    * @param imageToAddTo The name of the image to be added to
-   * @param layerToAdd The name of the layer to be added
+   * @param layerToAdd   The name of the layer to be added
    * @throws IllegalArgumentException If given a null input
    */
   public AddLayerCommand(String imageToAddTo, String layerToAdd) throws IllegalArgumentException {

@@ -26,15 +26,16 @@ public interface LayeredImage extends Iterable<FixedSizeGraph> {
    * @param layerName The name of the new layer to be added, which does not already exist
    * @param toCopy    The name of the layer, which must already exist, to be copied.
    * @throws IllegalArgumentException If the given string is null, or if layerName is a name that
-   *                                  already exists, or if toCopy is a name that does not exist,
-   *                                  or if the layerName is more than one word
+   *                                  already exists, or if toCopy is a name that does not exist, or
+   *                                  if the layerName is more than one word
    */
   void addLayer(String layerName, String toCopy) throws IllegalArgumentException;
 
   /**
    * Moves the layer with the given name to the given index in the pile.
+   *
    * @param layerName The name of the layer to be moved
-   * @param toIndex The index to move the layer to
+   * @param toIndex   The index to move the layer to
    * @throws IllegalArgumentException If the layerName is null, or is not a valid layer, or if
    *                                  toIndex is not a valid index for the pile.
    */
@@ -42,6 +43,7 @@ public interface LayeredImage extends Iterable<FixedSizeGraph> {
 
   /**
    * Sets the visibility of the layer referenced by the given string to the given boolean.
+   *
    * @param layerName The name of the layer
    * @param isVisible Whether or not it should be visible
    * @throws IllegalArgumentException If layerName is null or refers to a non-existent layer
@@ -50,6 +52,7 @@ public interface LayeredImage extends Iterable<FixedSizeGraph> {
 
   /**
    * Returns whether or not the referenced layer is visible.
+   *
    * @param layerName The name of the layer
    * @return Whether or not it is visible
    * @throws IllegalArgumentException If layerName is null or refers to a non-existent layer
@@ -58,6 +61,7 @@ public interface LayeredImage extends Iterable<FixedSizeGraph> {
 
   /**
    * Returns whether or not the referenced layer is visible.
+   *
    * @param layerIndex The index of the layer
    * @return Whether or not it is visible
    * @throws IllegalArgumentException If layerIndex is out of bounds
@@ -66,12 +70,14 @@ public interface LayeredImage extends Iterable<FixedSizeGraph> {
 
   /**
    * Returns the number of layers in this layeredImage.
+   *
    * @return The number of layers in this image
    */
   int getNumLayers();
 
   /**
    * Returns a list of all the layer names in this image, in order from top to bottom.
+   *
    * @return A list of all the layer names in this image as strings.
    */
   List<String> getLayerNames();
@@ -117,11 +123,12 @@ public interface LayeredImage extends Iterable<FixedSizeGraph> {
 
 
   /**
-   * Saves a copy of this Layered image as an image of the given outputType, blended as specified
-   * by the given Blend object, and with the given fileName.
-   * @param blendType The way the layers will be blended together
+   * Saves a copy of this Layered image as an image of the given outputType, blended as specified by
+   * the given Blend object, and with the given fileName.
+   *
+   * @param blendType  The way the layers will be blended together
    * @param outputType The type of image file to be outputted
-   * @param fileName The name of the file to be outputted
+   * @param fileName   The name of the file to be outputted
    * @throws IllegalArgumentException If the given filename is null
    */
   void saveAsImage(Blend blendType, OutputType outputType, String fileName)
@@ -129,6 +136,7 @@ public interface LayeredImage extends Iterable<FixedSizeGraph> {
 
   /**
    * Saves a copy of this Layered image as a layered-image file, with the given name.
+   *
    * @param fileName The naem of the file to be outputted
    * @throws IllegalArgumentException If the given filename is null
    */
@@ -136,12 +144,14 @@ public interface LayeredImage extends Iterable<FixedSizeGraph> {
 
   /**
    * Gets the common width of all layers.
+   *
    * @return An integer representing the width in pixels of all layers.
    */
   int getWidth();
 
   /**
    * Gets the common height of all layers.
+   *
    * @return An integer representing the height in pixels of all layers.
    */
   int getHeight();

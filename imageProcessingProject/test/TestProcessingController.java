@@ -12,9 +12,11 @@ import layeredimage.LayeredImageV0;
 import org.junit.Test;
 
 /**
- * Tests that the Controller class properly gets constructed and properly handles inputs and outputs.
+ * Tests that the Controller class properly gets constructed and properly handles inputs and
+ * outputs.
  */
 public class TestProcessingController {
+
   private ImageProcessingController testReadable;
   private ImageProcessingController testFile;
   private Appendable testOutputReadable;
@@ -33,7 +35,8 @@ public class TestProcessingController {
 
   @Test(expected = IllegalArgumentException.class)
   public void testFailConstructionReadableNullOutput() {
-    ImageProcessingController fail = new ProcessingController(new InputStreamReader(System.in), null);
+    ImageProcessingController fail = new ProcessingController(new InputStreamReader(System.in),
+        null);
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -75,7 +78,7 @@ public class TestProcessingController {
     testFile.run();
     assertEquals(
         "Invalid line 0: Unsupported command given\n"
-        + "Image Processor Quit",
+            + "Image Processor Quit",
         testOutputFile.toString());
     LayeredImage newLayeredImage = new LayeredImageV0("outputImages/testControllerFile");
     assertEquals(2, newLayeredImage.getNumLayers());
@@ -89,7 +92,8 @@ public class TestProcessingController {
     assertTrue(newLayeredImage.getVisibility("birb"));
     assertTrue(newLayeredImage.getVisibility("rainbow"));
 
-    GraphOfPixels newImageAsSingle = ImageToGraphConverter.convertImage("outputImages/testControllerFile/testControllerFile.png");
+    GraphOfPixels newImageAsSingle = ImageToGraphConverter
+        .convertImage("outputImages/testControllerFile/testControllerFile.png");
     assertEquals(1024, newImageAsSingle.getWidth());
     assertEquals(768, newImageAsSingle.getHeight());
   }
@@ -112,7 +116,8 @@ public class TestProcessingController {
     assertTrue(newLayeredImage.getVisibility("birb"));
     assertTrue(newLayeredImage.getVisibility("rainbow"));
 
-    GraphOfPixels newImageAsSingle = ImageToGraphConverter.convertImage("outputImages/testControllerReadable/testControllerReadable.png");
+    GraphOfPixels newImageAsSingle = ImageToGraphConverter
+        .convertImage("outputImages/testControllerReadable/testControllerReadable.png");
     assertEquals(1024, newImageAsSingle.getWidth());
     assertEquals(768, newImageAsSingle.getHeight());
   }

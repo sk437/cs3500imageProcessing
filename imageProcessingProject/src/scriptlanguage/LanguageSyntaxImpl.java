@@ -10,9 +10,11 @@ import scriptlanguage.parsedcommands.ParsedCommand;
  * given in that script on a given model.
  */
 public class LanguageSyntaxImpl implements LanguageSyntax {
+
   private static final HashMap<String, Command> commands;
   private String currentImage = null;
   private String currentLayer = null;
+
   static {
     HashMap<String, Command> temp = new HashMap<String, Command>();
     temp.put("create-image", Command.createImage);
@@ -34,7 +36,7 @@ public class LanguageSyntaxImpl implements LanguageSyntax {
   }
 
   @Override
-  public ParsedCommand parseCommand(String inputLine) throws IllegalArgumentException{
+  public ParsedCommand parseCommand(String inputLine) throws IllegalArgumentException {
     if (inputLine == null) {
       throw new IllegalArgumentException("Null input");
     }
@@ -46,7 +48,8 @@ public class LanguageSyntaxImpl implements LanguageSyntax {
     if (!commands.containsKey(cmd)) {
       throw new IllegalArgumentException("Unsupported command given");
     }
-    ParsedCommand toReturn = commands.get(cmd).returnExecutable(inputs, this.currentImage, this.currentLayer);
+    ParsedCommand toReturn = commands.get(cmd)
+        .returnExecutable(inputs, this.currentImage, this.currentLayer);
     return toReturn;
   }
 

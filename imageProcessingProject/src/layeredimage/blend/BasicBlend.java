@@ -11,7 +11,7 @@ import pixel.SimplePixel;
  * Blends the layers of an image together in a basic way, showing all colors at 100% opacity unless
  * they have 0 opacity, from the top layer down.
  */
-public class BasicBlend extends AbstractBlend{
+public class BasicBlend extends AbstractBlend {
 
   @Override
   protected void combineLayers(LayeredImage original, GraphOfPixels output)
@@ -31,7 +31,9 @@ public class BasicBlend extends AbstractBlend{
           Node outputCurrent = outputIterator.next();
 
           if (outputCurrent.getOpacity() == 0) {
-            outputCurrent.updateColors(new SimplePixel(layerCurrent.getRed(), layerCurrent.getGreen(), layerCurrent.getBlue()));
+            outputCurrent.updateColors(
+                new SimplePixel(layerCurrent.getRed(), layerCurrent.getGreen(),
+                    layerCurrent.getBlue()));
             outputCurrent.setOpacity(layerCurrent.getOpacity());
           }
         }

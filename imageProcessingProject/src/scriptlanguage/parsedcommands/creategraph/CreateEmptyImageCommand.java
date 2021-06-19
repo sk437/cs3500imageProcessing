@@ -8,14 +8,16 @@ import scriptlanguage.LanguageSyntax;
 import scriptlanguage.parsedcommands.ParsedCommand;
 
 /**
- * Represents a command which creates a new, empty image(not very useful as there is no script
- * to change the size of an existing image). //TODO DECIDE IF SOMETHING SHOULD BE DONE ABOUT THIS
+ * Represents a command which creates a new, empty image(not very useful as there is no script to
+ * change the size of an existing image). //TODO DECIDE IF SOMETHING SHOULD BE DONE ABOUT THIS
  */
 public class CreateEmptyImageCommand implements ParsedCommand {
+
   private final String imageName;
 
   /**
    * Constructs a new CreateEmptyImageCommand, which will create an empty image of the given name.
+   *
    * @param imageName The name of the image to be created
    * @throws IllegalArgumentException If given a null input
    */

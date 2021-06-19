@@ -1,6 +1,8 @@
 package scriptlanguage.parsedcommands.copylayer;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import imageasgraph.FixedSizeGraph;
 import imageasgraph.GraphOfPixels;
@@ -12,12 +14,12 @@ import pixel.SimplePixel;
 import scriptlanguage.LanguageSyntax;
 import scriptlanguage.LanguageSyntaxImpl;
 import scriptlanguage.parsedcommands.ParsedCommand;
-import scriptlanguage.parsedcommands.creategraph.CreateFromImageCommand;
 
 /**
  * Tests the functionality of creating a copy of a layer in a layered image through scripts.
  */
 public class TestCopyLayerCommand {
+
   private HashMap<String, GraphOfPixels> graphs;
   private HashMap<String, LayeredImage> layeredImages;
   private ParsedCommand newExecutableCommand;

@@ -16,6 +16,7 @@ import scriptlanguage.parsedcommands.ParsedCommand;
  * Tests the functionality of creating an empty image through scripts.
  */
 public class TestCreateEmptyImageCommand {
+
   private HashMap<String, GraphOfPixels> graphs;
   private HashMap<String, LayeredImage> layeredImages;
   private ParsedCommand newExecutableCommand;
@@ -60,7 +61,6 @@ public class TestCreateEmptyImageCommand {
     //Running the same command again should cause a problem.
     newExecutableCommand.execute(graphs, layeredImages);
   }
-
 
 
   @Test

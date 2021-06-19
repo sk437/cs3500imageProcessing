@@ -3,7 +3,7 @@ create-image checkerboard checkerboardImage 20 25 255 0 0 0 0 0
 create-image empty useless
 create-image transparent transparentImage 50 40
 create-image copy checkerboardTwo checkerboardImage
-create-image from-image birb outputImages/birb.jpg
+create-image from-image birb birb.jpg
 
 #Update colors of images
 update-color checkerboardTwo 0 0 15 16 17 18
@@ -18,7 +18,7 @@ load checkerboardImage
 apply-mutator greyscale
 
 #Save images
-save ppm res/checkerboard
-save birb jpeg res/birb
+save ppm checkerboard
+save birb jpeg birb
 load transparentImage
-save png res/transparent
+save png transparent

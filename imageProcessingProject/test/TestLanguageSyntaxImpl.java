@@ -36,6 +36,7 @@ import scriptlanguage.parsedcommands.updatevisibility.UpdateVisibilityCommand;
  * Tests whether commands are parsed correctly and correct function objects are returned.
  */
 public class TestLanguageSyntaxImpl {
+
   private HashMap<String, GraphOfPixels> graphs;
   private HashMap<String, LayeredImage> layeredImages;
   private LanguageSyntax test;
@@ -82,7 +83,6 @@ public class TestLanguageSyntaxImpl {
     graphs = new HashMap<String, GraphOfPixels>();
 
     layeredImages = new HashMap<String, LayeredImage>();
-
 
     test = new LanguageSyntaxImpl();
 
@@ -131,7 +131,8 @@ public class TestLanguageSyntaxImpl {
     assertTrue(test.parseCommand(createEmpty) instanceof CreateEmptyImageCommand);
     assertTrue(test.parseCommand(createCopy) instanceof CreateCopyCommand);
 
-    assertTrue(test.parseCommand(createLayeredImageFromFile) instanceof ImportNewLayeredImageCommand);
+    assertTrue(
+        test.parseCommand(createLayeredImageFromFile) instanceof ImportNewLayeredImageCommand);
     assertTrue(test.parseCommand(createLayeredImageBlank) instanceof CreateNewLayeredImageCommand);
 
     assertTrue(test.parseCommand(updateColorGraphImage) instanceof UpdateColorCommand);

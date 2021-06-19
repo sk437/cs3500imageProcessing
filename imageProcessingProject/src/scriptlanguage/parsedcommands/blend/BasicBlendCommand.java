@@ -13,19 +13,22 @@ import scriptlanguage.parsedcommands.ParsedCommand;
  * blend to that image.
  */
 public class BasicBlendCommand implements ParsedCommand {
+
   private final String imageToBlend;
   private final OutputType outputType;
   private final String fileName;
 
   /**
-   * Constructs a new BasicBlendCommand, which will blend an image of the given name and save it
-   * as a file of the given name and type.
+   * Constructs a new BasicBlendCommand, which will blend an image of the given name and save it as
+   * a file of the given name and type.
+   *
    * @param imageToBlend The name of the layered image to be blended
-   * @param outputType The type of file to be outputted
-   * @param fileName The name of the file to be outputted
+   * @param outputType   The type of file to be outputted
+   * @param fileName     The name of the file to be outputted
    * @throws IllegalArgumentException If given a null input
    */
-  public BasicBlendCommand(String imageToBlend, String outputType, String fileName) throws IllegalArgumentException {
+  public BasicBlendCommand(String imageToBlend, String outputType, String fileName)
+      throws IllegalArgumentException {
     if (imageToBlend == null || outputType == null || fileName == null) {
       throw new IllegalArgumentException("Null input");
     }

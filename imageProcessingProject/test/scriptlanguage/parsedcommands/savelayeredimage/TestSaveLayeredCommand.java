@@ -1,10 +1,8 @@
 package scriptlanguage.parsedcommands.savelayeredimage;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import imageasgraph.GraphOfPixels;
-import imageasgraph.ImageToGraphConverter;
 import java.util.HashMap;
 import layeredimage.LayeredImage;
 import layeredimage.LayeredImageV0;
@@ -18,6 +16,7 @@ import scriptlanguage.parsedcommands.ParsedCommand;
  * Tests the functionality of saving layered images through scripts.
  */
 public class TestSaveLayeredCommand {
+
   private HashMap<String, GraphOfPixels> graphs;
   private HashMap<String, LayeredImage> layeredImages;
   private ParsedCommand newExecutableCommandSingle;

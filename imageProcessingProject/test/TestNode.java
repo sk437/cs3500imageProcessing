@@ -198,7 +198,6 @@ public class TestNode {
     assertEquals(4, pn0.getGreen());
     assertEquals(5, pn0.getBlue());
 
-
     //Empty nodes have max transparency.
     assertEquals(0, empty0.getOpacity());
     assertEquals(0, empty0.getRed());

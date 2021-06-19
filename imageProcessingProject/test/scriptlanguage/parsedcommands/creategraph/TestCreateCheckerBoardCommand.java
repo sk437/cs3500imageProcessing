@@ -16,6 +16,7 @@ import scriptlanguage.parsedcommands.ParsedCommand;
  * Tests the functionality of creating a checkerboard image through scripts.
  */
 public class TestCreateCheckerBoardCommand {
+
   private HashMap<String, GraphOfPixels> graphs;
   private HashMap<String, LayeredImage> layeredImages;
   private ParsedCommand newExecutableCommand;

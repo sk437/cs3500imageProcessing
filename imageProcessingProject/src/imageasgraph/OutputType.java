@@ -6,6 +6,13 @@ package imageasgraph;
 public enum OutputType {
   ppm, jpeg, png;
 
+  /**
+   * Given a file extension as a String, converts it to corresponding output type.
+   *
+   * @param toConvert Extension to be converted
+   * @return OutputType corresponding to extension
+   * @throws IllegalArgumentException If null input or extension does not map to supported file
+   */
   public static OutputType convertString(String toConvert) throws IllegalArgumentException {
     if (toConvert == null) {
       throw new IllegalArgumentException("Null input");

@@ -1,6 +1,6 @@
 package scriptlanguage.parsedcommands.applymutator;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import imageasgraph.GraphOfPixels;
 import imageasgraph.ImageToGraphConverter;
@@ -17,6 +17,7 @@ import scriptlanguage.parsedcommands.ParsedCommand;
  * Tests the functionality of making an image greyscale through scripts.
  */
 public class TestGreyscaleCommand {
+
   private HashMap<String, GraphOfPixels> graphs;
   private HashMap<String, LayeredImage> layeredImages;
   private ParsedCommand newFailCommandNonExistingDestImage;

@@ -2,7 +2,6 @@ package imageasgraph;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -42,7 +41,7 @@ public class SimpleGraphOfPixels extends AbstractGraphOfPixels {
     if (fileType == null || fileName == null) {
       throw new IllegalArgumentException("One or both of the arguments is null");
     }
-    switch(fileType) {
+    switch (fileType) {
       case ppm:
         this.writePPM(fileName);
         break;
@@ -198,6 +197,7 @@ public class SimpleGraphOfPixels extends AbstractGraphOfPixels {
 
   /**
    * Writes this Graph as a PNG image file with the given string as it's name.
+   *
    * @param fileName The name of the image file to be created
    * @throws IllegalArgumentException If the name given is null
    */
@@ -218,6 +218,7 @@ public class SimpleGraphOfPixels extends AbstractGraphOfPixels {
 
   /**
    * Writes this Graph as a JPG image file with the given string as it's name.
+   *
    * @param fileName The name of the image file to be created
    * @throws IllegalArgumentException If the name given is null
    */
@@ -228,7 +229,6 @@ public class SimpleGraphOfPixels extends AbstractGraphOfPixels {
     BufferedImage toReturn = this.createBufferedImageNoAlpha();
     File outPut = new File(fileName + ".jpeg");
 
-
     try {
       ImageIO.write(toReturn, "jpeg", outPut);
     } catch (IOException e) {
@@ -237,8 +237,9 @@ public class SimpleGraphOfPixels extends AbstractGraphOfPixels {
   }
 
   /**
-   * Creates a buffered image which represents the image that this graph does, with all the
-   * ARGB values copied over.
+   * Creates a buffered image which represents the image that this graph does, with all the ARGB
+   * values copied over.
+   *
    * @return The buffered image representation
    */
   protected BufferedImage createBufferedImageForOutPut() {
@@ -247,7 +248,7 @@ public class SimpleGraphOfPixels extends AbstractGraphOfPixels {
     int col = 0;
     int row = 0;
     for (Node n : this) {
-      int rgb = (n.getOpacity()<<24 | n.getRed()<<16 | n.getGreen()<<8 | n.getBlue());
+      int rgb = (n.getOpacity() << 24 | n.getRed() << 16 | n.getGreen() << 8 | n.getBlue());
       toReturn.setRGB(col, row, rgb);
       col += 1;
       if (col == this.getWidth()) {
@@ -257,10 +258,11 @@ public class SimpleGraphOfPixels extends AbstractGraphOfPixels {
     }
     return toReturn;
   }
+
   /**
+   * Creates a buffered image which represents the image that this graph does, with all the RGB
+   * values copied over.
    *
-   * Creates a buffered image which represents the image that this graph does, with all the
-   * RGB values copied over.
    * @return The buffered image representation
    */
   protected BufferedImage createBufferedImageNoAlpha() {
@@ -269,7 +271,7 @@ public class SimpleGraphOfPixels extends AbstractGraphOfPixels {
     int col = 0;
     int row = 0;
     for (Node n : this) {
-      int rgb = (n.getRed()<<16 | n.getGreen()<<8 | n.getBlue());
+      int rgb = (n.getRed() << 16 | n.getGreen() << 8 | n.getBlue());
       toReturn.setRGB(col, row, rgb);
       col += 1;
       if (col == this.getWidth()) {
