@@ -1,32 +1,29 @@
 package view;
 
+import controller.ImageProcessingController;
+import controller.ProcessingController;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
- * DEPRECIATED: THIS IMPLEMENTATION IS INVALID, SEE COMMANDLINETEXTVIEW
- * Represents a textual view that only has basic message rendering capacity.
+ * Represents a test view that can be run from command line.
  */
-public class TextErrorView implements ErrorView {
+public class CommandLineTextView implements View{
 
   private final Appendable out;
 
-  public TextErrorView() {
-    this.out = System.out;
-  }
-
   /**
-   * Creates a new TextErrorView object with a specified output.
+   * Creates a new CommandLineTextView object with a specified output.
    *
    * @param output The desired output location
    * @throws IllegalArgumentException If any inputs are null
    */
-  public TextErrorView(Appendable output) throws IllegalArgumentException {
+  public CommandLineTextView(Appendable output) throws IllegalArgumentException {
     if (output == null) {
       throw new IllegalArgumentException("Null given output");
     }
     this.out = output;
   }
-
 
   @Override
   public void renderException(String message) throws IllegalArgumentException {
@@ -42,6 +39,6 @@ public class TextErrorView implements ErrorView {
 
   @Override
   public void show() {
-
+    new ProcessingController(this, new InputStreamReader(System.in)).run();
   }
 }

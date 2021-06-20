@@ -9,7 +9,7 @@ import layeredimage.blend.Blend;
  * Represents an image which is stored as multiple layered images, and which can access and mutate
  * those layers, save and export one or multiple.
  */
-public interface LayeredImage extends Iterable<FixedSizeGraph> {
+public interface LayeredImage extends ViewModel {
 
   /**
    * Adds a new, blank layer at the top of the current layered image.
@@ -74,13 +74,6 @@ public interface LayeredImage extends Iterable<FixedSizeGraph> {
    * @return The number of layers in this image
    */
   int getNumLayers();
-
-  /**
-   * Returns a list of all the layer names in this image, in order from top to bottom.
-   *
-   * @return A list of all the layer names in this image as strings.
-   */
-  List<String> getLayerNames();
 
   /**
    * Removes the layer with the given name from this LayeredImage.

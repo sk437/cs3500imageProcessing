@@ -9,15 +9,15 @@ import layeredimage.LayeredImage;
 import scriptlanguage.LanguageSyntax;
 import scriptlanguage.LanguageSyntaxImpl;
 import scriptlanguage.ParsedCommand;
-import view.ErrorView;
 import view.TextErrorView;
+import view.View;
 
 /**
  * Represents a controller object to execute scripts based on inputs.
  */
 public class ProcessingController implements ImageProcessingController {
 
-  private final ErrorView view;
+  private final View view;
   private final Readable input;
   private final HashMap<String, GraphOfPixels> singleImages;
   private final HashMap<String, LayeredImage> layeredImages;
@@ -62,6 +62,38 @@ public class ProcessingController implements ImageProcessingController {
     this.layeredImages = new HashMap<String, LayeredImage>();
   }
 
+  /**
+   * Creates a new constructor object.
+   * Throws an exception if this kind of controller is run. This controller is simply acting as a script handler rather than an information medium.
+   * @param view The interactive or text view for the program
+   * @throws IllegalArgumentException If view is null or if after construction this way, the controller is run
+   */
+  public ProcessingController(View view) throws IllegalArgumentException{
+    if (view == null) {
+      throw new IllegalArgumentException("Null view provided");
+    }
+    this.view = view;
+    this.input = null;
+    this.singleImages = new HashMap<String, GraphOfPixels>();
+    this.layeredImages = new HashMap<String, LayeredImage>();
+  }
+
+  /**
+   * Creates a new constructor object.
+   * Throws an exception if this kind of controller is run. This controller is simply acting as a script handler rather than an information medium.
+   * @param view The interactive or text view for the program
+   * @throws IllegalArgumentException If view is null or if after construction this way, the controller is run
+   */
+  public ProcessingController(View view, Readable in) throws IllegalArgumentException{
+    if (view == null) {
+      throw new IllegalArgumentException("Null view provided");
+    }
+    this.view = view;
+    this.input = in;
+    this.singleImages = new HashMap<String, GraphOfPixels>();
+    this.layeredImages = new HashMap<String, LayeredImage>();
+  }
+
 
   @Override
   public void run() {
@@ -74,7 +106,7 @@ public class ProcessingController implements ImageProcessingController {
       String nextCommand = scanner.nextLine();
       if (nextCommand.length() != 0 && nextCommand.charAt(0) != '#') {
         if (nextCommand.equals("quit")) {
-          this.view.renderMessage("Image Processor Quit");
+          this.view.renderException("Image Processor Quit");
           return;
         }
 
@@ -83,7 +115,47 @@ public class ProcessingController implements ImageProcessingController {
           toExecute.execute(singleImages, layeredImages);
           toExecute.alterLanguageState(parser);
         } catch (IllegalArgumentException e) {
-          this.view.renderMessage("Invalid line " + counter + ": " + e.getMessage() + "\n");
+          this.view.renderException("Invalid line " + counter + ": " + e.getMessage() + "\n");
+        }
+      }
+      counter += 1;
+    }
+  }
+
+  @Override
+  public LayeredImage getReferenceToImage(String imageName) throws IllegalArgumentException {
+    if (imageName == null) {
+      throw new IllegalArgumentException("Null image name given");
+    }
+
+    if (!layeredImages.containsKey(imageName)) {
+      throw new IllegalArgumentException("Given image does not exist");
+    }
+
+    return this.layeredImages.get(imageName);
+  }
+
+  @Override
+  public void runCommands(String commands) throws IllegalArgumentException {
+    this.singleImages.clear();
+    this.layeredImages.clear();
+    Scanner scanner = new Scanner(commands);
+    LanguageSyntax parser = new LanguageSyntaxImpl();
+    int counter = 0;
+    while (scanner.hasNext()) {
+      String nextCommand = scanner.nextLine();
+      if (nextCommand.length() != 0 && nextCommand.charAt(0) != '#') {
+        if (nextCommand.equals("quit")) {
+          this.view.renderException("Image Processor Quit");
+          return;
+        }
+
+        try {
+          ParsedCommand toExecute = parser.parseCommand(nextCommand);
+          toExecute.execute(singleImages, layeredImages);
+          toExecute.alterLanguageState(parser);
+        } catch (IllegalArgumentException e) {
+          this.view.renderException("Invalid line " + counter + ": " + e.getMessage() + "\n");
         }
       }
       counter += 1;
