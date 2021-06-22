@@ -1,6 +1,8 @@
 package controller;
 
+import java.util.List;
 import layeredimage.LayeredImage;
+import layeredimage.ViewModel;
 
 /**
  * Represents a controller for the image processing program.
@@ -18,7 +20,7 @@ public interface ImageProcessingController {
    * @return The LayeredImage being prompted for
    * @throws IllegalArgumentException If imageName is null or if the image does not exist
    */
-  LayeredImage getReferenceToImage(String imageName) throws IllegalArgumentException;
+  ViewModel getReferenceToImage(String imageName) throws IllegalArgumentException;
 
   /**
    * Runs all of the commands in the given String.
@@ -26,4 +28,10 @@ public interface ImageProcessingController {
    * @throws IllegalArgumentException If commands is null or any command is invalid
    */
   void runCommands(String commands) throws IllegalArgumentException;
+
+  /**
+   * Gets names of all created layered images from this environment.
+   * @return The list of all of the names
+   */
+  List<String> getLayeredImageNames();
 }

@@ -3,9 +3,14 @@ package controller;
 import imageasgraph.GraphOfPixels;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 import layeredimage.LayeredImage;
+import layeredimage.ViewModel;
 import scriptlanguage.LanguageSyntax;
 import scriptlanguage.LanguageSyntaxImpl;
 import scriptlanguage.ParsedCommand;
@@ -104,7 +109,7 @@ public class ProcessingController implements ImageProcessingController {
   }
 
   @Override
-  public LayeredImage getReferenceToImage(String imageName) throws IllegalArgumentException {
+  public ViewModel getReferenceToImage(String imageName) throws IllegalArgumentException {
     if (imageName == null) {
       throw new IllegalArgumentException("Null image name given");
     }
@@ -119,6 +124,11 @@ public class ProcessingController implements ImageProcessingController {
   public void runCommands(String commands) throws IllegalArgumentException {
     Scanner scanner = new Scanner(commands);
     this.runCommandsFromScanner(scanner);
+  }
+
+  @Override
+  public List<String> getLayeredImageNames() {
+    return new ArrayList<String>(this.layeredImages.keySet());
   }
 
   /**

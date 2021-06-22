@@ -1,0 +1,3 @@
+10 15
+fromImageLayer 0 true
+emptyLayer 1 true

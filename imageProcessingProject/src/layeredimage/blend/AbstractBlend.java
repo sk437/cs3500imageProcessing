@@ -3,6 +3,10 @@ package layeredimage.blend;
 import imageasgraph.FixedSizeGraph;
 import imageasgraph.GraphOfPixels;
 import imageasgraph.ImageToGraphConverter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import layeredimage.LayeredImage;
 
 /**
@@ -31,5 +35,13 @@ public abstract class AbstractBlend implements Blend {
     this.combineLayers(original, toReturn);
 
     return toReturn;
+  }
+
+  /**
+   * Gets all valid blend types for combing the layers of a LayeredImage.
+   * @return A List of String represents valid blend methods
+   */
+  public static String[] getBlendTypes() {
+    return new String[] {"basic"};
   }
 }

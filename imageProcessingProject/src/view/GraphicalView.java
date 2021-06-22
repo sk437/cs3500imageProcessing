@@ -3,13 +3,21 @@ package view;
 import controller.ImageProcessingController;
 import controller.ProcessingController;
 import imageasgraph.FixedSizeGraph;
+import imageasgraph.InputType;
 import imageasgraph.Node;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -26,6 +34,7 @@ import javax.swing.border.Border;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import layeredimage.LayeredImage;
 import layeredimage.ViewModel;
+import layeredimage.blend.AbstractBlend;
 
 public class GraphicalView extends JFrame implements View, ActionListener {
 
@@ -42,38 +51,47 @@ public class GraphicalView extends JFrame implements View, ActionListener {
   private JPanel layerMoveUppers;
   private JPanel layerMoveDowners;
   private JPanel layerCopiers;
-  private JPanel layerSaveAsImagers;
   private JPanel layerShowers;
   private JPanel layerHiders;
+  private JPanel tabs;
 
 
   public GraphicalView() {
     super();
     setTitle("Image Processing Interactive Interface");
-    setSize(500, 500);
+    setSize(750, 750);
 
     mainPanel = new JPanel();
     mainPanel.setLayout(new BorderLayout());
     mainScrollPane = new JScrollPane(mainPanel);
 
     JPanel topPanel = new JPanel();
-    topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.LINE_AXIS));
+    topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
+
+    JPanel topTopPanel = new JPanel();
+    topTopPanel.setLayout(new BoxLayout(topTopPanel, BoxLayout.LINE_AXIS));
     JButton fileOpen = new JButton("Load");
     fileOpen.setActionCommand("Load File");
     fileOpen.addActionListener(this);
-    topPanel.add(fileOpen);
+    topTopPanel.add(fileOpen);
     JButton fileSave = new JButton("Save");
     fileSave.setActionCommand("Save File");
     fileSave.addActionListener(this);
-    topPanel.add(fileSave);
+    topTopPanel.add(fileSave);
     JButton export = new JButton("Export as Image");
     export.setActionCommand("Export as Image");
     export.addActionListener(this);
-    topPanel.add(export);
+    topTopPanel.add(export);
     JButton execute = new JButton("Execute Script");
-    execute.setActionCommand("Execute a Script");
+    execute.setActionCommand("Execute Script");
     execute.addActionListener(this);
-    topPanel.add(execute);
+    topTopPanel.add(execute);
+    topPanel.add(topTopPanel);
+
+    tabs = new JPanel();
+    tabs.setLayout(new BoxLayout(tabs, BoxLayout.LINE_AXIS));
+    topPanel.add(tabs);
+
     JScrollPane topScrollPane = new JScrollPane(topPanel);
 
     imagePanel = new ImageIcon();
@@ -114,6 +132,10 @@ public class GraphicalView extends JFrame implements View, ActionListener {
     loadLayer.setActionCommand("Load Image As Layer");
     loadLayer.addActionListener(this);
     addLoadLayer.add(loadLayer);
+    JButton saveLayer = new JButton("Save Current");
+    saveLayer.setActionCommand("Save Current Layer");
+    saveLayer.addActionListener(this);
+    addLoadLayer.add(saveLayer);
     rightPanel.add(addLoadLayer);
     JPanel layerInterface = new JPanel();
     layerInterface.setLayout(new BoxLayout(layerInterface, BoxLayout.LINE_AXIS));
@@ -130,9 +152,6 @@ public class GraphicalView extends JFrame implements View, ActionListener {
     layerCopiers = new JPanel();
     layerCopiers.setLayout(new BoxLayout(layerCopiers, BoxLayout.PAGE_AXIS));
     layerInterface.add(layerCopiers);
-    layerSaveAsImagers = new JPanel();
-    layerSaveAsImagers.setLayout(new BoxLayout(layerSaveAsImagers, BoxLayout.PAGE_AXIS));
-    layerInterface.add(layerSaveAsImagers);
     layerShowers = new JPanel();
     layerShowers.setLayout(new BoxLayout(layerShowers, BoxLayout.PAGE_AXIS));
     layerInterface.add(layerShowers);
@@ -165,7 +184,7 @@ public class GraphicalView extends JFrame implements View, ActionListener {
       throw new IllegalArgumentException("Null action");
     }
     switch (e.getActionCommand()) {
-      case "Load File":
+      case "Load File": {
         final JFileChooser fChooser = new JFileChooser(".");
         fChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         int retValue = fChooser.showOpenDialog(GraphicalView.this);
@@ -180,9 +199,11 @@ public class GraphicalView extends JFrame implements View, ActionListener {
           this.currentLayerName = null;
           this.imagePanel.setImage(this.display.getImageRepresentation());
           this.updateLayerButtons();
+          this.updateTabs();
           SwingUtilities.updateComponentTreeUI(mainPanel);
         }
         break;
+      }
       case "Blur":
         if (!(this.currentImageName == null || this.currentLayerName == null)) {
           String commandToExecute = "apply-mutator blur " + this.currentImageName + " " + this.currentLayerName;
@@ -215,8 +236,140 @@ public class GraphicalView extends JFrame implements View, ActionListener {
           SwingUtilities.updateComponentTreeUI(mainPanel);
         }
         break;
+      case "Save Current Layer": {
+        if (!(this.currentImageName == null || this.currentLayerName == null)) {
+          final JFileChooser fChooser = new JFileChooser(".");
+          int retValue = fChooser.showSaveDialog(GraphicalView.this);
+          if (retValue == JFileChooser.APPROVE_OPTION) {
+            File f = fChooser.getSelectedFile();
+
+            String commandToExecute =
+                "save " + this.currentImageName + " " + this.currentLayerName + " "
+                    + f.getName().substring(f.getName().lastIndexOf(".") + 1) + " "
+                    + f.getPath().replaceAll(" ", ">").substring(0, f.getPath().lastIndexOf(".") + 1);
+            this.controller.runCommands(commandToExecute);
+            this.updateLayerButtons();
+            SwingUtilities.updateComponentTreeUI(mainPanel);
+          }
+        }
+        break;
+      }
+      case "Add New Layer": {
+        String newLayer = JOptionPane.showInputDialog("Enter the name of the new layer");
+        String commandToExecute = "add-layer " + this.currentImageName + " " + newLayer;
+        this.controller.runCommands(commandToExecute);
+        this.updateLayerButtons();
+        SwingUtilities.updateComponentTreeUI(mainPanel);
+        break;
+      }
+      case "Load Image As Layer": {
+        final JFileChooser fChooser = new JFileChooser(".");
+        //NOTE: NO FILTER AS VIEW SHOULD NOT BE COUPLED TO WHAT TYPES OF FILES ARE SUPPORTED.
+        int retValue = fChooser.showOpenDialog(GraphicalView.this);
+        if (retValue == JFileChooser.APPROVE_OPTION) {
+          File f = fChooser.getSelectedFile();
+          String newLayer = JOptionPane.showInputDialog("Enter the name of the new layer");
+          String commandToExecute =
+              "add-image-as-layer " + this.currentImageName + " " + newLayer + " "
+                  + f.getPath().replaceAll(" ", ">");
+          this.controller.runCommands(commandToExecute);
+          this.imagePanel.setImage(this.display.getImageRepresentation());
+          this.updateLayerButtons();
+          SwingUtilities.updateComponentTreeUI(mainPanel);
+        }
+        break;
+      }
+      case "Save File": {
+        if (!(this.currentImageName == null)) {
+          final JFileChooser fChooser = new JFileChooser(".");
+          int retValue = fChooser.showSaveDialog(GraphicalView.this);
+          if (retValue == JFileChooser.APPROVE_OPTION) {
+            File f = fChooser.getSelectedFile();
+
+            String commandToExecute =
+                "save-layered " + this.currentImageName + " " + f.getPath().replaceAll(" ", ">");
+            this.controller.runCommands(commandToExecute);
+            this.updateLayerButtons();
+            SwingUtilities.updateComponentTreeUI(mainPanel);
+          }
+        }
+        break;
+      }
+      case "Export as Image": {
+        if (!(this.currentImageName == null)) {
+          String[] allBlendTypes = AbstractBlend.getBlendTypes();
+          String blendType = allBlendTypes[JOptionPane.showOptionDialog(this, "Choose Blend Type",
+              "Blend Choices", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, allBlendTypes, allBlendTypes[0])];
+          final JFileChooser fChooser = new JFileChooser(".");
+          int retValue = fChooser.showSaveDialog(GraphicalView.this);
+          if (retValue == JFileChooser.APPROVE_OPTION) {
+            File f = fChooser.getSelectedFile();
+
+            String commandToExecute =
+                "save-as-image " + this.currentImageName + " "
+                    + blendType + " "
+                    + f.getName().substring(f.getName().lastIndexOf(".") + 1) + " "
+                    + f.getPath().replaceAll(" ", ">").substring(0, f.getPath().lastIndexOf(".") + 1);
+            this.controller.runCommands(commandToExecute);
+            this.updateLayerButtons();
+            SwingUtilities.updateComponentTreeUI(mainPanel);
+          }
+        }
+        break;
+      }
+      case "Execute Script": {
+        final JFileChooser fChooser = new JFileChooser(".");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt");
+        fChooser.setFileFilter(filter);
+        int retValue = fChooser.showOpenDialog(GraphicalView.this);
+        if (retValue == JFileChooser.APPROVE_OPTION) {
+          File f = fChooser.getSelectedFile();
+          FileReader newRead;
+          try {
+            newRead = new FileReader(f);
+          } catch (IOException fileError) {
+            this.renderException(fileError.getMessage());
+            return;
+          }
+          Scanner scanner = new Scanner(newRead);
+          StringBuilder commandToExecute = new StringBuilder();
+          while (scanner.hasNext()) {
+            commandToExecute.append(scanner.nextLine()).append("\n");
+          }
+
+          this.controller.runCommands(commandToExecute.toString());
+          this.imagePanel.setImage(this.display.getImageRepresentation());
+          this.updateLayerButtons();
+          this.updateTabs();
+          SwingUtilities.updateComponentTreeUI(mainPanel);
+        }
+        break;
+      }
       default:
         this.handleLayerCommand(e);
+        this.handleTabCommand(e);
+    }
+  }
+
+  private void handleTabCommand(ActionEvent e) {
+    if (e.getActionCommand().startsWith("Change Tab ")) {
+      String commandSecondPart;
+      try {
+        commandSecondPart = e.getActionCommand().split(" ")[2];
+      } catch (IndexOutOfBoundsException exception) {
+        return;
+      }
+      for (String imageName : this.controller.getLayeredImageNames()) {
+        if (commandSecondPart.equals(imageName)) {
+          this.currentImageName = imageName;
+          this.display = this.controller.getReferenceToImage(imageName);
+          this.currentLayerName = null;
+          this.imagePanel.setImage(this.display.getImageRepresentation());
+          this.updateLayerButtons();
+          SwingUtilities.updateComponentTreeUI(mainPanel);
+          return;
+        }
+      }
     }
   }
 
@@ -346,7 +499,6 @@ public class GraphicalView extends JFrame implements View, ActionListener {
     this.layers = new ButtonGroup();
     this.layerMoveUppers.removeAll();
     this.layerMoveDowners.removeAll();
-    this.layerSaveAsImagers.removeAll();
     this.layerShowers.removeAll();
     this.layerHiders.removeAll();
     this.layerCopiers.removeAll();
@@ -368,10 +520,6 @@ public class GraphicalView extends JFrame implements View, ActionListener {
       nextCopier.setActionCommand("Copy " + layerName);
       nextCopier.addActionListener(this);
       layerCopiers.add(nextCopier);
-      JButton nextSaveAsImager = new JButton("Save");
-      nextSaveAsImager.setActionCommand("Save Layer as Image " + layerName);
-      nextSaveAsImager.addActionListener(this);
-      layerSaveAsImagers.add(nextSaveAsImager);
       JButton nextShower = new JButton("Show");
       nextShower.setActionCommand("Show " + layerName);
       nextShower.addActionListener(this);
@@ -380,6 +528,17 @@ public class GraphicalView extends JFrame implements View, ActionListener {
       nextHider.setActionCommand("Hide " + layerName);
       nextHider.addActionListener(this);
       layerHiders.add(nextHider);
+    }
+  }
+
+  private void updateTabs() {
+    this.tabs.removeAll();
+    for (String imageName : this.controller.getLayeredImageNames()) {
+      JButton nextName = new JButton(imageName);
+      nextName.setActionCommand("Change Tab " + imageName);
+      nextName.addActionListener(this);
+      tabs.add(nextName);
+
     }
   }
 }

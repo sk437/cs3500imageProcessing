@@ -1,6 +1,7 @@
 package layeredimage.blend;
 
 import imageasgraph.FixedSizeGraph;
+import java.util.List;
 import layeredimage.LayeredImage;
 
 /**
