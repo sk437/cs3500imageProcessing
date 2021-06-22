@@ -42,7 +42,7 @@ public class LanguageSyntaxImpl implements LanguageSyntax {
     if (inputLine.length() < 1) {
       throw new IllegalArgumentException("Invalid input length");
     }
-    ArrayList<String> inputs = new ArrayList<String>(Arrays.asList(inputLine.split(" ")));
+    ArrayList<String> inputs = new ArrayList<String>(Arrays.asList(inputLine.split("\\s")));
     String cmd = inputs.remove(0);
     if (!commands.containsKey(cmd)) {
       throw new IllegalArgumentException("Unsupported command given");

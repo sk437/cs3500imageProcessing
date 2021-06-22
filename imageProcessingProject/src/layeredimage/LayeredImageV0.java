@@ -3,7 +3,9 @@ package layeredimage;
 import imageasgraph.FixedSizeGraph;
 import imageasgraph.GraphOfPixels;
 import imageasgraph.ImageToGraphConverter;
+import imageasgraph.Node;
 import imageasgraph.OutputType;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -11,6 +13,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,6 +21,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
+import layeredimage.blend.BasicBlend;
 import layeredimage.blend.Blend;
 
 /**
@@ -59,8 +63,13 @@ public class LayeredImageV0 implements LayeredImage {
     }
     Scanner sc;
 
+    File toRead = new File(fileName);
+    Path absolutePath = Paths.get(toRead.getAbsolutePath());
+    Path basePath = Paths.get(System.getProperty("user.dir"));
+    Path relativePath = basePath.relativize(absolutePath);
+
     try {
-      sc = new Scanner(new FileInputStream(fileName + "/layerdata.txt"));
+      sc = new Scanner(new FileInputStream(relativePath + "/layerdata.txt"));
     } catch (FileNotFoundException e) {
       throw new IllegalArgumentException("File not found");
     }
@@ -74,7 +83,7 @@ public class LayeredImageV0 implements LayeredImage {
       boolean visible = sc.nextBoolean();
 
       LayerData toAdd = new LayerData(
-          ImageToGraphConverter.convertComplexImage(fileName + "/" + key + ".png"), position,
+          ImageToGraphConverter.convertComplexImage(relativePath + "/" + key + ".png"), position,
           visible);
       this.layers.put(key, toAdd);
     }
@@ -134,6 +143,9 @@ public class LayeredImageV0 implements LayeredImage {
     this.assertLayerNameExists(toCopy);
     LayerData newData = new LayerData(ImageToGraphConverter.createCopyOfGraph(
         this.layers.get(toCopy).getImage()), 0);
+    if (!this.layers.get(toCopy).getVisibility()) {
+      newData.setVisibility(false);
+    }
     for (LayerData info : this.layers.values()) {
       info.setPos(info.getPos() + 1);
     }
@@ -319,6 +331,25 @@ public class LayeredImageV0 implements LayeredImage {
         printer.close();
       }
     }
+  }
+
+  @Override
+  public BufferedImage getImageRepresentation() {
+    FixedSizeGraph basicBlended = new BasicBlend().blend(this);
+    BufferedImage toReturn = new BufferedImage(basicBlended.getWidth(), basicBlended.getHeight(),
+        BufferedImage.TYPE_INT_ARGB);
+    int col = 0;
+    int row = 0;
+    for (Node n : basicBlended) {
+      int rgb = (n.getOpacity() << 24 | n.getRed() << 16 | n.getGreen() << 8 | n.getBlue());
+      toReturn.setRGB(col, row, rgb);
+      col += 1;
+      if (col == basicBlended.getWidth()) {
+        col = 0;
+        row += 1;
+      }
+    }
+    return toReturn;
   }
 
   @Override

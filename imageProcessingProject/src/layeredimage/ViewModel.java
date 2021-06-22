@@ -1,6 +1,7 @@
 package layeredimage;
 
 import imageasgraph.FixedSizeGraph;
+import java.awt.image.BufferedImage;
 import java.util.List;
 
 /**
@@ -14,4 +15,11 @@ public interface ViewModel extends Iterable<FixedSizeGraph>{
    * @return A list of all the layer names in this image as strings.
    */
   List<String> getLayerNames();
+
+  /** TODO MAKE THIS DECENT
+   * Returns a buffered image that represents this layered image blended together in a basic
+   * manner.
+   * @return The bufferedImage representation
+   */
+  BufferedImage getImageRepresentation();
 }

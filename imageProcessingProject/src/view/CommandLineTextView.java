@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 /**
  * Represents a test view that can be run from command line.
  */
-public class CommandLineTextView implements View{
+public class CommandLineTextView implements View {
 
   private final Appendable out;
 

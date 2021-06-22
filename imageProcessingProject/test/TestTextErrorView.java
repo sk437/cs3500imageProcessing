@@ -25,7 +25,7 @@ public class TestTextErrorView {
   public void testRenderMessage() throws IOException {
     Appendable out = new StringBuilder();
     ErrorView testView = new TextErrorView(out);
-    testView.renderMessage("Hello World!");
+    testView.renderException("Hello World!");
     assertEquals("Hello World!", out.toString());
   }
 
@@ -37,7 +37,7 @@ public class TestTextErrorView {
   public void testFailedMessageRender() throws IOException {
     Appendable out = new MockFailAppendable();
     ErrorView testView = new TextErrorView(out);
-    testView.renderMessage("THIS WILL FAIL.");
+    testView.renderException("THIS WILL FAIL.");
   }
 
 

@@ -16,7 +16,7 @@ greyscale
 load layer
 add layer
 
-
+SPACES IN FILE PATHS MUST BE WRITTEN AS : SO THEY ARE NOT SPLIT LIKE OTHER COMMANDS
 
 
 Example Syntax:

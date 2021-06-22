@@ -100,26 +100,7 @@ public class ProcessingController implements ImageProcessingController {
     this.singleImages.clear();
     this.layeredImages.clear();
     Scanner scanner = new Scanner(this.input);
-    LanguageSyntax parser = new LanguageSyntaxImpl();
-    int counter = 0;
-    while (scanner.hasNext()) {
-      String nextCommand = scanner.nextLine();
-      if (nextCommand.length() != 0 && nextCommand.charAt(0) != '#') {
-        if (nextCommand.equals("quit")) {
-          this.view.renderException("Image Processor Quit");
-          return;
-        }
-
-        try {
-          ParsedCommand toExecute = parser.parseCommand(nextCommand);
-          toExecute.execute(singleImages, layeredImages);
-          toExecute.alterLanguageState(parser);
-        } catch (IllegalArgumentException e) {
-          this.view.renderException("Invalid line " + counter + ": " + e.getMessage() + "\n");
-        }
-      }
-      counter += 1;
-    }
+    this.runCommandsFromScanner(scanner);
   }
 
   @Override
@@ -127,7 +108,6 @@ public class ProcessingController implements ImageProcessingController {
     if (imageName == null) {
       throw new IllegalArgumentException("Null image name given");
     }
-
     if (!layeredImages.containsKey(imageName)) {
       throw new IllegalArgumentException("Given image does not exist");
     }
@@ -137,9 +117,19 @@ public class ProcessingController implements ImageProcessingController {
 
   @Override
   public void runCommands(String commands) throws IllegalArgumentException {
-    this.singleImages.clear();
-    this.layeredImages.clear();
     Scanner scanner = new Scanner(commands);
+    this.runCommandsFromScanner(scanner);
+  }
+
+  /**
+   * Given a scanner over a set of input, runs every command contained in that input.
+   * @param scanner The scanner which is reading the input
+   * @throws IllegalArgumentException If scanner is null,\
+   */
+  private void runCommandsFromScanner(Scanner scanner) throws IllegalArgumentException {
+    if (scanner == null) {
+      throw new IllegalArgumentException("Null scanner");
+    }
     LanguageSyntax parser = new LanguageSyntaxImpl();
     int counter = 0;
     while (scanner.hasNext()) {

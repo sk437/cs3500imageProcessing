@@ -1,6 +1,8 @@
 package scriptlanguage;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import scriptlanguage.ParsedCommand.AddImageLayerCommand;
 import scriptlanguage.ParsedCommand.AddLayerCommand;
@@ -60,8 +62,11 @@ public enum Command {
           Command.assertValidNumInputs(3, inputs);
           return new CreateCopyCommand(inputs.get(1), inputs.get(2));
         case "from-image":
-          Command.assertValidNumInputs(3, inputs);
-          return new CreateFromImageCommand(inputs.get(1), inputs.get(2));
+          StringBuilder fileName = new StringBuilder();
+          for (int i = 2; i < inputs.size(); i += 1) {
+            fileName.append(inputs.get(i));
+          }
+          return new CreateFromImageCommand(inputs.get(1), fileName.toString());
         default:
           throw new IllegalArgumentException("Invalid type specified for this command");
       }
@@ -77,13 +82,15 @@ public enum Command {
       }
       switch (inputs.size()) {
         case 2:
-          return new ImportNewLayeredImageCommand(inputs.get(0), inputs.get(1));
+          return new ImportNewLayeredImageCommand(inputs.get(0), Command.decode(inputs.get(1)));
         case 3:
-          List<Integer> intInputs = Command.convertIntegerInputs(1, 3, inputs);
-          return new CreateNewLayeredImageCommand(inputs.get(0), intInputs.get(0),
-              intInputs.get(1));
+          if (Command.canBeInteger(inputs.get(1)) && Command.canBeInteger(inputs.get(2))) {
+            List<Integer> intInputs = Command.convertIntegerInputs(1, 3, inputs);
+            return new CreateNewLayeredImageCommand(inputs.get(0), intInputs.get(0),
+                intInputs.get(1));
+          }
         default:
-          throw new IllegalArgumentException("Invalid number of inputs");
+          throw new IllegalArgumentException(" Invalid number of inputs");
       }
     }
   },
@@ -207,11 +214,11 @@ public enum Command {
             throw new IllegalArgumentException("This command cannot be called with the given amount"
                 + " of inputs, because there is no default image");
           }
-          return new SaveCommand(currentImage, currentLayer, inputs.get(0), inputs.get(1));
+          return new SaveCommand(currentImage, currentLayer, inputs.get(0), Command.decode(inputs.get(1)));
         case 3:
-          return new SaveCommand(inputs.get(0), currentLayer, inputs.get(1), inputs.get(2));
+          return new SaveCommand(inputs.get(0), currentLayer, inputs.get(1), Command.decode(inputs.get(2)));
         case 4:
-          return new SaveCommand(inputs.get(0), inputs.get(1), inputs.get(2), inputs.get(3));
+          return new SaveCommand(inputs.get(0), inputs.get(1), inputs.get(2), Command.decode(inputs.get(3)));
         default:
           throw new IllegalArgumentException("Invalid number of inputs");
       }
@@ -228,9 +235,9 @@ public enum Command {
             throw new IllegalArgumentException("This command cannot be called with the given amount"
                 + " of inputs, because there is no default image");
           }
-          return new SaveLayeredCommand(currentImage, inputs.get(0));
+          return new SaveLayeredCommand(currentImage, Command.decode(inputs.get(0)));
         case 2:
-          return new SaveLayeredCommand(inputs.get(0), inputs.get(1));
+          return new SaveLayeredCommand(inputs.get(0), Command.decode(inputs.get(1)));
         default:
           throw new IllegalArgumentException("Invalid number of inputs");
       }
@@ -500,6 +507,28 @@ public enum Command {
       }
     }
     return intInputs;
+  }
+
+  /**
+   * Given a string, returns true if it can be parsed into an integer.
+   * @param toTest The string to be tested
+   * @return If the string can become an integer
+   * @throws IllegalArgumentException If given a null String
+   */
+  private static boolean canBeInteger(String toTest) throws IllegalArgumentException {
+    if (toTest == null) {
+      throw new IllegalArgumentException("Null input");
+    }
+    try {
+      Integer.parseInt(toTest);
+      return true;
+    } catch (NumberFormatException e) {
+      return false;
+    }
+  }
+
+  private static String decode(String toDecode) {
+    return toDecode.replaceAll(">", " ");
   }
 
 }
