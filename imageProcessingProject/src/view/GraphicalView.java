@@ -43,6 +43,8 @@ public class GraphicalView extends JFrame implements View, ActionListener {
   private JPanel layerMoveDowners;
   private JPanel layerCopiers;
   private JPanel layerSaveAsImagers;
+  private JPanel layerShowers;
+  private JPanel layerHiders;
 
 
   public GraphicalView() {
@@ -131,6 +133,12 @@ public class GraphicalView extends JFrame implements View, ActionListener {
     layerSaveAsImagers = new JPanel();
     layerSaveAsImagers.setLayout(new BoxLayout(layerSaveAsImagers, BoxLayout.PAGE_AXIS));
     layerInterface.add(layerSaveAsImagers);
+    layerShowers = new JPanel();
+    layerShowers.setLayout(new BoxLayout(layerShowers, BoxLayout.PAGE_AXIS));
+    layerInterface.add(layerShowers);
+    layerHiders = new JPanel();
+    layerHiders.setLayout(new BoxLayout(layerHiders, BoxLayout.PAGE_AXIS));
+    layerInterface.add(layerHiders);
     rightPanel.add(layerInterface);
     JScrollPane rightScrollPane = new JScrollPane(rightPanel);
 
@@ -169,8 +177,41 @@ public class GraphicalView extends JFrame implements View, ActionListener {
           this.controller.runCommands(commandToExecute);
           this.display = controller.getReferenceToImage(f.getName());
           this.currentImageName = f.getName();
+          this.currentLayerName = null;
           this.imagePanel.setImage(this.display.getImageRepresentation());
           this.updateLayerButtons();
+          SwingUtilities.updateComponentTreeUI(mainPanel);
+        }
+        break;
+      case "Blur":
+        if (!(this.currentImageName == null || this.currentLayerName == null)) {
+          String commandToExecute = "apply-mutator blur " + this.currentImageName + " " + this.currentLayerName;
+          this.controller.runCommands(commandToExecute);
+          this.imagePanel.setImage(this.display.getImageRepresentation());
+          SwingUtilities.updateComponentTreeUI(mainPanel);
+        }
+        break;
+      case "Sharpen":
+        if (!(this.currentImageName == null || this.currentLayerName == null)) {
+          String commandToExecute = "apply-mutator sharpen " + this.currentImageName + " " + this.currentLayerName;
+          this.controller.runCommands(commandToExecute);
+          this.imagePanel.setImage(this.display.getImageRepresentation());
+          SwingUtilities.updateComponentTreeUI(mainPanel);
+        }
+        break;
+      case "Greyscale":
+        if (!(this.currentImageName == null || this.currentLayerName == null)) {
+          String commandToExecute = "apply-mutator greyscale " + this.currentImageName + " " + this.currentLayerName;
+          this.controller.runCommands(commandToExecute);
+          this.imagePanel.setImage(this.display.getImageRepresentation());
+          SwingUtilities.updateComponentTreeUI(mainPanel);
+        }
+        break;
+      case "Sepia":
+        if (!(this.currentImageName == null || this.currentLayerName == null)) {
+          String commandToExecute = "apply-mutator sepia " + this.currentImageName + " " + this.currentLayerName;
+          this.controller.runCommands(commandToExecute);
+          this.imagePanel.setImage(this.display.getImageRepresentation());
           SwingUtilities.updateComponentTreeUI(mainPanel);
         }
         break;
@@ -262,7 +303,42 @@ public class GraphicalView extends JFrame implements View, ActionListener {
         }
       }
     }
-
+    if (e.getActionCommand().startsWith("Show ")) {
+      String commandSecondPart;
+      try {
+        commandSecondPart = e.getActionCommand().split(" ")[1];
+      } catch (IndexOutOfBoundsException exception) {
+        return;
+      }
+      for (String layerName : display.getLayerNames()) {
+        if (commandSecondPart.equals(layerName)) {
+          String commandToExecute = "update-visibility " + this.currentImageName + " " + layerName + " true";
+          this.controller.runCommands(commandToExecute);
+          this.updateLayerButtons();
+          this.imagePanel.setImage(this.display.getImageRepresentation());
+          SwingUtilities.updateComponentTreeUI(mainPanel);
+          return;
+        }
+      }
+    }
+    if (e.getActionCommand().startsWith("Hide ")) {
+      String commandSecondPart;
+      try {
+        commandSecondPart = e.getActionCommand().split(" ")[1];
+      } catch (IndexOutOfBoundsException exception) {
+        return;
+      }
+      for (String layerName : display.getLayerNames()) {
+        if (commandSecondPart.equals(layerName)) {
+          String commandToExecute = "update-visibility " + this.currentImageName + " " + layerName + " false";
+          this.controller.runCommands(commandToExecute);
+          this.updateLayerButtons();
+          this.imagePanel.setImage(this.display.getImageRepresentation());
+          SwingUtilities.updateComponentTreeUI(mainPanel);
+          return;
+        }
+      }
+    }
   }
 
   private void updateLayerButtons() {
@@ -271,6 +347,8 @@ public class GraphicalView extends JFrame implements View, ActionListener {
     this.layerMoveUppers.removeAll();
     this.layerMoveDowners.removeAll();
     this.layerSaveAsImagers.removeAll();
+    this.layerShowers.removeAll();
+    this.layerHiders.removeAll();
     this.layerCopiers.removeAll();
     for (String layerName : this.display.getLayerNames()) {
       JRadioButton nextLayerSelector = new JRadioButton(layerName);
@@ -294,6 +372,14 @@ public class GraphicalView extends JFrame implements View, ActionListener {
       nextSaveAsImager.setActionCommand("Save Layer as Image " + layerName);
       nextSaveAsImager.addActionListener(this);
       layerSaveAsImagers.add(nextSaveAsImager);
+      JButton nextShower = new JButton("Show");
+      nextShower.setActionCommand("Show " + layerName);
+      nextShower.addActionListener(this);
+      layerShowers.add(nextShower);
+      JButton nextHider = new JButton("Hide");
+      nextHider.setActionCommand("Hide " + layerName);
+      nextHider.addActionListener(this);
+      layerHiders.add(nextHider);
     }
   }
 }
