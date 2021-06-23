@@ -6,12 +6,12 @@ import java.awt.image.BufferedImage;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import layeredimage.LayeredImage;
 import layeredimage.LayeredImageV0;
 import layeredimage.ViewModel;
 import layeredimage.blend.AbstractBlend;
 import org.junit.Test;
+import view.TextErrorView;
 
 public class TestNewNonViewFunctionality {
 
@@ -82,5 +82,51 @@ public class TestNewNonViewFunctionality {
         assertEquals(actual.getRGB(row, col), expected.getRGB(row, col));
       }
     }
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testConstructViewControllerNullInput() {
+    new ProcessingController(null);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testConstructViewControllerNullInputReadable() {
+    new ProcessingController(null, new InputStreamReader(System.in));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testConstructViewControllerInvalidRun() {
+    ImageProcessingController testController = new ProcessingController(new TextErrorView(), null);
+    testController.run();
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testRunViewControllerNoInput() {
+    ImageProcessingController testController = new ProcessingController(new TextErrorView());
+    testController.run();
+  }
+
+  @Test
+  public void testControllerViewRun() {
+    StringBuilder out = new StringBuilder();
+    ImageProcessingController testController = new ProcessingController(new TextErrorView(out));
+    testController.runCommands("this does not work");
+    assertEquals("Invalid line 0: Unsupported command given\n", out.toString());
+  }
+
+  @Test
+  public void testRunCommand() {
+    ImageProcessingController testController = new ProcessingController(new InputStreamReader(System.in), System.out);
+    assertEquals(new ArrayList<String>(), testController.getLayeredImageNames());
+    testController.runCommands("create-layered-image im0 5 5");
+    assertEquals(new ArrayList<String>(Arrays.asList("im0")), testController.getLayeredImageNames());
+    assertEquals(new ArrayList<String>(), testController.getReferenceToImage("im0").getLayerNames());
+    testController.runCommands("create-layered-image im1 outputImages/exampleLayeredImage");
+    assertEquals(new ArrayList<String>(Arrays.asList("im1", "im0")), testController.getLayeredImageNames());
+    assertEquals(new ArrayList<String>(Arrays.asList("invisible-layer", "blue-layer", "red-layer")), testController.getReferenceToImage("im1").getLayerNames());
+    testController.runCommands("add-layer im1 newLayer\nadd-layer im0 first\nupdate-color im0 first 0 0 255 255 255 255");
+    assertEquals(new ArrayList<String>(Arrays.asList("newLayer", "invisible-layer", "blue-layer", "red-layer")), testController.getReferenceToImage("im1").getLayerNames());
+    assertEquals(new ArrayList<String>(Arrays.asList("first")), testController.getReferenceToImage("im0").getLayerNames());
+    assertEquals(255 << 24 | 255 << 16 | 255 << 8 | 255, testController.getReferenceToImage("im0").getImageRepresentation().getRGB(0,0));
   }
 }

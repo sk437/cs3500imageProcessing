@@ -39,6 +39,10 @@ import layeredimage.LayeredImage;
 import layeredimage.ViewModel;
 import layeredimage.blend.AbstractBlend;
 
+/**
+ * Represents a GUI interface that allows a user to perform all supported functionality
+ * for editing a layered image, and see a preview of their work as they make changes.
+ */
 public class GraphicalView extends JFrame implements View, ActionListener {
 
   private final ImageProcessingController controller;
@@ -61,8 +65,13 @@ public class GraphicalView extends JFrame implements View, ActionListener {
   private JPanel layerShowers;
   private JPanel layerHiders;
   private JMenu tabs;
+  private JMenuBar menuBar;
 
-
+  /**
+   * Constructs a new graphical view - initializes all unchanging JFrame components as well
+   * as the overall framework of the GUI, and creates a new controller which references this as it's
+   * view and which will actually hold and edit a model.
+   */
   public GraphicalView() {
     super();
     setTitle("Image Processing Interactive Interface");
@@ -72,7 +81,8 @@ public class GraphicalView extends JFrame implements View, ActionListener {
     mainPanel.setLayout(new BorderLayout());
     mainScrollPane = new JScrollPane(mainPanel);
 
-    JMenuBar menuBar = new JMenuBar();
+    menuBar = new JMenuBar();
+    menuBar.setName("Menus");
     JMenu file = new JMenu("File");
     JMenuItem load = new JMenuItem("Load");
     load.setActionCommand("Load File");
@@ -230,7 +240,11 @@ public class GraphicalView extends JFrame implements View, ActionListener {
           String commandToExecute =
               "create-layered-image " + f.getName() + " " + f.getPath().replaceAll(" ", ">");
           this.controller.runCommands(commandToExecute);
-          this.display = controller.getReferenceToImage(f.getName());
+          try {
+            this.display = controller.getReferenceToImage(f.getName());
+          } catch (IllegalArgumentException exception) {
+            this.renderException(exception.getMessage());
+          }
           this.currentImageName = f.getName();
           this.currentLayerName = null;
           this.imagePanel.setImage(this.display.getImageRepresentation());
@@ -387,6 +401,12 @@ public class GraphicalView extends JFrame implements View, ActionListener {
     }
   }
 
+  /**
+   * Given an action event, will process it as a dynamic tab-selecting action: if it begins with
+   * "Change Tab ", and then the name of a image currently existing within the model, this will set
+   * the image currently being edited to that image and refresh layer buttons and menu items.
+   * @param e The action event to be handled
+   */
   private void handleTabCommand(ActionEvent e) {
     if (e.getActionCommand().startsWith("Change Tab ")) {
       String commandSecondPart;
@@ -398,7 +418,11 @@ public class GraphicalView extends JFrame implements View, ActionListener {
       for (String imageName : this.controller.getLayeredImageNames()) {
         if (commandSecondPart.equals(imageName)) {
           this.currentImageName = imageName;
-          this.display = this.controller.getReferenceToImage(imageName);
+          try {
+            this.display = controller.getReferenceToImage(imageName);
+          } catch (IllegalArgumentException exception) {
+            this.renderException(exception.getMessage());
+          }
           this.currentLayerName = null;
           this.imagePanel.setImage(this.display.getImageRepresentation());
           this.updateLayerButtons();
@@ -409,6 +433,12 @@ public class GraphicalView extends JFrame implements View, ActionListener {
     }
   }
 
+  /**
+   * Given an action event, will process it as a dynamic method that does something to a currently
+   * existing layer. Currently handles selecting layers, moving them up or down, copying a particular
+   * layer, and showing or hiding individual layers.
+   * @param e The action event to be processed
+   */
   private void handleLayerCommand(ActionEvent e) {
     if (e.getActionCommand().startsWith("Select ")) {
       String commandSecondPart;
@@ -530,6 +560,10 @@ public class GraphicalView extends JFrame implements View, ActionListener {
     }
   }
 
+  /**
+   * Refreshes the currently available layer menu buttons and freestanding buttons, so that they
+   * match the currently existing layers of the currently displaying image.
+   */
   private void updateLayerButtons() {
     this.layerSelectors.removeAll();
     this.layers = new ButtonGroup();
@@ -598,6 +632,10 @@ public class GraphicalView extends JFrame implements View, ActionListener {
     }
   }
 
+  /**
+   * Updates the image selection buttons so that they accurately represent the existing
+   * models within the controller.
+   */
   private void updateTabs() {
     this.tabs.removeAll();
     for (String imageName : this.controller.getLayeredImageNames()) {
@@ -606,5 +644,9 @@ public class GraphicalView extends JFrame implements View, ActionListener {
       nextName.addActionListener(this);
       tabs.add(nextName);
     }
+  }
+
+  public JMenu getFileMenu() {
+    return this.menuBar.getMenu(0);
   }
 }

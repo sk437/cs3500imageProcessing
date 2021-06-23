@@ -527,6 +527,12 @@ public enum Command {
     }
   }
 
+  /**
+   * Replaces all spaces coded as >, which was done to avoid splitting file names with spaces as
+   * multiple arguments, with the space key they were supposed to be.
+   * @param toDecode The string to have it's elements replaced
+   * @return The string with specified elements replaced
+   */
   private static String decode(String toDecode) {
     return toDecode.replaceAll(">", " ");
   }

@@ -104,6 +104,9 @@ public class ProcessingController implements ImageProcessingController {
   public void run() {
     this.singleImages.clear();
     this.layeredImages.clear();
+    if (this.input == null) {
+      throw new IllegalArgumentException("Null input, cannot be run this way");
+    }
     Scanner scanner = new Scanner(this.input);
     this.runCommandsFromScanner(scanner);
   }
@@ -121,7 +124,11 @@ public class ProcessingController implements ImageProcessingController {
   }
 
   @Override
-  public void runCommands(String commands) throws IllegalArgumentException {
+  public void runCommands(String commands) {
+    if (commands == null) {
+      this.view.renderException("Null command given");
+      return;
+    }
     Scanner scanner = new Scanner(commands);
     this.runCommandsFromScanner(scanner);
   }
@@ -134,11 +141,11 @@ public class ProcessingController implements ImageProcessingController {
   /**
    * Given a scanner over a set of input, runs every command contained in that input.
    * @param scanner The scanner which is reading the input
-   * @throws IllegalArgumentException If scanner is null,\
    */
-  private void runCommandsFromScanner(Scanner scanner) throws IllegalArgumentException {
+  private void runCommandsFromScanner(Scanner scanner) {
     if (scanner == null) {
-      throw new IllegalArgumentException("Null scanner");
+      this.view.renderException("Null scanner given for processing");
+      return;
     }
     LanguageSyntax parser = new LanguageSyntaxImpl();
     int counter = 0;
