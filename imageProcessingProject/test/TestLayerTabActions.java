@@ -1,4 +1,4 @@
-
+import static org.junit.Assert.assertEquals;
 import controller.ImageProcessingController;
 import java.awt.AWTException;
 import java.awt.Component;
@@ -7,7 +7,10 @@ import java.awt.Robot;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.AbstractButton;
+import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JMenu;
@@ -37,16 +40,22 @@ public class TestLayerTabActions {
    * @return The LayeredImage representation of the image to be loaded
    * @throws IllegalArgumentException If either input is null, or if there is an issue fetching the image
    */
-  private LayeredImage getViewableForTesting(ImageProcessingController controller, String imageName) throws IllegalArgumentException {
-    if (controller == null || imageName == null) {
+  private LayeredImage getViewableForTesting(GraphicalView toSaveFrom, String toSaveAs) throws IllegalArgumentException, AWTException {
+    if (toSaveFrom == null) {
       throw new IllegalArgumentException("Null input");
     }
-    controller.runCommands("save-layered " + imageName + "outputImages/tempForTesting");
-    return new LayeredImageV0("outputImages/tempForTesting");
+    try{Thread.sleep(500);}catch(InterruptedException e) {};
+    this.openSaveFileRobot(toSaveFrom, toSaveAs, false);
+    try{Thread.sleep(500);}catch(InterruptedException e) {};
+    return new LayeredImageV0(toSaveAs);
   }
 
-  private void openFileRobot(GraphicalView toOpenOn, String fileToOpen) throws AWTException {
-    try {Thread.sleep(500);}catch (InterruptedException e) {};
+  private void openSaveFileRobot(GraphicalView toOpenOn, String fileToOpen, boolean isOpen) throws AWTException, IllegalArgumentException {
+    if (toOpenOn == null || fileToOpen == null) {
+      throw new IllegalArgumentException("Null input");
+    }
+    try{Thread.sleep(300);}catch(InterruptedException e) {};
+    toOpenOn.setVisible(true);
     JMenu fileMenu = toOpenOn.getFileMenu();
     Point p = fileMenu.getLocationOnScreen();
     Robot fileOpener = new Robot();
@@ -55,7 +64,12 @@ public class TestLayerTabActions {
     fileOpener.mousePress(InputEvent.BUTTON1_DOWN_MASK);
     fileOpener.delay(100);
     fileOpener.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-    Point p2 = fileMenu.getItem(0).getLocationOnScreen();
+    Point p2;
+    if (isOpen) {
+      p2 = fileMenu.getItem(0).getLocationOnScreen();
+    } else {
+      p2 = fileMenu.getItem(1).getLocationOnScreen();
+    }
     fileOpener.mouseMove(p2.x + fileMenu.getItem(0).getWidth() / 2, p2.y + fileMenu.getItem(0).getHeight() / 2);
     fileOpener.delay(500);
     fileOpener.mousePress(InputEvent.BUTTON1_DOWN_MASK);
@@ -88,17 +102,46 @@ public class TestLayerTabActions {
     fileOpener.mousePress(InputEvent.BUTTON1_DOWN_MASK);
     fileOpener.delay(100);
     fileOpener.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-    fileOpener.delay(10000);
+    fileOpener.delay(100);
+    fileOpener.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+    fileOpener.delay(100);
+    fileOpener.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+    try{Thread.sleep(600);}catch(InterruptedException e) {};
   }
 
   @Test
-  public void testMoveUp() {
+  public void testMoveUp() throws AWTException {
     //Nonexistent layer
     GraphicalView forTesting = new GraphicalView();
-    forTesting.setVisible(true);
     try {
-      this.openFileRobot(forTesting, "outputImages/exampleLayeredImage");
+      this.openSaveFileRobot(forTesting, "outputImages/exampleLayeredImage", true);
     } catch(AWTException e) {
     }
+    LayeredImage currentState = this.getViewableForTesting(forTesting, "currentstate0");
+    assertEquals(new ArrayList<String>(Arrays.asList("invisible-layer", "blue-layer", "red-layer")), currentState.getLayerNames());
+    forTesting.actionPerformed(new ActionEvent(new JButton("For Testing"), ActionEvent.ACTION_PERFORMED, "Move Up red-layer"));
+    assertEquals(currentState.getLayer(2), currentState.getLayer("red-layer"));
+    currentState = this.getViewableForTesting(forTesting, "currentstate1");
+    assertEquals(new ArrayList<String>(Arrays.asList("invisible-layer", "red-layer", "blue-layer")), currentState.getLayerNames());
+    assertEquals(currentState.getLayer(1), currentState.getLayer("red-layer"));
+    forTesting.setVisible(false);
   }
+
+  @Test
+  public void testMoveDown() throws AWTException {
+    //Nonexistent layer
+    GraphicalView forTesting = new GraphicalView();
+    try {
+      this.openSaveFileRobot(forTesting, "outputImages/exampleLayeredImage", true);
+    } catch(AWTException e) {
+    }
+    LayeredImage currentState = this.getViewableForTesting(forTesting, "currentstate2");
+    assertEquals(new ArrayList<String>(Arrays.asList("invisible-layer", "blue-layer", "red-layer")), currentState.getLayerNames());
+    forTesting.actionPerformed(new ActionEvent(new JButton("For Testing"), ActionEvent.ACTION_PERFORMED, "Move Down invisible-layer"));
+    assertEquals(currentState.getLayer(0), currentState.getLayer("invisible-layer"));
+    currentState = this.getViewableForTesting(forTesting, "currentstate3");
+    assertEquals(new ArrayList<String>(Arrays.asList("blue-layer", "invisible-layer", "red-layer")), currentState.getLayerNames());
+    assertEquals(currentState.getLayer(1), currentState.getLayer("invisible-layer"));
+  }
+  
 }
