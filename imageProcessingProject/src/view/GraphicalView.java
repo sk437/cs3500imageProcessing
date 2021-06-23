@@ -25,6 +25,9 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -47,13 +50,17 @@ public class GraphicalView extends JFrame implements View, ActionListener {
   private JPanel mainPanel;
   private ImageIcon imagePanel;
   private JPanel layerSelectors;
+  private JMenu layerMenu;
+  private JMenuItem newLayer;
+  private JMenuItem loadLayer;
+  private JMenuItem saveCurrentLayer;
   private ButtonGroup layers;
   private JPanel layerMoveUppers;
   private JPanel layerMoveDowners;
   private JPanel layerCopiers;
   private JPanel layerShowers;
   private JPanel layerHiders;
-  private JPanel tabs;
+  private JMenu tabs;
 
 
   public GraphicalView() {
@@ -65,34 +72,64 @@ public class GraphicalView extends JFrame implements View, ActionListener {
     mainPanel.setLayout(new BorderLayout());
     mainScrollPane = new JScrollPane(mainPanel);
 
-    JPanel topPanel = new JPanel();
-    topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
+    JMenuBar menuBar = new JMenuBar();
+    JMenu file = new JMenu("File");
+    JMenuItem load = new JMenuItem("Load");
+    load.setActionCommand("Load File");
+    load.addActionListener(this);
+    file.add(load);
+    JMenuItem save = new JMenuItem("Save");
+    save.setActionCommand("Save File");
+    save.addActionListener(this);
+    file.add(save);
+    JMenuItem exportMenuItem = new JMenuItem("Export");
+    exportMenuItem.setActionCommand("Export as Image");
+    exportMenuItem.addActionListener(this);
+    file.add(exportMenuItem);
+    JMenuItem executeMenuItem = new JMenuItem("Execute");
+    executeMenuItem.setActionCommand("Execute Script");
+    executeMenuItem.addActionListener(this);
+    file.add(executeMenuItem);
+    menuBar.add(file);
 
-    JPanel topTopPanel = new JPanel();
-    topTopPanel.setLayout(new BoxLayout(topTopPanel, BoxLayout.LINE_AXIS));
-    JButton fileOpen = new JButton("Load");
-    fileOpen.setActionCommand("Load File");
-    fileOpen.addActionListener(this);
-    topTopPanel.add(fileOpen);
-    JButton fileSave = new JButton("Save");
-    fileSave.setActionCommand("Save File");
-    fileSave.addActionListener(this);
-    topTopPanel.add(fileSave);
-    JButton export = new JButton("Export as Image");
-    export.setActionCommand("Export as Image");
-    export.addActionListener(this);
-    topTopPanel.add(export);
-    JButton execute = new JButton("Execute Script");
-    execute.setActionCommand("Execute Script");
-    execute.addActionListener(this);
-    topTopPanel.add(execute);
-    topPanel.add(topTopPanel);
+    JMenu edit = new JMenu("Edit");
+    JMenu applyMutator = new JMenu("Apply Mutator");
+    JMenuItem applyBlur = new JMenuItem("Blur");
+    applyBlur.setActionCommand("Blur");
+    applyBlur.addActionListener(this);
+    applyMutator.add(applyBlur);
+    JMenuItem applySharpen = new JMenuItem("Sharpen");
+    applySharpen.setActionCommand("Sharpen");
+    applySharpen.addActionListener(this);
+    applyMutator.add(applySharpen);
+    JMenuItem applyGreyscale = new JMenuItem("Greyscale");
+    applyGreyscale.setActionCommand("Greyscale");
+    applyGreyscale.addActionListener(this);
+    applyMutator.add(applyGreyscale);
+    JMenuItem applySepia = new JMenuItem("Sepia");
+    applySepia.setActionCommand("Sepia");
+    applySepia.addActionListener(this);
+    applyMutator.add(applySepia);
+    edit.add(applyMutator);
+    menuBar.add(edit);
 
-    tabs = new JPanel();
-    tabs.setLayout(new BoxLayout(tabs, BoxLayout.LINE_AXIS));
-    topPanel.add(tabs);
+    layerMenu = new JMenu("Layer");
+    newLayer = new JMenuItem("New Layer");
+    newLayer.setActionCommand("Add New Layer");
+    newLayer.addActionListener(this);
+    layerMenu.add(newLayer);
+    loadLayer = new JMenuItem("Load Image");
+    loadLayer.setActionCommand("Load Image As Layer");
+    loadLayer.addActionListener(this);
+    layerMenu.add(loadLayer);
+    saveCurrentLayer = new JMenuItem("Save Current Layer");
+    saveCurrentLayer.setActionCommand("Load Image As Layer");
+    saveCurrentLayer.addActionListener(this);
+    layerMenu.add(saveCurrentLayer);
+    menuBar.add(layerMenu);
 
-    JScrollPane topScrollPane = new JScrollPane(topPanel);
+    tabs = new JMenu("Current Images");
+    menuBar.add(tabs);
 
     imagePanel = new ImageIcon();
     JLabel imageHolder = new JLabel();
@@ -161,11 +198,10 @@ public class GraphicalView extends JFrame implements View, ActionListener {
     rightPanel.add(layerInterface);
     JScrollPane rightScrollPane = new JScrollPane(rightPanel);
 
-
-    mainPanel.add(topScrollPane, BorderLayout.NORTH);
     mainPanel.add(imageScrollPane, BorderLayout.CENTER);
     mainPanel.add(rightScrollPane, BorderLayout.EAST);
     mainPanel.add(leftScrollPane, BorderLayout.WEST);
+    mainPanel.add(menuBar, BorderLayout.NORTH);
     add(mainScrollPane);
     this.controller = new ProcessingController(this);
   }
@@ -502,7 +538,38 @@ public class GraphicalView extends JFrame implements View, ActionListener {
     this.layerShowers.removeAll();
     this.layerHiders.removeAll();
     this.layerCopiers.removeAll();
+    this.layerMenu.removeAll();
+    layerMenu.add(newLayer);
+    layerMenu.add(loadLayer);
+    layerMenu.add(saveCurrentLayer);
     for (String layerName : this.display.getLayerNames()) {
+      JMenu nextLayerMenu = new JMenu(layerName);
+      JMenuItem nextSetAsCurrent = new JMenuItem("Set as current");
+      nextSetAsCurrent.setActionCommand("Select " + layerName);
+      nextSetAsCurrent.addActionListener(this);
+      nextLayerMenu.add(nextSetAsCurrent);
+      JMenuItem nextMoveUp = new JMenuItem("Move Up");
+      nextMoveUp.setActionCommand("Move Up " + layerName);
+      nextMoveUp.addActionListener(this);
+      nextLayerMenu.add(nextMoveUp);
+      JMenuItem nextMoveDown = new JMenuItem("Move Down");
+      nextMoveDown.setActionCommand("Move Down " + layerName);
+      nextMoveDown.addActionListener(this);
+      nextLayerMenu.add(nextMoveDown);
+      JMenuItem nextCopy = new JMenuItem("Copy");
+      nextCopy.setActionCommand("Copy " + layerName);
+      nextCopy.addActionListener(this);
+      nextLayerMenu.add(nextCopy);
+      JMenuItem nextShow = new JMenuItem("Show");
+      nextShow.setActionCommand("Show " + layerName);
+      nextShow.addActionListener(this);
+      nextLayerMenu.add(nextShow);
+      JMenuItem nextHide = new JMenuItem("Hide");
+      nextHide.setActionCommand("Hide " + layerName);
+      nextHide.addActionListener(this);
+      nextLayerMenu.add(nextHide);
+      layerMenu.add(nextLayerMenu);
+
       JRadioButton nextLayerSelector = new JRadioButton(layerName);
       nextLayerSelector.setActionCommand("Select " + layerName);
       nextLayerSelector.addActionListener(this);
@@ -534,11 +601,10 @@ public class GraphicalView extends JFrame implements View, ActionListener {
   private void updateTabs() {
     this.tabs.removeAll();
     for (String imageName : this.controller.getLayeredImageNames()) {
-      JButton nextName = new JButton(imageName);
+      JMenuItem nextName = new JMenuItem(imageName);
       nextName.setActionCommand("Change Tab " + imageName);
       nextName.addActionListener(this);
       tabs.add(nextName);
-
     }
   }
 }
