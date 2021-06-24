@@ -644,15 +644,4 @@ public class GraphicalView extends JFrame implements View, ActionListener {
       tabs.add(nextName);
     }
   }
-
-  public JMenu getFileMenu() {
-    return this.menuBar.getMenu(0);
-  }
-
-  public JMenu getMenu(int item) throws IllegalArgumentException {
-    if (this.menuBar.getMenu(item) == null) {
-      throw new IllegalArgumentException("No menu at this location");
-    }
-    return this.menuBar.getMenu(item);
-  }
 }

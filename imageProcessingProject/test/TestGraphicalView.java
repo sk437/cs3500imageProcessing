@@ -1,5 +1,6 @@
 import static org.junit.Assert.assertEquals;
 
+import controller.ImageProcessingController;
 import imageasgraph.GraphOfPixels;
 import imageasgraph.ImageToGraphConverter;
 import java.awt.AWTException;
@@ -11,8 +12,13 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import javax.swing.Action;
+import javax.swing.JButton;
 import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
 import layeredimage.LayeredImage;
 import layeredimage.LayeredImageV0;
 import org.junit.Test;
@@ -27,6 +33,14 @@ import view.GraphicalView;
  * null, it is displayed.
  */
 public class TestGraphicalView {
+
+  private JMenu getFileMenu(GraphicalView fromView) {
+    return this.getMenu(fromView, 0);
+  }
+
+  private JMenu getMenu(GraphicalView fromView, int index) {
+    return ((JMenuBar)(((JPanel)(((JScrollPane)(fromView.getRootPane().getContentPane().getComponent(0))).getViewport().getComponent(0))).getComponent(3))).getMenu(index);
+  }
 
   private final GraphicalView test = new GraphicalView();
 
@@ -102,7 +116,7 @@ public class TestGraphicalView {
     try{Thread.sleep(300);}catch(InterruptedException e) {};
     toOpenOn.setVisible(true);
     Robot fileOpener = new Robot();
-    JMenu fileMenu = toOpenOn.getFileMenu();
+    JMenu fileMenu = this.getFileMenu(toOpenOn);
     Point p = fileMenu.getLocationOnScreen();
     fileOpener.mouseMove(p.x + fileMenu.getWidth() / 2, p.y + fileMenu.getHeight() / 2);
     fileOpener.delay(100);
@@ -168,9 +182,9 @@ public class TestGraphicalView {
     try{Thread.sleep(300);}catch(InterruptedException e) {};
     toOpenOn.setVisible(true);
     Robot fileOpener = new Robot();
-    JMenu fileMenu = toOpenOn.getFileMenu();
-    JMenu editMenu = toOpenOn.getMenu(1);
-    JMenu layerMenu = toOpenOn.getMenu(2);
+    JMenu fileMenu = this.getFileMenu(toOpenOn);
+    JMenu editMenu = this.getMenu(toOpenOn, 1);
+    JMenu layerMenu = this.getMenu(toOpenOn, 2);
     Point p = fileMenu.getLocationOnScreen();
     int moveRight = p.x + fileMenu.getWidth() + editMenu.getWidth() + layerMenu.getWidth() / 2;
     fileOpener.mouseMove(moveRight, p.y + layerMenu.getHeight() / 2);
@@ -232,9 +246,9 @@ public class TestGraphicalView {
     try{Thread.sleep(300);}catch(InterruptedException e) {};
     toOpenOn.setVisible(true);
     Robot fileOpener = new Robot();
-    JMenu fileMenu = toOpenOn.getFileMenu();
-    JMenu editMenu = toOpenOn.getMenu(1);
-    JMenu layerMenu = toOpenOn.getMenu(2);
+    JMenu fileMenu = this.getFileMenu(toOpenOn);
+    JMenu editMenu = this.getMenu(toOpenOn, 1);
+    JMenu layerMenu = this.getMenu(toOpenOn, 2);
     Point p = fileMenu.getLocationOnScreen();
     int moveRight = p.x + fileMenu.getWidth() + editMenu.getWidth() + layerMenu.getWidth() / 2;
     fileOpener.mouseMove(moveRight, p.y + layerMenu.getHeight() / 2);
@@ -279,7 +293,7 @@ public class TestGraphicalView {
     fileOpener.delay(100);
 
     fileOpener.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-    fileOpener.mouseMove(1500, 600);
+    fileOpener.mouseMove(900, 525);
     fileOpener.delay(500);
     fileOpener.mousePress(InputEvent.BUTTON1_DOWN_MASK);
     fileOpener.delay(100);
@@ -290,7 +304,7 @@ public class TestGraphicalView {
       fileOpener.keyRelease(KeyEvent.getExtendedKeyCodeForChar(c));
     }
     fileOpener.delay(100);
-    fileOpener.mouseMove(1500, 650);
+    fileOpener.mouseMove(900, 550);
     fileOpener.delay(100);
     fileOpener.mousePress(InputEvent.BUTTON1_DOWN_MASK);
     fileOpener.delay(100);
@@ -312,9 +326,9 @@ public class TestGraphicalView {
     try{Thread.sleep(300);}catch(InterruptedException e) {};
     toOpenOn.setVisible(true);
     Robot fileOpener = new Robot();
-    JMenu fileMenu = toOpenOn.getFileMenu();
-    JMenu editMenu = toOpenOn.getMenu(1);
-    JMenu layerMenu = toOpenOn.getMenu(2);
+    JMenu fileMenu = this.getFileMenu(toOpenOn);
+    JMenu editMenu = this.getMenu(toOpenOn, 1);
+    JMenu layerMenu = this.getMenu(toOpenOn, 2);
     Point p = fileMenu.getLocationOnScreen();
     int moveRight = p.x + fileMenu.getWidth() + editMenu.getWidth() + layerMenu.getWidth() / 2;
     fileOpener.mouseMove(moveRight, p.y + layerMenu.getHeight() / 2);
@@ -330,7 +344,7 @@ public class TestGraphicalView {
     fileOpener.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
     fileOpener.delay(500);
     fileOpener.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-    fileOpener.mouseMove(1500, 600);
+    fileOpener.mouseMove(900, 525);
     fileOpener.delay(500);
     fileOpener.mousePress(InputEvent.BUTTON1_DOWN_MASK);
     fileOpener.delay(100);
@@ -341,7 +355,7 @@ public class TestGraphicalView {
       fileOpener.keyRelease(KeyEvent.getExtendedKeyCodeForChar(c));
     }
     fileOpener.delay(100);
-    fileOpener.mouseMove(1500, 650);
+    fileOpener.mouseMove(900, 550);
     fileOpener.delay(100);
     fileOpener.mousePress(InputEvent.BUTTON1_DOWN_MASK);
     fileOpener.delay(100);
@@ -364,7 +378,7 @@ public class TestGraphicalView {
     try{Thread.sleep(300);}catch(InterruptedException e) {};
     toOpenOn.setVisible(true);
     Robot fileOpener = new Robot();
-    JMenu fileMenu = toOpenOn.getFileMenu();
+    JMenu fileMenu = this.getFileMenu(toOpenOn);
     Point p = fileMenu.getLocationOnScreen();
     fileOpener.mouseMove(p.x + fileMenu.getWidth() / 2, p.y + fileMenu.getHeight() / 2);
     fileOpener.delay(100);
@@ -434,7 +448,7 @@ public class TestGraphicalView {
     try{Thread.sleep(300);}catch(InterruptedException e) {};
     toOpenOn.setVisible(true);
     Robot fileOpener = new Robot();
-    JMenu fileMenu = toOpenOn.getFileMenu();
+    JMenu fileMenu = this.getFileMenu(toOpenOn);
     Point p = fileMenu.getLocationOnScreen();
     fileOpener.mouseMove(p.x + fileMenu.getWidth() / 2, p.y + fileMenu.getHeight() / 2);
     fileOpener.delay(100);
@@ -495,7 +509,7 @@ public class TestGraphicalView {
     test.actionPerformed(null);
   }
 
-  /*
+
   @Test
   public void testLoadAction() throws AWTException {
     ActionEvent testLoad = new ActionEvent(test, 0, "Load File");
@@ -675,7 +689,7 @@ public class TestGraphicalView {
   }
 
 
-   */
+   
 
   @Test
   public void testExecuteScript() throws AWTException {
@@ -693,6 +707,48 @@ public class TestGraphicalView {
     assertEquals(111, currentState.getLayer(0).getPixelAt(0, 0).getRed());
     assertEquals(111, currentState.getLayer(0).getPixelAt(0, 0).getGreen());
     assertEquals(111, currentState.getLayer(0).getPixelAt(0, 0).getBlue());
+  }
+
+  @Test
+  public void testControllerViewConnection() {
+    MockGraphicalView mock = new MockGraphicalView();
+    ImageProcessingController controller = mock.getController();
+    mock.actionPerformed(new ActionEvent(new JButton("For Testing"), ActionEvent.ACTION_PERFORMED, "Load File"));
+    assertEquals(new ArrayList<String>(Arrays.asList("loadFileReceived")), controller.getLayeredImageNames());
+    mock.actionPerformed(new ActionEvent(new JButton("For Testing"), ActionEvent.ACTION_PERFORMED, "Blur"));
+    assertEquals(new ArrayList<String>(Arrays.asList("loadFileReceived", "blurReceived")), controller.getLayeredImageNames());
+    mock.actionPerformed(new ActionEvent(new JButton("For Testing"), ActionEvent.ACTION_PERFORMED, "Sharpen"));
+    assertEquals(new ArrayList<String>(Arrays.asList("loadFileReceived", "blurReceived", "sharpenReceived")), controller.getLayeredImageNames());
+    mock.actionPerformed(new ActionEvent(new JButton("For Testing"), ActionEvent.ACTION_PERFORMED, "Greyscale"));
+    assertEquals(new ArrayList<String>(Arrays.asList("loadFileReceived", "blurReceived", "sharpenReceived", "greyscaleReceived")), controller.getLayeredImageNames());
+    mock.actionPerformed(new ActionEvent(new JButton("For Testing"), ActionEvent.ACTION_PERFORMED, "Sepia"));
+    assertEquals(new ArrayList<String>(Arrays.asList("sepiaReceived", "loadFileReceived", "blurReceived", "sharpenReceived", "greyscaleReceived")), controller.getLayeredImageNames());
+    mock.actionPerformed(new ActionEvent(new JButton("For Testing"), ActionEvent.ACTION_PERFORMED, "Save Current Layer"));
+    assertEquals(new ArrayList<String>(Arrays.asList("sepiaReceived", "loadFileReceived", "blurReceived", "sharpenReceived", "greyscaleReceived", "saveCurrentLayerReceived")), controller.getLayeredImageNames());
+    mock.actionPerformed(new ActionEvent(new JButton("For Testing"), ActionEvent.ACTION_PERFORMED, "Add New Layer"));
+    assertEquals(new ArrayList<String>(Arrays.asList("sepiaReceived", "loadFileReceived", "blurReceived", "sharpenReceived", "greyscaleReceived", "addNewLayerReceived", "saveCurrentLayerReceived")), controller.getLayeredImageNames());
+    mock.actionPerformed(new ActionEvent(new JButton("For Testing"), ActionEvent.ACTION_PERFORMED, "Load Image As Layer"));
+    assertEquals(new ArrayList<String>(Arrays.asList("sepiaReceived", "loadFileReceived", "blurReceived", "sharpenReceived", "greyscaleReceived", "loadImageAsLayerReceived", "addNewLayerReceived", "saveCurrentLayerReceived")), controller.getLayeredImageNames());
+    mock.actionPerformed(new ActionEvent(new JButton("For Testing"), ActionEvent.ACTION_PERFORMED, "Save File"));
+    assertEquals(new ArrayList<String>(Arrays.asList("saveFileReceived", "sepiaReceived", "loadFileReceived", "blurReceived", "sharpenReceived", "greyscaleReceived", "loadImageAsLayerReceived", "addNewLayerReceived", "saveCurrentLayerReceived")), controller.getLayeredImageNames());
+    mock.actionPerformed(new ActionEvent(new JButton("For Testing"), ActionEvent.ACTION_PERFORMED, "Export as Image"));
+    assertEquals(new ArrayList<String>(Arrays.asList("saveFileReceived", "sepiaReceived", "loadFileReceived", "blurReceived", "sharpenReceived", "greyscaleReceived","exportAsImageReceived", "loadImageAsLayerReceived", "addNewLayerReceived", "saveCurrentLayerReceived")), controller.getLayeredImageNames());
+    mock.actionPerformed(new ActionEvent(new JButton("For Testing"), ActionEvent.ACTION_PERFORMED, "Execute Script"));
+    assertEquals(new ArrayList<String>(Arrays.asList("saveFileReceived", "sepiaReceived", "loadFileReceived", "blurReceived", "sharpenReceived", "greyscaleReceived","exportAsImageReceived", "loadImageAsLayerReceived", "executeScriptReceived", "addNewLayerReceived", "saveCurrentLayerReceived")), controller.getLayeredImageNames());
+    MockGraphicalView mockForDynamicTesting = new MockGraphicalView();
+    ImageProcessingController controller2 = mockForDynamicTesting.getController();
+    mockForDynamicTesting.actionPerformed(new ActionEvent(new JButton("For Testing"), ActionEvent.ACTION_PERFORMED, "Move Up Some Layer"));
+    assertEquals(new ArrayList<String>(Arrays.asList("moveUpDynamicCommandReceived")), controller2.getLayeredImageNames());
+    mockForDynamicTesting.actionPerformed(new ActionEvent(new JButton("For Testing"), ActionEvent.ACTION_PERFORMED, "Move Down Some Layer"));
+    assertEquals(new ArrayList<String>(Arrays.asList("moveUpDynamicCommandReceived", "moveDownDynamicCommandReceived")), controller2.getLayeredImageNames());
+    mockForDynamicTesting.actionPerformed(new ActionEvent(new JButton("For Testing"), ActionEvent.ACTION_PERFORMED, "Copy Some Layer"));
+    assertEquals(new ArrayList<String>(Arrays.asList("copyDynamicCommandReceived", "moveUpDynamicCommandReceived", "moveDownDynamicCommandReceived")), controller2.getLayeredImageNames());
+    mockForDynamicTesting.actionPerformed(new ActionEvent(new JButton("For Testing"), ActionEvent.ACTION_PERFORMED, "Show Some Layer"));
+    assertEquals(new ArrayList<String>(Arrays.asList("copyDynamicCommandReceived", "moveUpDynamicCommandReceived", "moveDownDynamicCommandReceived", "showDynamicCommandReceived")), controller2.getLayeredImageNames());
+    mockForDynamicTesting.actionPerformed(new ActionEvent(new JButton("For Testing"), ActionEvent.ACTION_PERFORMED, "Hide Some Layer"));
+    assertEquals(new ArrayList<String>(Arrays.asList("hideDynamicCommandReceived", "copyDynamicCommandReceived", "moveUpDynamicCommandReceived", "moveDownDynamicCommandReceived", "showDynamicCommandReceived")), controller2.getLayeredImageNames());
+    mockForDynamicTesting.actionPerformed(new ActionEvent(new JButton("For Testing"), ActionEvent.ACTION_PERFORMED, "Change Tab to Some Image"));
+    assertEquals(new ArrayList<String>(Arrays.asList("hideDynamicCommandReceived", "changeTabDynamicCommandReceived", "copyDynamicCommandReceived", "moveUpDynamicCommandReceived", "moveDownDynamicCommandReceived", "showDynamicCommandReceived")), controller2.getLayeredImageNames());
   }
 
 
