@@ -1,0 +1,3 @@
+create-layered-image test1 outputImages/testSaveLayered
+load test1
+remove-layer test1 firstLayer

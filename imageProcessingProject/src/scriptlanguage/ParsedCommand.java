@@ -629,7 +629,7 @@ public interface ParsedCommand {
 
   /**
    * Represents a command which creates a new, empty image(not very useful as there is no script to
-   * change the size of an existing image). //TODO DECIDE IF SOMETHING SHOULD BE DONE ABOUT THIS
+   * change the size of an existing image).
    */
   class CreateEmptyImageCommand implements ParsedCommand {
 

@@ -38,7 +38,7 @@ public class CommandLineTextView implements View {
   }
 
   @Override
-  public void show() {
+  public void showView() {
     new ProcessingController(this, new InputStreamReader(System.in)).run();
   }
 }

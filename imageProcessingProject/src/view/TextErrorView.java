@@ -1,6 +1,8 @@
 package view;
 
+import controller.ProcessingController;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * DEPRECIATED: THIS IMPLEMENTATION IS INVALID, SEE COMMANDLINETEXTVIEW
@@ -41,7 +43,7 @@ public class TextErrorView implements ErrorView {
   }
 
   @Override
-  public void show() {
-
+  public void showView() {
+    new ProcessingController(this, new InputStreamReader(System.in)).run();
   }
 }

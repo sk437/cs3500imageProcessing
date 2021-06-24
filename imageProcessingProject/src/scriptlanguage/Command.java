@@ -66,7 +66,7 @@ public enum Command {
           for (int i = 2; i < inputs.size(); i += 1) {
             fileName.append(inputs.get(i));
           }
-          return new CreateFromImageCommand(inputs.get(1), fileName.toString());
+          return new CreateFromImageCommand(inputs.get(1), Command.decode(fileName.toString()));
         default:
           throw new IllegalArgumentException("Invalid type specified for this command");
       }
@@ -372,12 +372,12 @@ public enum Command {
                   "This command cannot be called with the given amount"
                       + " of inputs, because there is no default image");
             }
-            return new BasicBlendCommand(currentImage, inputs.get(1), inputs.get(2));
+            return new BasicBlendCommand(currentImage, inputs.get(1), Command.decode(inputs.get(2)));
           }
           throw new IllegalArgumentException("Unsupported blend type");
         case 4:
           if ("basic".equals(inputs.get(1))) {
-            return new BasicBlendCommand(inputs.get(0), inputs.get(2), inputs.get(3));
+            return new BasicBlendCommand(inputs.get(0), inputs.get(2), Command.decode(inputs.get(3)));
           }
           throw new IllegalArgumentException("Unsupported blend type");
         default:

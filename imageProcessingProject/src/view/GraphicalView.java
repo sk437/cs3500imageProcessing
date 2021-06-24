@@ -2,21 +2,12 @@ package view;
 
 import controller.ImageProcessingController;
 import controller.ProcessingController;
-import imageasgraph.FixedSizeGraph;
-import imageasgraph.InputType;
-import imageasgraph.Node;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -33,9 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
-import javax.swing.border.Border;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import layeredimage.LayeredImage;
 import layeredimage.ViewModel;
 import layeredimage.blend.AbstractBlend;
 
@@ -133,7 +122,7 @@ public class GraphicalView extends JFrame implements View, ActionListener {
     loadLayer.addActionListener(this);
     layerMenu.add(loadLayer);
     saveCurrentLayer = new JMenuItem("Save Current Layer");
-    saveCurrentLayer.setActionCommand("Load Image As Layer");
+    saveCurrentLayer.setActionCommand("Save Current Layer");
     saveCurrentLayer.addActionListener(this);
     layerMenu.add(saveCurrentLayer);
     menuBar.add(layerMenu);
@@ -225,6 +214,12 @@ public class GraphicalView extends JFrame implements View, ActionListener {
   }
 
   @Override
+  public void showView() {
+    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    this.setVisible(true);
+  }
+
+  @Override
   public void actionPerformed(ActionEvent e) {
     if (e == null) {
       throw new IllegalArgumentException("Null action");
@@ -296,7 +291,7 @@ public class GraphicalView extends JFrame implements View, ActionListener {
             String commandToExecute =
                 "save " + this.currentImageName + " " + this.currentLayerName + " "
                     + f.getName().substring(f.getName().lastIndexOf(".") + 1) + " "
-                    + f.getPath().replaceAll(" ", ">").substring(0, f.getPath().lastIndexOf(".") + 1);
+                    + f.getPath().replaceAll(" ", ">").substring(0, f.getPath().lastIndexOf("."));
             this.controller.runCommands(commandToExecute);
             this.updateLayerButtons();
             SwingUtilities.updateComponentTreeUI(mainPanel);
@@ -359,7 +354,7 @@ public class GraphicalView extends JFrame implements View, ActionListener {
                 "save-as-image " + this.currentImageName + " "
                     + blendType + " "
                     + f.getName().substring(f.getName().lastIndexOf(".") + 1) + " "
-                    + f.getPath().replaceAll(" ", ">").substring(0, f.getPath().lastIndexOf(".") + 1);
+                    + f.getPath().replaceAll(" ", ">").substring(0, f.getPath().lastIndexOf("."));
             this.controller.runCommands(commandToExecute);
             this.updateLayerButtons();
             SwingUtilities.updateComponentTreeUI(mainPanel);
@@ -383,12 +378,16 @@ public class GraphicalView extends JFrame implements View, ActionListener {
           }
           Scanner scanner = new Scanner(newRead);
           StringBuilder commandToExecute = new StringBuilder();
-          while (scanner.hasNext()) {
+          while (scanner.hasNextLine()) {
             commandToExecute.append(scanner.nextLine()).append("\n");
           }
-
+          System.out.println(commandToExecute);
           this.controller.runCommands(commandToExecute.toString());
-          this.imagePanel.setImage(this.display.getImageRepresentation());
+          if (controller.getLayeredImageNames().size() != 0) {
+            this.currentImageName = (controller.getLayeredImageNames().get(0));
+            this.display = controller.getReferenceToImage(currentImageName);
+            this.imagePanel.setImage(this.display.getImageRepresentation());
+          }
           this.updateLayerButtons();
           this.updateTabs();
           SwingUtilities.updateComponentTreeUI(mainPanel);
@@ -648,5 +647,12 @@ public class GraphicalView extends JFrame implements View, ActionListener {
 
   public JMenu getFileMenu() {
     return this.menuBar.getMenu(0);
+  }
+
+  public JMenu getMenu(int item) throws IllegalArgumentException {
+    if (this.menuBar.getMenu(item) == null) {
+      throw new IllegalArgumentException("No menu at this location");
+    }
+    return this.menuBar.getMenu(item);
   }
 }

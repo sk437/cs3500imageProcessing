@@ -7,7 +7,10 @@ import view.TextErrorView;
 
 /**
  * Represents a class for sample testing the methods of a View that would have function, but just
- * throws errors here.
+ * throws errors here. NOTE: The showView method relies on inputs from System.in, but as this can not be
+ *  simulated, we instead test the outputs and the inputs are handled in the controller tests, so
+ *  refer to other tests (such as those for input/output behavior tested in the TestCommand and
+ *  TestLanguageSyntax classes).
  */
 public class TestTextErrorView {
 

@@ -26,14 +26,13 @@ public class GraphicsMain {
         break;
       case "-text":
         View textView = new CommandLineTextView(System.out);
-        ImageProcessingController commandLine = new ProcessingController(textView, new InputStreamReader(System.in));
+        textView.showView();
         break;
       case "-interactive":
         GraphicalView.setDefaultLookAndFeelDecorated(false);
         GraphicalView frame = new GraphicalView();
 
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
+        frame.showView();
         break;
       default:
         throw new IllegalArgumentException("Invalid arguments given");

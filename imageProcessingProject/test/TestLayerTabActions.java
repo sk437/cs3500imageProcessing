@@ -35,8 +35,8 @@ public class TestLayerTabActions {
    * Given a controller and the name of an image contained by that controller, saves the image
    * and then loads it as a layeredImage so everything that is necessary for testing can be
    * reached.
-   * @param controller The controller which contains the image
-   * @param imageName The name of the image to be loaded
+   * @param toSaveFrom The view from which to save the image
+   * @param toSaveAs The name of the image to be saved as
    * @return The LayeredImage representation of the image to be loaded
    * @throws IllegalArgumentException If either input is null, or if there is an issue fetching the image
    */
@@ -50,6 +50,14 @@ public class TestLayerTabActions {
     return new LayeredImageV0(toSaveAs);
   }
 
+  /**
+   * Creates a Robot that automates clicking and loading/saving files.
+   * @param toOpenOn View to open files on
+   * @param fileToOpen File to open up
+   * @param isOpen If opening versus saving
+   * @throws AWTException Thrown when automating
+   * @throws IllegalArgumentException If any arguments are null
+   */
   private void openSaveFileRobot(GraphicalView toOpenOn, String fileToOpen, boolean isOpen) throws AWTException, IllegalArgumentException {
     if (toOpenOn == null || fileToOpen == null) {
       throw new IllegalArgumentException("Null input");
@@ -78,7 +86,7 @@ public class TestLayerTabActions {
     fileOpener.delay(500);
     fileOpener.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
     fileOpener.mouseMove(300, 460);
-    fileOpener.delay(100);
+    fileOpener.delay(500);
     fileOpener.mousePress(InputEvent.BUTTON1_DOWN_MASK);
     fileOpener.delay(100);
     fileOpener.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
@@ -143,5 +151,5 @@ public class TestLayerTabActions {
     assertEquals(new ArrayList<String>(Arrays.asList("blue-layer", "invisible-layer", "red-layer")), currentState.getLayerNames());
     assertEquals(currentState.getLayer(1), currentState.getLayer("invisible-layer"));
   }
-  
+
 }

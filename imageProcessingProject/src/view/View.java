@@ -17,5 +17,5 @@ public interface View {
   /**
    * Start up the view and begin taking scripts.
    */
-  void show();
+  void showView();
 }

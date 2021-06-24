@@ -1,9 +1,15 @@
 import static org.junit.Assert.assertTrue;
 
+import imageasgraph.GraphOfPixels;
+import imageasgraph.ImageToGraphConverter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import layeredimage.LayeredImage;
+import layeredimage.LayeredImageV0;
 import org.junit.Test;
 import scriptlanguage.Command;
 import scriptlanguage.ParsedCommand.AddImageLayerCommand;
@@ -63,7 +69,14 @@ public class TestCommand {
         Arrays.asList("from-image", "new", "outputImages/birb.jpg"));
     assertTrue(Command.createImage.returnExecutable(
         fromImageInputs, null, null) instanceof CreateFromImageCommand);
+
+    List<String> fromImageInputsDecoded = new ArrayList<String>(
+        Arrays.asList("from-image", "new", "outputImages/Space>Folder/example.ppm"));
+    assertTrue(Command.createImage.returnExecutable(
+        fromImageInputsDecoded, null, null) instanceof CreateFromImageCommand);
   }
+
+
 
   @Test(expected = IllegalArgumentException.class)
   public void testFailCreateCheckerboardInvalidNumbers() {
@@ -184,6 +197,11 @@ public class TestCommand {
         Arrays.asList("newLayered", "outputImages/misc"));
     assertTrue(Command.createLayeredImage
         .returnExecutable(fromInputs, null, null) instanceof ImportNewLayeredImageCommand);
+
+    List<String> fromInputsDecoded = new ArrayList<String>(
+        Arrays.asList("newLayered", "outputImages/Space>Folder/testSaveLayeredAlter"));
+    assertTrue(Command.createLayeredImage
+        .returnExecutable(fromInputsDecoded, null, null) instanceof ImportNewLayeredImageCommand);
 
     List<String> createNewInputs = new ArrayList<String>(
         Arrays.asList("newLayered", "1024", "768"));
@@ -486,6 +504,14 @@ public class TestCommand {
         Arrays.asList("existingImage", "none", "png", "outputImages/birbNEW"));
     assertTrue(Command.save.returnExecutable(noCurrentsSingle, null, null) instanceof SaveCommand);
 
+    List<String> noCurrentsSingleDecoded = new ArrayList<String>(
+        Arrays.asList("existingImage", "none", "ppm", "outputImages/Space>Folder/delete"));
+    assertTrue(Command.save.returnExecutable(noCurrentsSingleDecoded, null, null) instanceof SaveCommand);
+    HashMap<String, GraphOfPixels> testGraphs = new HashMap<String, GraphOfPixels>();
+    testGraphs.put("existingImage", ImageToGraphConverter.convertPPM("outputImages/example.ppm"));
+    HashMap<String, LayeredImage> testLayered = new HashMap<String, LayeredImage>();
+    Command.save.returnExecutable(noCurrentsSingleDecoded, null, null).execute(testGraphs, testLayered);
+
     List<String> noCurrentsLayered = new ArrayList<String>(
         Arrays.asList("existingImage", "birb", "png", "outputImages/birbLayerNEW"));
     assertTrue(Command.save.returnExecutable(noCurrentsLayered, null, null) instanceof SaveCommand);
@@ -542,6 +568,15 @@ public class TestCommand {
     assertTrue(Command.saveLayered
         .returnExecutable(noCurrentsSingle, null, null) instanceof SaveLayeredCommand);
 
+    List<String> noCurrentsSingleDecoded = new ArrayList<String>(
+        Arrays.asList("existingImage", "outputImages/Space>Folder/delete2"));
+    assertTrue(Command.saveLayered
+        .returnExecutable(noCurrentsSingleDecoded, null, null) instanceof SaveLayeredCommand);
+    HashMap<String, GraphOfPixels> testGraphs = new HashMap<String, GraphOfPixels>();
+    HashMap<String, LayeredImage> testLayered = new HashMap<String, LayeredImage>();
+    testLayered.put("existingImage", new LayeredImageV0("outputImages/exampleLayeredImage"));
+    Command.saveLayered.returnExecutable(noCurrentsSingleDecoded, null, null).execute(testGraphs, testLayered);
+
     List<String> currentImage = new ArrayList<String>(
         Collections.singletonList("outputImages/misc4"));
     assertTrue(Command.saveLayered
@@ -588,6 +623,16 @@ public class TestCommand {
         Arrays.asList("existingImage", "basic", "png", "outputImages/misc4"));
     assertTrue(Command.saveAsImage
         .returnExecutable(noCurrentsSave, null, null) instanceof BasicBlendCommand);
+
+
+    List<String> noCurrentsSaveDecoded = new ArrayList<String>(
+        Arrays.asList("existingImage", "basic", "png", "outputImages/Space>Folder/delete3"));
+    assertTrue(Command.saveAsImage
+        .returnExecutable(noCurrentsSave, null, null) instanceof BasicBlendCommand);
+    HashMap<String, GraphOfPixels> testGraphs = new HashMap<String, GraphOfPixels>();
+    HashMap<String, LayeredImage> testLayered = new HashMap<String, LayeredImage>();
+    testLayered.put("existingImage", new LayeredImageV0("outputImages/exampleLayeredImage"));
+    Command.saveAsImage.returnExecutable(noCurrentsSaveDecoded, null, null).execute(testGraphs, testLayered);
 
     List<String> currentImageSave = new ArrayList<String>(
         Arrays.asList("basic", "png", "outputImages/misc4"));
