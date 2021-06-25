@@ -219,181 +219,255 @@ public class GraphicalView extends JFrame implements View, ActionListener {
     this.setVisible(true);
   }
 
+  /**
+   * Handles a user request to load a layered image file as a new image accessible by the view.
+   */
+  private void handleLoadFile() {
+    final JFileChooser fChooser = new JFileChooser(".");
+    fChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+    int retValue = fChooser.showOpenDialog(GraphicalView.this);
+    if (retValue == JFileChooser.APPROVE_OPTION) {
+      File f = fChooser.getSelectedFile();
+
+      String commandToExecute =
+          "create-layered-image " + f.getName() + " " + f.getPath().replaceAll(" ", ">");
+      this.controller.runCommands(commandToExecute);
+      try {
+        this.display = controller.getReferenceToImage(f.getName());
+      } catch (IllegalArgumentException exception) {
+        this.renderException(exception.getMessage());
+      }
+      this.currentImageName = f.getName();
+      this.currentLayerName = null;
+      this.imagePanel.setImage(this.display.getImageRepresentation());
+      this.updateLayerButtons();
+      this.updateTabs();
+      SwingUtilities.updateComponentTreeUI(mainPanel);
+    }
+  }
+
+  /**
+   * Handles a user request to blur the currently selected layer of the currently selected image.
+   */
+  private void handleBlur() {
+    if (!(this.currentImageName == null || this.currentLayerName == null)) {
+      String commandToExecute = "apply-mutator blur " + this.currentImageName + " " + this.currentLayerName;
+      this.controller.runCommands(commandToExecute);
+      this.imagePanel.setImage(this.display.getImageRepresentation());
+      SwingUtilities.updateComponentTreeUI(mainPanel);
+    }
+  }
+
+  /**
+   * Handles a user request to sharpen the currently selected layer of the currently selected image.
+   */
+  private void handleSharpen() {
+    if (!(this.currentImageName == null || this.currentLayerName == null)) {
+      String commandToExecute = "apply-mutator sharpen " + this.currentImageName + " " + this.currentLayerName;
+      this.controller.runCommands(commandToExecute);
+      this.imagePanel.setImage(this.display.getImageRepresentation());
+      SwingUtilities.updateComponentTreeUI(mainPanel);
+    }
+  }
+
+  /**
+   * Handles a user request to apply a greyscale filter to the currently selected layer of the currently
+   * selected image.
+   */
+  private void handleGreyscale() {
+    if (!(this.currentImageName == null || this.currentLayerName == null)) {
+      String commandToExecute = "apply-mutator greyscale " + this.currentImageName + " " + this.currentLayerName;
+      this.controller.runCommands(commandToExecute);
+      this.imagePanel.setImage(this.display.getImageRepresentation());
+      SwingUtilities.updateComponentTreeUI(mainPanel);
+    }
+  }
+
+  /**
+   * Handles a user request to apply a sepia filter to the currently selected layer of the currently
+   * selected image.
+   */
+  private void handleSepia() {
+    if (!(this.currentImageName == null || this.currentLayerName == null)) {
+      String commandToExecute = "apply-mutator sepia " + this.currentImageName + " " + this.currentLayerName;
+      this.controller.runCommands(commandToExecute);
+      this.imagePanel.setImage(this.display.getImageRepresentation());
+      SwingUtilities.updateComponentTreeUI(mainPanel);
+    }
+  }
+
+
+  /**
+   * Handles a user request to save the currently selected layer as an image file.
+   */
+  private void handleSaveCurrentLayer() {
+    if (!(this.currentImageName == null || this.currentLayerName == null)) {
+      final JFileChooser fChooser = new JFileChooser(".");
+      int retValue = fChooser.showSaveDialog(GraphicalView.this);
+      if (retValue == JFileChooser.APPROVE_OPTION) {
+        File f = fChooser.getSelectedFile();
+
+        String commandToExecute =
+            "save " + this.currentImageName + " " + this.currentLayerName + " "
+                + f.getName().substring(f.getName().lastIndexOf(".") + 1) + " "
+                + f.getPath().replaceAll(" ", ">").substring(0, f.getPath().lastIndexOf("."));
+        this.controller.runCommands(commandToExecute);
+        this.updateLayerButtons();
+        SwingUtilities.updateComponentTreeUI(mainPanel);
+      }
+    }
+  }
+
+  /**
+   * Handles a user request to add a new layer to the currently selected image.
+   */
+  private void handleAddNewLayer() {
+    String newLayer = JOptionPane.showInputDialog("Enter the name of the new layer");
+    String commandToExecute = "add-layer " + this.currentImageName + " " + newLayer;
+    this.controller.runCommands(commandToExecute);
+    this.updateLayerButtons();
+    SwingUtilities.updateComponentTreeUI(mainPanel);
+  }
+
+  /**
+   * Handles a user request to load an existing image file as a new layer of the currently
+   * selected image.
+   */
+  private void handleLoadImageAsLayer() {
+    final JFileChooser fChooser = new JFileChooser(".");
+    //NOTE: NO FILTER AS VIEW SHOULD NOT BE COUPLED TO WHAT TYPES OF FILES ARE SUPPORTED.
+    int retValue = fChooser.showOpenDialog(GraphicalView.this);
+    if (retValue == JFileChooser.APPROVE_OPTION) {
+      File f = fChooser.getSelectedFile();
+      String newLayer = JOptionPane.showInputDialog("Enter the name of the new layer");
+      String commandToExecute =
+          "add-image-as-layer " + this.currentImageName + " " + newLayer + " "
+              + f.getPath().replaceAll(" ", ">");
+      this.controller.runCommands(commandToExecute);
+      this.imagePanel.setImage(this.display.getImageRepresentation());
+      this.updateLayerButtons();
+      SwingUtilities.updateComponentTreeUI(mainPanel);
+    }
+  }
+
+  /**
+   * Handles a user request to save the current layered image as a layered image file.
+   */
+  private void handleSaveFile() {
+    if (!(this.currentImageName == null)) {
+      final JFileChooser fChooser = new JFileChooser(".");
+      int retValue = fChooser.showSaveDialog(GraphicalView.this);
+      if (retValue == JFileChooser.APPROVE_OPTION) {
+        File f = fChooser.getSelectedFile();
+
+        String commandToExecute =
+            "save-layered " + this.currentImageName + " " + f.getPath().replaceAll(" ", ">");
+        this.controller.runCommands(commandToExecute);
+        this.updateLayerButtons();
+        SwingUtilities.updateComponentTreeUI(mainPanel);
+      }
+    }
+  }
+
+  /**
+   * Handles a user request to export the currently selected image as an image file.
+   */
+  private void handleExportAsImage() {
+    if (!(this.currentImageName == null)) {
+      String[] allBlendTypes = AbstractBlend.getBlendTypes();
+      String blendType = allBlendTypes[JOptionPane.showOptionDialog(this, "Choose Blend Type",
+          "Blend Choices", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, allBlendTypes, allBlendTypes[0])];
+      final JFileChooser fChooser = new JFileChooser(".");
+      int retValue = fChooser.showSaveDialog(GraphicalView.this);
+      if (retValue == JFileChooser.APPROVE_OPTION) {
+        File f = fChooser.getSelectedFile();
+
+        String commandToExecute =
+            "save-as-image " + this.currentImageName + " "
+                + blendType + " "
+                + f.getName().substring(f.getName().lastIndexOf(".") + 1) + " "
+                + f.getPath().replaceAll(" ", ">").substring(0, f.getPath().lastIndexOf("."));
+        this.controller.runCommands(commandToExecute);
+        this.updateLayerButtons();
+        SwingUtilities.updateComponentTreeUI(mainPanel);
+      }
+    }
+  }
+
+  /**
+   * Handles a user request to run an external script, and see the results.
+   */
+  private void handleExecuteScript() {
+    final JFileChooser fChooser = new JFileChooser(".");
+    FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt");
+    fChooser.setFileFilter(filter);
+    int retValue = fChooser.showOpenDialog(GraphicalView.this);
+    if (retValue == JFileChooser.APPROVE_OPTION) {
+      File f = fChooser.getSelectedFile();
+      FileReader newRead;
+      try {
+        newRead = new FileReader(f);
+      } catch (IOException fileError) {
+        this.renderException(fileError.getMessage());
+        return;
+      }
+      Scanner scanner = new Scanner(newRead);
+      StringBuilder commandToExecute = new StringBuilder();
+      while (scanner.hasNextLine()) {
+        commandToExecute.append(scanner.nextLine()).append("\n");
+      }
+      System.out.println(commandToExecute);
+      this.controller.runCommands(commandToExecute.toString());
+      if (controller.getLayeredImageNames().size() != 0) {
+        this.currentImageName = (controller.getLayeredImageNames().get(0));
+        this.display = controller.getReferenceToImage(currentImageName);
+        this.imagePanel.setImage(this.display.getImageRepresentation());
+      }
+      this.updateLayerButtons();
+      this.updateTabs();
+      SwingUtilities.updateComponentTreeUI(mainPanel);
+    }
+  }
+
   @Override
   public void actionPerformed(ActionEvent e) {
     if (e == null) {
       throw new IllegalArgumentException("Null action");
     }
     switch (e.getActionCommand()) {
-      case "Load File": {
-        final JFileChooser fChooser = new JFileChooser(".");
-        fChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        int retValue = fChooser.showOpenDialog(GraphicalView.this);
-        if (retValue == JFileChooser.APPROVE_OPTION) {
-          File f = fChooser.getSelectedFile();
-
-          String commandToExecute =
-              "create-layered-image " + f.getName() + " " + f.getPath().replaceAll(" ", ">");
-          this.controller.runCommands(commandToExecute);
-          try {
-            this.display = controller.getReferenceToImage(f.getName());
-          } catch (IllegalArgumentException exception) {
-            this.renderException(exception.getMessage());
-          }
-          this.currentImageName = f.getName();
-          this.currentLayerName = null;
-          this.imagePanel.setImage(this.display.getImageRepresentation());
-          this.updateLayerButtons();
-          this.updateTabs();
-          SwingUtilities.updateComponentTreeUI(mainPanel);
-        }
+      case "Load File":
+        this.handleLoadFile();
         break;
-      }
       case "Blur":
-        if (!(this.currentImageName == null || this.currentLayerName == null)) {
-          String commandToExecute = "apply-mutator blur " + this.currentImageName + " " + this.currentLayerName;
-          this.controller.runCommands(commandToExecute);
-          this.imagePanel.setImage(this.display.getImageRepresentation());
-          SwingUtilities.updateComponentTreeUI(mainPanel);
-        }
+        this.handleBlur();
         break;
       case "Sharpen":
-        if (!(this.currentImageName == null || this.currentLayerName == null)) {
-          String commandToExecute = "apply-mutator sharpen " + this.currentImageName + " " + this.currentLayerName;
-          this.controller.runCommands(commandToExecute);
-          this.imagePanel.setImage(this.display.getImageRepresentation());
-          SwingUtilities.updateComponentTreeUI(mainPanel);
-        }
+        this.handleSharpen();
         break;
       case "Greyscale":
-        if (!(this.currentImageName == null || this.currentLayerName == null)) {
-          String commandToExecute = "apply-mutator greyscale " + this.currentImageName + " " + this.currentLayerName;
-          this.controller.runCommands(commandToExecute);
-          this.imagePanel.setImage(this.display.getImageRepresentation());
-          SwingUtilities.updateComponentTreeUI(mainPanel);
-        }
+        this.handleGreyscale();
         break;
       case "Sepia":
-        if (!(this.currentImageName == null || this.currentLayerName == null)) {
-          String commandToExecute = "apply-mutator sepia " + this.currentImageName + " " + this.currentLayerName;
-          this.controller.runCommands(commandToExecute);
-          this.imagePanel.setImage(this.display.getImageRepresentation());
-          SwingUtilities.updateComponentTreeUI(mainPanel);
-        }
+        this.handleSepia();
         break;
-      case "Save Current Layer": {
-        if (!(this.currentImageName == null || this.currentLayerName == null)) {
-          final JFileChooser fChooser = new JFileChooser(".");
-          int retValue = fChooser.showSaveDialog(GraphicalView.this);
-          if (retValue == JFileChooser.APPROVE_OPTION) {
-            File f = fChooser.getSelectedFile();
-
-            String commandToExecute =
-                "save " + this.currentImageName + " " + this.currentLayerName + " "
-                    + f.getName().substring(f.getName().lastIndexOf(".") + 1) + " "
-                    + f.getPath().replaceAll(" ", ">").substring(0, f.getPath().lastIndexOf("."));
-            this.controller.runCommands(commandToExecute);
-            this.updateLayerButtons();
-            SwingUtilities.updateComponentTreeUI(mainPanel);
-          }
-        }
+      case "Save Current Layer":
+        this.handleSaveCurrentLayer();
         break;
-      }
-      case "Add New Layer": {
-        String newLayer = JOptionPane.showInputDialog("Enter the name of the new layer");
-        String commandToExecute = "add-layer " + this.currentImageName + " " + newLayer;
-        this.controller.runCommands(commandToExecute);
-        this.updateLayerButtons();
-        SwingUtilities.updateComponentTreeUI(mainPanel);
+      case "Add New Layer":
+        this.handleAddNewLayer();
         break;
-      }
-      case "Load Image As Layer": {
-        final JFileChooser fChooser = new JFileChooser(".");
-        //NOTE: NO FILTER AS VIEW SHOULD NOT BE COUPLED TO WHAT TYPES OF FILES ARE SUPPORTED.
-        int retValue = fChooser.showOpenDialog(GraphicalView.this);
-        if (retValue == JFileChooser.APPROVE_OPTION) {
-          File f = fChooser.getSelectedFile();
-          String newLayer = JOptionPane.showInputDialog("Enter the name of the new layer");
-          String commandToExecute =
-              "add-image-as-layer " + this.currentImageName + " " + newLayer + " "
-                  + f.getPath().replaceAll(" ", ">");
-          this.controller.runCommands(commandToExecute);
-          this.imagePanel.setImage(this.display.getImageRepresentation());
-          this.updateLayerButtons();
-          SwingUtilities.updateComponentTreeUI(mainPanel);
-        }
+      case "Load Image As Layer":
+        this.handleLoadImageAsLayer();
         break;
-      }
-      case "Save File": {
-        if (!(this.currentImageName == null)) {
-          final JFileChooser fChooser = new JFileChooser(".");
-          int retValue = fChooser.showSaveDialog(GraphicalView.this);
-          if (retValue == JFileChooser.APPROVE_OPTION) {
-            File f = fChooser.getSelectedFile();
-
-            String commandToExecute =
-                "save-layered " + this.currentImageName + " " + f.getPath().replaceAll(" ", ">");
-            this.controller.runCommands(commandToExecute);
-            this.updateLayerButtons();
-            SwingUtilities.updateComponentTreeUI(mainPanel);
-          }
-        }
+      case "Save File":
+        this.handleSaveFile();
         break;
-      }
-      case "Export as Image": {
-        if (!(this.currentImageName == null)) {
-          String[] allBlendTypes = AbstractBlend.getBlendTypes();
-          String blendType = allBlendTypes[JOptionPane.showOptionDialog(this, "Choose Blend Type",
-              "Blend Choices", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, allBlendTypes, allBlendTypes[0])];
-          final JFileChooser fChooser = new JFileChooser(".");
-          int retValue = fChooser.showSaveDialog(GraphicalView.this);
-          if (retValue == JFileChooser.APPROVE_OPTION) {
-            File f = fChooser.getSelectedFile();
-
-            String commandToExecute =
-                "save-as-image " + this.currentImageName + " "
-                    + blendType + " "
-                    + f.getName().substring(f.getName().lastIndexOf(".") + 1) + " "
-                    + f.getPath().replaceAll(" ", ">").substring(0, f.getPath().lastIndexOf("."));
-            this.controller.runCommands(commandToExecute);
-            this.updateLayerButtons();
-            SwingUtilities.updateComponentTreeUI(mainPanel);
-          }
-        }
+      case "Export as Image":
+        this.handleExportAsImage();
         break;
-      }
-      case "Execute Script": {
-        final JFileChooser fChooser = new JFileChooser(".");
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt");
-        fChooser.setFileFilter(filter);
-        int retValue = fChooser.showOpenDialog(GraphicalView.this);
-        if (retValue == JFileChooser.APPROVE_OPTION) {
-          File f = fChooser.getSelectedFile();
-          FileReader newRead;
-          try {
-            newRead = new FileReader(f);
-          } catch (IOException fileError) {
-            this.renderException(fileError.getMessage());
-            return;
-          }
-          Scanner scanner = new Scanner(newRead);
-          StringBuilder commandToExecute = new StringBuilder();
-          while (scanner.hasNextLine()) {
-            commandToExecute.append(scanner.nextLine()).append("\n");
-          }
-          System.out.println(commandToExecute);
-          this.controller.runCommands(commandToExecute.toString());
-          if (controller.getLayeredImageNames().size() != 0) {
-            this.currentImageName = (controller.getLayeredImageNames().get(0));
-            this.display = controller.getReferenceToImage(currentImageName);
-            this.imagePanel.setImage(this.display.getImageRepresentation());
-          }
-          this.updateLayerButtons();
-          this.updateTabs();
-          SwingUtilities.updateComponentTreeUI(mainPanel);
-        }
+      case "Execute Script":
+        this.handleExecuteScript();
         break;
-      }
       default:
         this.handleLayerCommand(e);
         this.handleTabCommand(e);

@@ -750,10 +750,4 @@ public class TestGraphicalView {
     mockForDynamicTesting.actionPerformed(new ActionEvent(new JButton("For Testing"), ActionEvent.ACTION_PERFORMED, "Change Tab to Some Image"));
     assertEquals(new ArrayList<String>(Arrays.asList("hideDynamicCommandReceived", "changeTabDynamicCommandReceived", "copyDynamicCommandReceived", "moveUpDynamicCommandReceived", "moveDownDynamicCommandReceived", "showDynamicCommandReceived")), controller2.getLayeredImageNames());
   }
-
-
-
-  @Test
-  public void getFileMenu() {
-  }
 }
