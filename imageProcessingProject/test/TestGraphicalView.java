@@ -236,7 +236,7 @@ public class TestGraphicalView {
    * Creates a Robot that automates opening a file and adding a layer.
    * @param toOpenOn View to open files on
    * @param fileToOpen File to open
-   * @throws AWTException Thrown when automatingnewlayer
+   * @throws AWTException Thrown when automating
    * @throws IllegalArgumentException If any arguments are null
    */
   private void openFileInputNameRobot(GraphicalView toOpenOn, String fileToOpen, String layerToAdd) throws AWTException, IllegalArgumentException {
@@ -294,6 +294,7 @@ public class TestGraphicalView {
 
     fileOpener.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
     fileOpener.mouseMove(900, 525);
+    //fileOpener.mouseMove(1500, 630);
     fileOpener.delay(500);
     fileOpener.mousePress(InputEvent.BUTTON1_DOWN_MASK);
     fileOpener.delay(100);
@@ -305,6 +306,7 @@ public class TestGraphicalView {
     }
     fileOpener.delay(100);
     fileOpener.mouseMove(900, 550);
+    //fileOpener.mouseMove(1500, 650);
     fileOpener.delay(100);
     fileOpener.mousePress(InputEvent.BUTTON1_DOWN_MASK);
     fileOpener.delay(100);
@@ -689,7 +691,7 @@ public class TestGraphicalView {
   }
 
 
-   
+
 
   @Test
   public void testExecuteScript() throws AWTException {
