@@ -29,8 +29,8 @@ import layeredimage.ViewModel;
 import layeredimage.blend.AbstractBlend;
 
 /**
- * Represents a GUI interface that allows a user to perform all supported functionality
- * for editing a layered image, and see a preview of their work as they make changes.
+ * Represents a GUI interface that allows a user to perform all supported functionality for editing
+ * a layered image, and see a preview of their work as they make changes.
  */
 public class GraphicalView extends JFrame implements View, ActionListener {
 
@@ -39,7 +39,6 @@ public class GraphicalView extends JFrame implements View, ActionListener {
   private String currentImageName;
   private String currentLayerName;
 
-  private JScrollPane mainScrollPane;
   private JPanel mainPanel;
   private ImageIcon imagePanel;
   private JPanel layerSelectors;
@@ -54,12 +53,11 @@ public class GraphicalView extends JFrame implements View, ActionListener {
   private JPanel layerShowers;
   private JPanel layerHiders;
   private JMenu tabs;
-  private JMenuBar menuBar;
 
   /**
-   * Constructs a new graphical view - initializes all unchanging JFrame components as well
-   * as the overall framework of the GUI, and creates a new controller which references this as it's
-   * view and which will actually hold and edit a model.
+   * Constructs a new graphical view - initializes all unchanging JFrame components as well as the
+   * overall framework of the GUI, and creates a new controller which references this as it's view
+   * and which will actually hold and edit a model.
    */
   public GraphicalView() {
     super();
@@ -68,9 +66,9 @@ public class GraphicalView extends JFrame implements View, ActionListener {
 
     mainPanel = new JPanel();
     mainPanel.setLayout(new BorderLayout());
-    mainScrollPane = new JScrollPane(mainPanel);
+    JScrollPane mainScrollPane = new JScrollPane(mainPanel);
 
-    menuBar = new JMenuBar();
+    JMenuBar menuBar = new JMenuBar();
     menuBar.setName("Menus");
     JMenu file = new JMenu("File");
     JMenuItem load = new JMenuItem("Load");
@@ -210,7 +208,7 @@ public class GraphicalView extends JFrame implements View, ActionListener {
     if (message == null) {
       throw new IllegalArgumentException("Null Message");
     }
-    JOptionPane.showMessageDialog(GraphicalView.this,message,"Error", JOptionPane.ERROR_MESSAGE);
+    JOptionPane.showMessageDialog(GraphicalView.this, message, "Error", JOptionPane.ERROR_MESSAGE);
   }
 
   @Override
@@ -251,7 +249,8 @@ public class GraphicalView extends JFrame implements View, ActionListener {
    */
   private void handleBlur() {
     if (!(this.currentImageName == null || this.currentLayerName == null)) {
-      String commandToExecute = "apply-mutator blur " + this.currentImageName + " " + this.currentLayerName;
+      String commandToExecute =
+          "apply-mutator blur " + this.currentImageName + " " + this.currentLayerName;
       this.controller.runCommands(commandToExecute);
       this.imagePanel.setImage(this.display.getImageRepresentation());
       SwingUtilities.updateComponentTreeUI(mainPanel);
@@ -259,11 +258,13 @@ public class GraphicalView extends JFrame implements View, ActionListener {
   }
 
   /**
-   * Handles a user request to sharpen the currently selected layer of the currently selected image.
+   * Handles a user request to sharpen the currently selected layer of the currently selected
+   * image.
    */
   private void handleSharpen() {
     if (!(this.currentImageName == null || this.currentLayerName == null)) {
-      String commandToExecute = "apply-mutator sharpen " + this.currentImageName + " " + this.currentLayerName;
+      String commandToExecute =
+          "apply-mutator sharpen " + this.currentImageName + " " + this.currentLayerName;
       this.controller.runCommands(commandToExecute);
       this.imagePanel.setImage(this.display.getImageRepresentation());
       SwingUtilities.updateComponentTreeUI(mainPanel);
@@ -271,12 +272,13 @@ public class GraphicalView extends JFrame implements View, ActionListener {
   }
 
   /**
-   * Handles a user request to apply a greyscale filter to the currently selected layer of the currently
-   * selected image.
+   * Handles a user request to apply a greyscale filter to the currently selected layer of the
+   * currently selected image.
    */
   private void handleGreyscale() {
     if (!(this.currentImageName == null || this.currentLayerName == null)) {
-      String commandToExecute = "apply-mutator greyscale " + this.currentImageName + " " + this.currentLayerName;
+      String commandToExecute =
+          "apply-mutator greyscale " + this.currentImageName + " " + this.currentLayerName;
       this.controller.runCommands(commandToExecute);
       this.imagePanel.setImage(this.display.getImageRepresentation());
       SwingUtilities.updateComponentTreeUI(mainPanel);
@@ -289,7 +291,8 @@ public class GraphicalView extends JFrame implements View, ActionListener {
    */
   private void handleSepia() {
     if (!(this.currentImageName == null || this.currentLayerName == null)) {
-      String commandToExecute = "apply-mutator sepia " + this.currentImageName + " " + this.currentLayerName;
+      String commandToExecute =
+          "apply-mutator sepia " + this.currentImageName + " " + this.currentLayerName;
       this.controller.runCommands(commandToExecute);
       this.imagePanel.setImage(this.display.getImageRepresentation());
       SwingUtilities.updateComponentTreeUI(mainPanel);
@@ -330,8 +333,8 @@ public class GraphicalView extends JFrame implements View, ActionListener {
   }
 
   /**
-   * Handles a user request to load an existing image file as a new layer of the currently
-   * selected image.
+   * Handles a user request to load an existing image file as a new layer of the currently selected
+   * image.
    */
   private void handleLoadImageAsLayer() {
     final JFileChooser fChooser = new JFileChooser(".");
@@ -354,7 +357,7 @@ public class GraphicalView extends JFrame implements View, ActionListener {
    * Handles a user request to save the current layered image as a layered image file.
    */
   private void handleSaveFile() {
-    if (!(this.currentImageName == null)) {
+    if (this.currentImageName != null) {
       final JFileChooser fChooser = new JFileChooser(".");
       int retValue = fChooser.showSaveDialog(GraphicalView.this);
       if (retValue == JFileChooser.APPROVE_OPTION) {
@@ -373,10 +376,11 @@ public class GraphicalView extends JFrame implements View, ActionListener {
    * Handles a user request to export the currently selected image as an image file.
    */
   private void handleExportAsImage() {
-    if (!(this.currentImageName == null)) {
+    if (this.currentImageName != null) {
       String[] allBlendTypes = AbstractBlend.getBlendTypes();
       String blendType = allBlendTypes[JOptionPane.showOptionDialog(this, "Choose Blend Type",
-          "Blend Choices", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, allBlendTypes, allBlendTypes[0])];
+          "Blend Choices", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+          allBlendTypes, allBlendTypes[0])];
       final JFileChooser fChooser = new JFileChooser(".");
       int retValue = fChooser.showSaveDialog(GraphicalView.this);
       if (retValue == JFileChooser.APPROVE_OPTION) {
@@ -478,6 +482,7 @@ public class GraphicalView extends JFrame implements View, ActionListener {
    * Given an action event, will process it as a dynamic tab-selecting action: if it begins with
    * "Change Tab ", and then the name of a image currently existing within the model, this will set
    * the image currently being edited to that image and refresh layer buttons and menu items.
+   *
    * @param e The action event to be handled
    */
   private void handleTabCommand(ActionEvent e) {
@@ -508,8 +513,9 @@ public class GraphicalView extends JFrame implements View, ActionListener {
 
   /**
    * Given an action event, will process it as a dynamic method that does something to a currently
-   * existing layer. Currently handles selecting layers, moving them up or down, copying a particular
-   * layer, and showing or hiding individual layers.
+   * existing layer. Currently handles selecting layers, moving them up or down, copying a
+   * particular layer, and showing or hiding individual layers.
+   *
    * @param e The action event to be processed
    */
   private void handleLayerCommand(ActionEvent e) {
@@ -540,7 +546,8 @@ public class GraphicalView extends JFrame implements View, ActionListener {
       for (String layerName : display.getLayerNames()) {
         if (commandSecondPart.equals(layerName)) {
           if (counter != 0) {
-            String commandToExecute = "move-layer " + this.currentImageName + " " + layerName + " " + (counter - 1);
+            String commandToExecute =
+                "move-layer " + this.currentImageName + " " + layerName + " " + (counter - 1);
             this.controller.runCommands(commandToExecute);
             this.updateLayerButtons();
             this.imagePanel.setImage(this.display.getImageRepresentation());
@@ -562,7 +569,8 @@ public class GraphicalView extends JFrame implements View, ActionListener {
       for (String layerName : display.getLayerNames()) {
         if (commandSecondPart.equals(layerName)) {
           if (counter != display.getLayerNames().size() - 1) {
-            String commandToExecute = "move-layer " + this.currentImageName + " " + layerName + " " + (counter + 1);
+            String commandToExecute =
+                "move-layer " + this.currentImageName + " " + layerName + " " + (counter + 1);
             this.controller.runCommands(commandToExecute);
             this.updateLayerButtons();
             this.imagePanel.setImage(this.display.getImageRepresentation());
@@ -586,7 +594,8 @@ public class GraphicalView extends JFrame implements View, ActionListener {
           if (newLayer == null) {
             return;
           }
-          String commandToExecute = "copy-layer " + this.currentImageName + " " + newLayer + " " + layerName;
+          String commandToExecute =
+              "copy-layer " + this.currentImageName + " " + newLayer + " " + layerName;
           this.controller.runCommands(commandToExecute);
           this.updateLayerButtons();
           this.imagePanel.setImage(this.display.getImageRepresentation());
@@ -604,7 +613,8 @@ public class GraphicalView extends JFrame implements View, ActionListener {
       }
       for (String layerName : display.getLayerNames()) {
         if (commandSecondPart.equals(layerName)) {
-          String commandToExecute = "update-visibility " + this.currentImageName + " " + layerName + " true";
+          String commandToExecute =
+              "update-visibility " + this.currentImageName + " " + layerName + " true";
           this.controller.runCommands(commandToExecute);
           this.updateLayerButtons();
           this.imagePanel.setImage(this.display.getImageRepresentation());
@@ -622,7 +632,8 @@ public class GraphicalView extends JFrame implements View, ActionListener {
       }
       for (String layerName : display.getLayerNames()) {
         if (commandSecondPart.equals(layerName)) {
-          String commandToExecute = "update-visibility " + this.currentImageName + " " + layerName + " false";
+          String commandToExecute =
+              "update-visibility " + this.currentImageName + " " + layerName + " false";
           this.controller.runCommands(commandToExecute);
           this.updateLayerButtons();
           this.imagePanel.setImage(this.display.getImageRepresentation());
@@ -706,8 +717,8 @@ public class GraphicalView extends JFrame implements View, ActionListener {
   }
 
   /**
-   * Updates the image selection buttons so that they accurately represent the existing
-   * models within the controller.
+   * Updates the image selection buttons so that they accurately represent the existing models
+   * within the controller.
    */
   private void updateTabs() {
     this.tabs.removeAll();

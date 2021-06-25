@@ -3,9 +3,7 @@ package controller;
 import imageasgraph.GraphOfPixels;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
@@ -14,7 +12,7 @@ import layeredimage.ViewModel;
 import scriptlanguage.LanguageSyntax;
 import scriptlanguage.LanguageSyntaxImpl;
 import scriptlanguage.ParsedCommand;
-import view.TextErrorView;
+import view.ErrorView.TextErrorView;
 import view.View;
 
 /**
@@ -68,12 +66,14 @@ public class ProcessingController implements ImageProcessingController {
   }
 
   /**
-   * Creates a new constructor object.
-   * Throws an exception if this kind of controller is run. This controller is simply acting as a script handler rather than an information medium.
+   * Creates a new constructor object. Throws an exception if this kind of controller is run. This
+   * controller is simply acting as a script handler rather than an information medium.
+   *
    * @param view The interactive or text view for the program
-   * @throws IllegalArgumentException If view is null or if after construction this way, the controller is run
+   * @throws IllegalArgumentException If view is null or if after construction this way, the
+   *                                  controller is run
    */
-  public ProcessingController(View view) throws IllegalArgumentException{
+  public ProcessingController(View view) throws IllegalArgumentException {
     if (view == null) {
       throw new IllegalArgumentException("Null view provided");
     }
@@ -84,12 +84,14 @@ public class ProcessingController implements ImageProcessingController {
   }
 
   /**
-   * Creates a new constructor object.
-   * Throws an exception if this kind of controller is run. This controller is simply acting as a script handler rather than an information medium.
+   * Creates a new constructor object. Throws an exception if this kind of controller is run. This
+   * controller is simply acting as a script handler rather than an information medium.
+   *
    * @param view The interactive or text view for the program
-   * @throws IllegalArgumentException If view is null or if after construction this way, the controller is run
+   * @throws IllegalArgumentException If view is null or if after construction this way, the
+   *                                  controller is run
    */
-  public ProcessingController(View view, Readable in) throws IllegalArgumentException{
+  public ProcessingController(View view, Readable in) throws IllegalArgumentException {
     if (view == null) {
       throw new IllegalArgumentException("Null view provided");
     }
@@ -140,6 +142,7 @@ public class ProcessingController implements ImageProcessingController {
 
   /**
    * Given a scanner over a set of input, runs every command contained in that input.
+   *
    * @param scanner The scanner which is reading the input
    */
   private void runCommandsFromScanner(Scanner scanner) {

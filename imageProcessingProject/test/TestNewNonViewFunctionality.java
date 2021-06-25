@@ -11,44 +11,55 @@ import layeredimage.LayeredImageV0;
 import layeredimage.ViewModel;
 import layeredimage.blend.AbstractBlend;
 import org.junit.Test;
-import view.TextErrorView;
+import view.ErrorView.TextErrorView;
 
+/**
+ * Tests new functionality added to our program that are not directly related to View.
+ */
 public class TestNewNonViewFunctionality {
 
   @Test
   public void testGetLayeredImageNames() {
-    ImageProcessingController testController = new ProcessingController(new InputStreamReader(System.in), System.out);
+    ImageProcessingController testController = new ProcessingController(
+        new InputStreamReader(System.in), System.out);
     assertEquals(new ArrayList<String>(), testController.getLayeredImageNames());
     testController.runCommands("create-layered-image im0 5 5");
-    assertEquals(new ArrayList<String>(Arrays.asList("im0")), testController.getLayeredImageNames());
+    assertEquals(new ArrayList<String>(Arrays.asList("im0")),
+        testController.getLayeredImageNames());
     testController.runCommands("create-layered-image im1 5 5");
-    assertEquals(new ArrayList<String>(Arrays.asList("im1", "im0")), testController.getLayeredImageNames());
+    assertEquals(new ArrayList<String>(Arrays.asList("im1", "im0")),
+        testController.getLayeredImageNames());
     testController.runCommands("create-image empty im2");
-    assertEquals(new ArrayList<String>(Arrays.asList("im1", "im0")), testController.getLayeredImageNames());
+    assertEquals(new ArrayList<String>(Arrays.asList("im1", "im0")),
+        testController.getLayeredImageNames());
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testGetReferenceToImageNullInput() {
-    ImageProcessingController testController = new ProcessingController(new InputStreamReader(System.in), System.out);
+    ImageProcessingController testController = new ProcessingController(
+        new InputStreamReader(System.in), System.out);
     testController.getReferenceToImage(null);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testGetReferenceToImageNonexistentImage() {
-    ImageProcessingController testController = new ProcessingController(new InputStreamReader(System.in), System.out);
+    ImageProcessingController testController = new ProcessingController(
+        new InputStreamReader(System.in), System.out);
     testController.getReferenceToImage("Yo");
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testGetReferenceToWrongTypeOfImage() {
-    ImageProcessingController testController = new ProcessingController(new InputStreamReader(System.in), System.out);
+    ImageProcessingController testController = new ProcessingController(
+        new InputStreamReader(System.in), System.out);
     testController.runCommands("create-image empty im2");
     testController.getReferenceToImage("im2");
   }
 
   @Test
   public void testGetReferenceToImage() {
-    ImageProcessingController testController = new ProcessingController(new InputStreamReader(System.in), System.out);
+    ImageProcessingController testController = new ProcessingController(
+        new InputStreamReader(System.in), System.out);
     testController.runCommands("create-layered-image im0 5 5");
     testController.runCommands("add-layer im0 l0");
     ViewModel forTesting = testController.getReferenceToImage("im0");
@@ -56,7 +67,8 @@ public class TestNewNonViewFunctionality {
     BufferedImage imageCopy = new BufferedImage(5, 5, BufferedImage.TYPE_INT_ARGB);
     for (int row = 0; row < 5; row += 1) {
       for (int col = 0; col < 5; col += 1) {
-        assertEquals(imageCopy.getRGB(row, col), forTesting.getImageRepresentation().getRGB(row, col));
+        assertEquals(imageCopy.getRGB(row, col),
+            forTesting.getImageRepresentation().getRGB(row, col));
       }
     }
   }
@@ -116,17 +128,27 @@ public class TestNewNonViewFunctionality {
 
   @Test
   public void testRunCommand() {
-    ImageProcessingController testController = new ProcessingController(new InputStreamReader(System.in), System.out);
+    ImageProcessingController testController = new ProcessingController(
+        new InputStreamReader(System.in), System.out);
     assertEquals(new ArrayList<String>(), testController.getLayeredImageNames());
     testController.runCommands("create-layered-image im0 5 5");
-    assertEquals(new ArrayList<String>(Arrays.asList("im0")), testController.getLayeredImageNames());
-    assertEquals(new ArrayList<String>(), testController.getReferenceToImage("im0").getLayerNames());
+    assertEquals(new ArrayList<String>(Arrays.asList("im0")),
+        testController.getLayeredImageNames());
+    assertEquals(new ArrayList<String>(),
+        testController.getReferenceToImage("im0").getLayerNames());
     testController.runCommands("create-layered-image im1 outputImages/exampleLayeredImage");
-    assertEquals(new ArrayList<String>(Arrays.asList("im1", "im0")), testController.getLayeredImageNames());
-    assertEquals(new ArrayList<String>(Arrays.asList("invisible-layer", "blue-layer", "red-layer")), testController.getReferenceToImage("im1").getLayerNames());
-    testController.runCommands("add-layer im1 newLayer\nadd-layer im0 first\nupdate-color im0 first 0 0 255 255 255 255");
-    assertEquals(new ArrayList<String>(Arrays.asList("newLayer", "invisible-layer", "blue-layer", "red-layer")), testController.getReferenceToImage("im1").getLayerNames());
-    assertEquals(new ArrayList<String>(Arrays.asList("first")), testController.getReferenceToImage("im0").getLayerNames());
-    assertEquals(255 << 24 | 255 << 16 | 255 << 8 | 255, testController.getReferenceToImage("im0").getImageRepresentation().getRGB(0,0));
+    assertEquals(new ArrayList<String>(Arrays.asList("im1", "im0")),
+        testController.getLayeredImageNames());
+    assertEquals(new ArrayList<String>(Arrays.asList("invisible-layer", "blue-layer", "red-layer")),
+        testController.getReferenceToImage("im1").getLayerNames());
+    testController.runCommands(
+        "add-layer im1 newLayer\nadd-layer im0 first\nupdate-color im0 first 0 0 255 255 255 255");
+    assertEquals(new ArrayList<String>(
+            Arrays.asList("newLayer", "invisible-layer", "blue-layer", "red-layer")),
+        testController.getReferenceToImage("im1").getLayerNames());
+    assertEquals(new ArrayList<String>(Arrays.asList("first")),
+        testController.getReferenceToImage("im0").getLayerNames());
+    assertEquals(255 << 24 | 255 << 16 | 255 << 8 | 255,
+        testController.getReferenceToImage("im0").getImageRepresentation().getRGB(0, 0));
   }
 }

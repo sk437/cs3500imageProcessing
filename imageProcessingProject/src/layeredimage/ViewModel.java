@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Represents shared features between the Views and the Model.
  */
-public interface ViewModel extends Iterable<FixedSizeGraph>{
+public interface ViewModel extends Iterable<FixedSizeGraph> {
 
   /**
    * Returns a list of all the layer names in this image, in order from top to bottom.
@@ -16,10 +16,11 @@ public interface ViewModel extends Iterable<FixedSizeGraph>{
    */
   List<String> getLayerNames();
 
-  /** TODO MAKE THIS DECENT
-   * Returns a buffered image that represents this layered image blended together in a basic
-   * manner.
-   * @return The bufferedImage representation
+  /**
+   * Returns a buffered image that represents this layered image blended together in a basic manner
+   * to be displayed in a GUI.
+   *
+   * @return The conversion of the blended layers from a graph of pixels to a BufferedImage
    */
   BufferedImage getImageRepresentation();
 }

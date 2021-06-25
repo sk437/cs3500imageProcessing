@@ -1,2 +1,0 @@
-create-layered-image test1 outputImages/testSaveLayered
-remove-layer test1 firstLayer

@@ -1,0 +1,76 @@
+USEGUI
+Project Creators: Marko Krstulovic and Kyle Sacks
+
+- Loading Images:
+ | - Click on the File Menu > Click Load > User is prompted to select directory to load via FileOpener > Click OK
+
+- Saving As Layered Image:
+ | - Click on the File Menu > Click Save > User is prompted to navigate to desired directory to save to >
+     Enter desired FileName > Click OK
+
+- Exporting Layered Image as Single Image Via Blending:
+ | - Click on the File Menu > Click Export > Choose one of Displayed Blend Methods > 
+     User is prompted to navigate to desired directory to save to > Enter desired FileName > Click OK
+
+- Executing a Script:
+ | - Click on the File Menu > Click Execute > User is prompted to select script text file to execute via FileOpener > Click OK
+
+-Applying a Mutator:
+ | - NOTE: Ensure an Image is Loaded and a Layer is Selected
+ | - Click on Edit Menu > Mouse over expandable Apply Mutator Submenu > Select Desired Mutator and Click
+ | - Click one of the apply mutator buttons on the left panel: Blur/Sharpen/Greyscale/Sepia
+
+- Adding Empty Layers to Layered Image:
+ | - NOTE: Ensure an Image is Loaded
+ | - Click on Layer Menu > Click New Layer > User is prompted to enter UNIQUE name for new layer > Click OK
+ | - Click on New Layer Button on the Right Panel > User is prompted to enter UNIQUE name for new layer > Click OK
+
+- Loading Image as Layer:
+ | - NOTE: Ensure an Image is Loaded
+ | - Click on Layer Menu > Click Load Image > User is prompted to select image to load via FileOpener >
+ |   User is prompted to enter UNIQUE name for new layer > Click OK
+ | - Click on Load Image Button on the Right Panel > User is prompted to select image to load via FileOpener >
+     User is prompted to enter UNIQUE name for new layer > Click OK
+
+- Save Current Layer as Image:
+ | - NOTE: Ensure an Image is Loaded and a Layer is Selected
+ | - Click on Layer Menu > Click Save Current Layer > User is prompted to select save location to save to > Click OK
+ | - Click on Save Current Button on the Right Panel > User is prompted to select save location to save to > Click OK
+
+DYNAMIC LAYER OPERATIONS:
+
+- Set Current Layer:
+ | - NOTE: Ensure an Image is Loaded
+ | - Click Layer Menu > Mouse over desired layer's submenu > Click Set as Current
+ | - Click radio button next to desired layer name in right panel
+
+- Moving layer towards Top of View:
+ | - NOTE: Ensure an Image is Loaded
+ | - Click Layer Menu > Mouse over desired layer's submenu > Click Move Up
+ | - Click up facing arrow button next to desired layer name in right panel
+
+- Moving layer towards Bottom of View:
+ | - NOTE: Ensure an Image is Loaded
+ | - Click Layer Menu > Mouse over desired layer's submenu > Click Move Down
+ | - Click down facing arrow button next to desired layer name in right panel
+
+- Making new layer as copy of existing layer:
+ | - NOTE: Ensure an Image is Loaded
+ | - Click Layer Menu > Mouse over desired layer's submenu > Click Copy > 
+ |   User is prompter to enter UNIQUE name for new layer > Click OK
+ | - Click Copy button next to desired layer name in right panel > User is prompter to enter UNIQUE name for new layer > Click OK
+
+- Enabling Layer Visibility:
+ | - NOTE: Ensure an Image is Loaded
+ | - Click Layer Menu > Mouse over desired layer's submenu > Click Show
+ | - Click Show button next to desired layer name in right panel
+
+- Disabling Layer Visibility:
+ | - NOTE: Ensure an Image is Loaded
+ | - Click Layer Menu > Mouse over desired layer's submenu > Click Hide
+ | - Click Hide button next to desired layer name in right panel
+
+TABS:
+
+- Changing Layered Image Being Processed: 
+ | - Click on Current Images Menu > Click on desired Layered Image in drop-down

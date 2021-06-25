@@ -1,8 +1,6 @@
 package scriptlanguage;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import scriptlanguage.ParsedCommand.AddImageLayerCommand;
 import scriptlanguage.ParsedCommand.AddLayerCommand;
@@ -88,6 +86,8 @@ public enum Command {
             List<Integer> intInputs = Command.convertIntegerInputs(1, 3, inputs);
             return new CreateNewLayeredImageCommand(inputs.get(0), intInputs.get(0),
                 intInputs.get(1));
+          } else {
+            throw new IllegalArgumentException("Non-integer arguments given");
           }
         default:
           throw new IllegalArgumentException(" Invalid number of inputs");
@@ -214,11 +214,14 @@ public enum Command {
             throw new IllegalArgumentException("This command cannot be called with the given amount"
                 + " of inputs, because there is no default image");
           }
-          return new SaveCommand(currentImage, currentLayer, inputs.get(0), Command.decode(inputs.get(1)));
+          return new SaveCommand(currentImage, currentLayer, inputs.get(0),
+              Command.decode(inputs.get(1)));
         case 3:
-          return new SaveCommand(inputs.get(0), currentLayer, inputs.get(1), Command.decode(inputs.get(2)));
+          return new SaveCommand(inputs.get(0), currentLayer, inputs.get(1),
+              Command.decode(inputs.get(2)));
         case 4:
-          return new SaveCommand(inputs.get(0), inputs.get(1), inputs.get(2), Command.decode(inputs.get(3)));
+          return new SaveCommand(inputs.get(0), inputs.get(1), inputs.get(2),
+              Command.decode(inputs.get(3)));
         default:
           throw new IllegalArgumentException("Invalid number of inputs");
       }
@@ -372,12 +375,14 @@ public enum Command {
                   "This command cannot be called with the given amount"
                       + " of inputs, because there is no default image");
             }
-            return new BasicBlendCommand(currentImage, inputs.get(1), Command.decode(inputs.get(2)));
+            return new BasicBlendCommand(currentImage, inputs.get(1),
+                Command.decode(inputs.get(2)));
           }
           throw new IllegalArgumentException("Unsupported blend type");
         case 4:
           if ("basic".equals(inputs.get(1))) {
-            return new BasicBlendCommand(inputs.get(0), inputs.get(2), Command.decode(inputs.get(3)));
+            return new BasicBlendCommand(inputs.get(0), inputs.get(2),
+                Command.decode(inputs.get(3)));
           }
           throw new IllegalArgumentException("Unsupported blend type");
         default:
@@ -511,6 +516,7 @@ public enum Command {
 
   /**
    * Given a string, returns true if it can be parsed into an integer.
+   *
    * @param toTest The string to be tested
    * @return If the string can become an integer
    * @throws IllegalArgumentException If given a null String
@@ -530,6 +536,7 @@ public enum Command {
   /**
    * Replaces all spaces coded as >, which was done to avoid splitting file names with spaces as
    * multiple arguments, with the space key they were supposed to be.
+   *
    * @param toDecode The string to have it's elements replaced
    * @return The string with specified elements replaced
    */

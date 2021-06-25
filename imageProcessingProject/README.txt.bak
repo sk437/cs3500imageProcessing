@@ -213,17 +213,9 @@ Past Model Changes:
 - Added support for more file types
 - Added new read and write image file support
 Current Additions:
-- Added a new View interface to handle more dynamic representations of the program.
-- Added a ViewModel interface to provide to the View information without allowing it to mutate any of it.
-- Added new controller constructors to accomodate for different views, as we decided the controller was applicable to all View, but needed to be constructed differently to handle input and output differences.
-  | - Added a method to the controller to handle running many given commands, so that the state of the models in the controller might be preserved between being passed different commands.
-- Added a CommandLineTextView that allows for interactive scripting with System.in and System.out.
-- Added a GUI view for users to be able to handle image processing in a visual manner. This interacts with the controller by sending it string commands to be parsed by our LanguageSyntax package. 
-  | - This has already been set up through the controller in order to handle such scripting.
 - Added methods to Blend in order to provide access to blend type names for GUI so that GUI does not have to be changed when a new blend type is added to offer that blend type.
-- Added methods to get visual representations of images without saving them to allow for previewing by the GUI.
-- Added methods to handle spaces in file paths in order to not interrupt parsing of varied length commands.
-  | - NOTE: IN SCRIPT COMMANDS GIVEN, SPACES IN FILE NAMES SHOULD HENCEFORTH BE REPRESENTED WITH ">". THIS WILL BE REPLACED BY OUR SCRIPT HANDLER.
+- 
+- 
 
 ASSUMPTIONS:
 - Left space open for possibly resizing the images.

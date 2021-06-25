@@ -14,9 +14,6 @@ If both arguments are provided, they will be used in this described order.
 NOTE:
 For commands with only (@ImageName): If image name is not specified, program will use currently loaded image name.
 
-NOTE:
-WHEN ENTERING FILE PATH, IF THERE IS A SPACE IN THE FILE NAME OR PATH, REPLACE SPACE WITH ">". THIS IS DONE SO AS TO NOT INTERRUPT PARSING.
-
 
 
 create-image @ImageName @ImageType [ @Arg0 @Arg1 ... @ArgN ]

@@ -1,6 +1,5 @@
 package view;
 
-import controller.ImageProcessingController;
 import controller.ProcessingController;
 import java.io.IOException;
 import java.io.InputStreamReader;

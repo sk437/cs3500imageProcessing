@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 import layeredimage.blend.BasicBlend;
@@ -365,5 +366,138 @@ public class LayeredImageV0 implements LayeredImage {
   @Override
   public Iterator<FixedSizeGraph> iterator() {
     return new LayeredImageIterator(this.layers);
+  }
+
+  /**
+   * Represents an iterator that iterates through all the layers of a LayeredImage, in their order
+   * as described by their positions.
+   */
+  public static class LayeredImageIterator implements Iterator<FixedSizeGraph> {
+
+    private final List<FixedSizeGraph> layers;
+
+    /**
+     * Creates a new LayeredImageIterator over the layers provided.
+     *
+     * @param layers The layers to be iterated over
+     */
+    public LayeredImageIterator(HashMap<String, LayerData> layers) {
+      if (layers == null) {
+        throw new IllegalArgumentException("Null layers");
+      }
+      FixedSizeGraph[] layerArray = new FixedSizeGraph[layers.size()];
+      for (LayerData info : layers.values()) {
+        layerArray[info.getPos()] = info.getImage();
+      }
+      this.layers = new LinkedList<FixedSizeGraph>(Arrays.asList(layerArray));
+    }
+
+    @Override
+    public boolean hasNext() {
+      return this.layers.size() > 0;
+    }
+
+    @Override
+    public FixedSizeGraph next() {
+      if (!this.hasNext()) {
+        throw new IllegalArgumentException("No more items");
+      }
+      return layers.remove(0);
+    }
+  }
+
+  /**
+   * Stores information about a layer - it's actual image, it's position in a layered image, and
+   * whether or not it is visible.
+   */
+  static class LayerData {
+
+    private final FixedSizeGraph image;
+    private int pos;
+    private boolean visibility;
+
+    /**
+     * Constructs a new LayerData about the given image, at the given position, that is initially
+     * visible.
+     *
+     * @param image The image this LayerData represents
+     * @param pos   The position of that image in a Layered Image
+     * @throws IllegalArgumentException If the given image is null
+     */
+    LayerData(FixedSizeGraph image, int pos) throws IllegalArgumentException {
+      if (image == null) {
+        throw new IllegalArgumentException("Null image");
+      }
+      this.image = image;
+      this.pos = pos;
+      this.visibility = true;
+    }
+
+
+    /**
+     * Constructs a new LayerData about the given image, at the given position, with the given
+     * visibility.
+     *
+     * @param image      The image this LayerData represents
+     * @param pos        The position of that image in a Layered Image
+     * @param visibility The visibility of the image
+     * @throws IllegalArgumentException If the given image is null
+     */
+    LayerData(FixedSizeGraph image, int pos, boolean visibility) throws IllegalArgumentException {
+      if (image == null) {
+        throw new IllegalArgumentException("Null image");
+      }
+      this.image = image;
+      this.pos = pos;
+      this.visibility = visibility;
+    }
+
+    /**
+     * Returns a reference to the image of this layer.
+     *
+     * @return The image of this layer
+     */
+    FixedSizeGraph getImage() {
+      return this.image;
+    }
+
+    /**
+     * Returns the position of this layer in it's LayeredImage.
+     *
+     * @return The position of this layer
+     */
+    int getPos() {
+      return this.pos;
+    }
+
+    /**
+     * Returns whether or not this is a visible layer.
+     *
+     * @return The visibility of this layer
+     */
+    boolean getVisibility() {
+      return this.visibility;
+    }
+
+    /**
+     * Sets the position of this image to the given one, that given position should be valid for
+     * it's layered image.
+     *
+     * @param newPos The new position
+     */
+    void setPos(int newPos) {
+      this.pos = newPos;
+    }
+
+    /**
+     * Sets the visibility of this image to the given boolean.
+     *
+     * @param newVisibility The new visibility for this image.
+     */
+    void setVisibility(boolean newVisibility) {
+      this.visibility = newVisibility;
+    }
+
+
   }
 }
