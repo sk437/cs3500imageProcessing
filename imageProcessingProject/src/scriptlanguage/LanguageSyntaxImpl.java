@@ -3,6 +3,7 @@ package scriptlanguage;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Defines the language which parses commands given by an input script, and executes the command
@@ -10,7 +11,7 @@ import java.util.HashMap;
  */
 public class LanguageSyntaxImpl implements LanguageSyntax {
 
-  private static final HashMap<String, Command> commands;
+  private static final Map<String, Command> commands;
   private String currentImage = null;
   private String currentLayer = null;
 

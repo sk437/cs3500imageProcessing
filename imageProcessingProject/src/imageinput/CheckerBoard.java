@@ -1,6 +1,7 @@
 package imageinput;
 
 import java.util.ArrayList;
+import java.util.List;
 import pixel.PixelAsColors;
 
 /**
@@ -10,7 +11,7 @@ import pixel.PixelAsColors;
 public class CheckerBoard implements ImageProgram {
 
 
-  private ArrayList<ArrayList<PixelAsColors>> img;
+  private List<ArrayList<PixelAsColors>> img;
 
   /**
    * Throws an exception if the given integer is not a perfect square.
@@ -94,7 +95,7 @@ public class CheckerBoard implements ImageProgram {
   }
 
   @Override
-  public ArrayList<ArrayList<PixelAsColors>> getImage() {
+  public List<ArrayList<PixelAsColors>> getImage() {
     return this.img;
   }
 }

@@ -1,6 +1,7 @@
 package mutators.matrices;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a matrix of double values.
@@ -10,7 +11,7 @@ public class MatrixImpl implements Matrix {
 
   private final int width;
   private final int height;
-  private final ArrayList<Double> values;
+  private final List<Double> values;
 
   /**
    * Constructs a new matrix, of dimensions width by height and with the values of the given array

@@ -128,7 +128,7 @@ public class PreviousTesting {
       PixelAsColors red = new SimplePixel(255, 0, 0);
       PixelAsColors black = new SimplePixel(0, 0, 0);
       ImageProgram c0 = new CheckerBoard(4, 4, red, black);
-      ArrayList<ArrayList<PixelAsColors>> cArray = c0.getImage();
+      List<ArrayList<PixelAsColors>> cArray = c0.getImage();
       assertEquals(red, cArray.get(0).get(0));
       assertEquals(red, cArray.get(0).get(1));
       assertEquals(red, cArray.get(0).get(2));

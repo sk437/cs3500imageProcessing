@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
 import javax.imageio.ImageIO;
 import pixel.PixelAsColors;
@@ -261,7 +262,7 @@ public class ImageToGraphConverter {
    *                                  arrays are null, or if any pixels are null.
    */
   private static GraphOfPixels convertFromDoubleArray(
-      ArrayList<ArrayList<PixelAsColors>> toConvert) {
+      List<ArrayList<PixelAsColors>> toConvert) {
     if (toConvert == null) {
       throw new IllegalArgumentException("Null input");
     }

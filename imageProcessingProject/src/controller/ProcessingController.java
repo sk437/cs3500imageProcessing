@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import layeredimage.LayeredImage;
 import layeredimage.ViewModel;
@@ -22,8 +23,8 @@ public class ProcessingController implements ImageProcessingController {
 
   private final View view;
   private final Readable input;
-  private final HashMap<String, GraphOfPixels> singleImages;
-  private final HashMap<String, LayeredImage> layeredImages;
+  private final Map<String, GraphOfPixels> singleImages;
+  private final Map<String, LayeredImage> layeredImages;
 
   /**
    * Creates a controller instance using a readable input.

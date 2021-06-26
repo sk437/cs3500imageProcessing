@@ -5,6 +5,7 @@ import imageasgraph.ImageToGraphConverter;
 import imageasgraph.OutputType;
 import imageinput.CheckerBoard;
 import java.util.HashMap;
+import java.util.Map;
 import layeredimage.LayeredImage;
 import layeredimage.LayeredImageV0;
 import layeredimage.blend.BasicBlend;
@@ -28,7 +29,7 @@ public interface ParsedCommand {
    * @throws IllegalArgumentException If given null inputs, or if the command cannot be executed
    *                                  properly
    */
-  void execute(HashMap<String, GraphOfPixels> graphs, HashMap<String, LayeredImage> layeredImages)
+  void execute(Map<String, GraphOfPixels> graphs, Map<String, LayeredImage> layeredImages)
       throws IllegalArgumentException;
 
   /**
@@ -71,8 +72,8 @@ public interface ParsedCommand {
     }
 
     @Override
-    public void execute(HashMap<String, GraphOfPixels> graphs,
-        HashMap<String, LayeredImage> layeredImages) throws IllegalArgumentException {
+    public void execute(Map<String, GraphOfPixels> graphs,
+        Map<String, LayeredImage> layeredImages) throws IllegalArgumentException {
       if (graphs == null || layeredImages == null) {
         throw new IllegalArgumentException("Null inputs");
       }
@@ -135,8 +136,8 @@ public interface ParsedCommand {
     }
 
     @Override
-    public void execute(HashMap<String, GraphOfPixels> graphs,
-        HashMap<String, LayeredImage> layeredImages) throws IllegalArgumentException {
+    public void execute(Map<String, GraphOfPixels> graphs,
+        Map<String, LayeredImage> layeredImages) throws IllegalArgumentException {
       if (graphs == null || layeredImages == null) {
         throw new IllegalArgumentException("Null inputs");
       }
@@ -183,8 +184,8 @@ public interface ParsedCommand {
     }
 
     @Override
-    public void execute(HashMap<String, GraphOfPixels> graphs,
-        HashMap<String, LayeredImage> layeredImages) throws IllegalArgumentException {
+    public void execute(Map<String, GraphOfPixels> graphs,
+        Map<String, LayeredImage> layeredImages) throws IllegalArgumentException {
       if (graphs == null || layeredImages == null) {
         throw new IllegalArgumentException("Null inputs");
       }
@@ -240,8 +241,8 @@ public interface ParsedCommand {
     }
 
     @Override
-    public void execute(HashMap<String, GraphOfPixels> graphs,
-        HashMap<String, LayeredImage> layeredImages) throws IllegalArgumentException {
+    public void execute(Map<String, GraphOfPixels> graphs,
+        Map<String, LayeredImage> layeredImages) throws IllegalArgumentException {
       if (graphs == null || layeredImages == null) {
         throw new IllegalArgumentException("Null inputs");
       }
@@ -293,8 +294,8 @@ public interface ParsedCommand {
     }
 
     @Override
-    public void execute(HashMap<String, GraphOfPixels> graphs,
-        HashMap<String, LayeredImage> layeredImages) throws IllegalArgumentException {
+    public void execute(Map<String, GraphOfPixels> graphs,
+        Map<String, LayeredImage> layeredImages) throws IllegalArgumentException {
       if (graphs == null || layeredImages == null) {
         throw new IllegalArgumentException("Null inputs");
       }
@@ -343,8 +344,8 @@ public interface ParsedCommand {
     }
 
     @Override
-    public void execute(HashMap<String, GraphOfPixels> graphs,
-        HashMap<String, LayeredImage> layeredImages) throws IllegalArgumentException {
+    public void execute(Map<String, GraphOfPixels> graphs,
+        Map<String, LayeredImage> layeredImages) throws IllegalArgumentException {
       if (graphs == null || layeredImages == null) {
         throw new IllegalArgumentException("Null inputs");
       }
@@ -382,8 +383,8 @@ public interface ParsedCommand {
     }
 
     @Override
-    public void execute(HashMap<String, GraphOfPixels> graphs,
-        HashMap<String, LayeredImage> layeredImages) throws IllegalArgumentException {
+    public void execute(Map<String, GraphOfPixels> graphs,
+        Map<String, LayeredImage> layeredImages) throws IllegalArgumentException {
       if (graphs == null || layeredImages == null) {
         throw new IllegalArgumentException("Null inputs");
       }
@@ -422,8 +423,8 @@ public interface ParsedCommand {
     }
 
     @Override
-    public void execute(HashMap<String, GraphOfPixels> graphs,
-        HashMap<String, LayeredImage> layeredImages) throws IllegalArgumentException {
+    public void execute(Map<String, GraphOfPixels> graphs,
+        Map<String, LayeredImage> layeredImages) throws IllegalArgumentException {
       if (graphs == null || layeredImages == null) {
         throw new IllegalArgumentException("Null inputs");
       }
@@ -466,8 +467,8 @@ public interface ParsedCommand {
     }
 
     @Override
-    public void execute(HashMap<String, GraphOfPixels> graphs,
-        HashMap<String, LayeredImage> layeredImages) throws IllegalArgumentException {
+    public void execute(Map<String, GraphOfPixels> graphs,
+        Map<String, LayeredImage> layeredImages) throws IllegalArgumentException {
       if (graphs == null || layeredImages == null) {
         throw new IllegalArgumentException("Null inputs");
       }
@@ -514,8 +515,8 @@ public interface ParsedCommand {
     }
 
     @Override
-    public void execute(HashMap<String, GraphOfPixels> graphs,
-        HashMap<String, LayeredImage> layeredImages) throws IllegalArgumentException {
+    public void execute(Map<String, GraphOfPixels> graphs,
+        Map<String, LayeredImage> layeredImages) throws IllegalArgumentException {
       if (graphs == null || layeredImages == null) {
         throw new IllegalArgumentException("Null inputs");
       }
@@ -561,8 +562,8 @@ public interface ParsedCommand {
     }
 
     @Override
-    public void execute(HashMap<String, GraphOfPixels> graphs,
-        HashMap<String, LayeredImage> layeredImages) throws IllegalArgumentException {
+    public void execute(Map<String, GraphOfPixels> graphs,
+        Map<String, LayeredImage> layeredImages) throws IllegalArgumentException {
       if (graphs == null || layeredImages == null) {
         throw new IllegalArgumentException("Null inputs");
       }
@@ -607,8 +608,8 @@ public interface ParsedCommand {
     }
 
     @Override
-    public void execute(HashMap<String, GraphOfPixels> graphs,
-        HashMap<String, LayeredImage> layeredImages) throws IllegalArgumentException {
+    public void execute(Map<String, GraphOfPixels> graphs,
+        Map<String, LayeredImage> layeredImages) throws IllegalArgumentException {
       if (graphs == null || layeredImages == null) {
         throw new IllegalArgumentException("Null inputs");
       }
@@ -650,8 +651,8 @@ public interface ParsedCommand {
     }
 
     @Override
-    public void execute(HashMap<String, GraphOfPixels> graphs,
-        HashMap<String, LayeredImage> layeredImages) throws IllegalArgumentException {
+    public void execute(Map<String, GraphOfPixels> graphs,
+        Map<String, LayeredImage> layeredImages) throws IllegalArgumentException {
       if (graphs == null || layeredImages == null) {
         throw new IllegalArgumentException("Null inputs");
       }
@@ -694,8 +695,8 @@ public interface ParsedCommand {
     }
 
     @Override
-    public void execute(HashMap<String, GraphOfPixels> graphs,
-        HashMap<String, LayeredImage> layeredImages) throws IllegalArgumentException {
+    public void execute(Map<String, GraphOfPixels> graphs,
+        Map<String, LayeredImage> layeredImages) throws IllegalArgumentException {
       if (graphs == null || layeredImages == null) {
         throw new IllegalArgumentException("Null inputs");
       }
@@ -753,8 +754,8 @@ public interface ParsedCommand {
     }
 
     @Override
-    public void execute(HashMap<String, GraphOfPixels> graphs,
-        HashMap<String, LayeredImage> layeredImages) throws IllegalArgumentException {
+    public void execute(Map<String, GraphOfPixels> graphs,
+        Map<String, LayeredImage> layeredImages) throws IllegalArgumentException {
       if (graphs == null || layeredImages == null) {
         throw new IllegalArgumentException("Null inputs");
       }
@@ -803,8 +804,8 @@ public interface ParsedCommand {
     }
 
     @Override
-    public void execute(HashMap<String, GraphOfPixels> graphs,
-        HashMap<String, LayeredImage> layeredImages) throws IllegalArgumentException {
+    public void execute(Map<String, GraphOfPixels> graphs,
+        Map<String, LayeredImage> layeredImages) throws IllegalArgumentException {
       if (graphs == null || layeredImages == null) {
         throw new IllegalArgumentException("Null inputs");
       }
@@ -854,8 +855,8 @@ public interface ParsedCommand {
     }
 
     @Override
-    public void execute(HashMap<String, GraphOfPixels> graphs,
-        HashMap<String, LayeredImage> layeredImages) throws IllegalArgumentException {
+    public void execute(Map<String, GraphOfPixels> graphs,
+        Map<String, LayeredImage> layeredImages) throws IllegalArgumentException {
       if (graphs == null || layeredImages == null) {
         throw new IllegalArgumentException("Null inputs");
       }
@@ -904,8 +905,8 @@ public interface ParsedCommand {
     }
 
     @Override
-    public void execute(HashMap<String, GraphOfPixels> graphs,
-        HashMap<String, LayeredImage> layeredImages) throws IllegalArgumentException {
+    public void execute(Map<String, GraphOfPixels> graphs,
+        Map<String, LayeredImage> layeredImages) throws IllegalArgumentException {
       if (graphs == null || layeredImages == null) {
         throw new IllegalArgumentException("Null inputs");
       }
@@ -957,8 +958,8 @@ public interface ParsedCommand {
     }
 
     @Override
-    public void execute(HashMap<String, GraphOfPixels> graphs,
-        HashMap<String, LayeredImage> layeredImages) throws IllegalArgumentException {
+    public void execute(Map<String, GraphOfPixels> graphs,
+        Map<String, LayeredImage> layeredImages) throws IllegalArgumentException {
       if (graphs == null || layeredImages == null) {
         throw new IllegalArgumentException("Null inputs");
       }
@@ -1003,8 +1004,8 @@ public interface ParsedCommand {
     }
 
     @Override
-    public void execute(HashMap<String, GraphOfPixels> graphs,
-        HashMap<String, LayeredImage> layeredImages) throws IllegalArgumentException {
+    public void execute(Map<String, GraphOfPixels> graphs,
+        Map<String, LayeredImage> layeredImages) throws IllegalArgumentException {
       if (graphs == null || layeredImages == null) {
         throw new IllegalArgumentException("Null inputs");
       }
@@ -1052,8 +1053,8 @@ public interface ParsedCommand {
     }
 
     @Override
-    public void execute(HashMap<String, GraphOfPixels> graphs,
-        HashMap<String, LayeredImage> layeredImages) throws IllegalArgumentException {
+    public void execute(Map<String, GraphOfPixels> graphs,
+        Map<String, LayeredImage> layeredImages) throws IllegalArgumentException {
       if (graphs == null || layeredImages == null) {
         throw new IllegalArgumentException("Null inputs");
       }
@@ -1107,8 +1108,8 @@ public interface ParsedCommand {
     }
 
     @Override
-    public void execute(HashMap<String, GraphOfPixels> graphs,
-        HashMap<String, LayeredImage> layeredImages) throws IllegalArgumentException {
+    public void execute(Map<String, GraphOfPixels> graphs,
+        Map<String, LayeredImage> layeredImages) throws IllegalArgumentException {
       if (graphs == null || layeredImages == null) {
         throw new IllegalArgumentException("Null inputs");
       }
@@ -1164,8 +1165,8 @@ public interface ParsedCommand {
     }
 
     @Override
-    public void execute(HashMap<String, GraphOfPixels> graphs,
-        HashMap<String, LayeredImage> layeredImages) throws IllegalArgumentException {
+    public void execute(Map<String, GraphOfPixels> graphs,
+        Map<String, LayeredImage> layeredImages) throws IllegalArgumentException {
       if (graphs == null || layeredImages == null) {
         throw new IllegalArgumentException("Null inputs");
       }

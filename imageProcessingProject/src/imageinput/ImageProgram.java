@@ -1,6 +1,7 @@
 package imageinput;
 
 import java.util.ArrayList;
+import java.util.List;
 import pixel.PixelAsColors;
 
 /**
@@ -16,5 +17,5 @@ public interface ImageProgram {
    *
    * @return the representation of this generated image as pixels
    */
-  ArrayList<ArrayList<PixelAsColors>> getImage();
+  List<ArrayList<PixelAsColors>> getImage();
 }

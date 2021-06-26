@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import layeredimage.blend.BasicBlend;
 import layeredimage.blend.Blend;
@@ -31,7 +32,7 @@ import layeredimage.blend.Blend;
  */
 public class LayeredImageV0 implements LayeredImage {
 
-  protected final HashMap<String, LayerData> layers;
+  protected final Map<String, LayerData> layers;
   protected final int width;
   protected final int height;
 
@@ -381,7 +382,7 @@ public class LayeredImageV0 implements LayeredImage {
      *
      * @param layers The layers to be iterated over
      */
-    public LayeredImageIterator(HashMap<String, LayerData> layers) {
+    public LayeredImageIterator(Map<String, LayerData> layers) {
       if (layers == null) {
         throw new IllegalArgumentException("Null layers");
       }
